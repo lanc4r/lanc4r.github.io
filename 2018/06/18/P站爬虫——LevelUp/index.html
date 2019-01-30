@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,爬虫,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言自从答辩完开始，已经浪了一周了(大部分时间都是在玩游戏啦…)，期间通关了一款 RPG恐怖解密小游戏 《Feather Of Praying》，虽然评价还不错，但是我觉得还没达到推荐的必要，所以没有写进安利篇内，其实主要是感情戏描述得太多了，让单身汪引起不适，哼 ￣へ￣">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="P站爬虫 —— 第一次优化">
+<meta property="og:url" content="http://yoursite.com/2018/06/18/P站爬虫——LevelUp/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言自从答辩完开始，已经浪了一周了(大部分时间都是在玩游戏啦…)，期间通关了一款 RPG恐怖解密小游戏 《Feather Of Praying》，虽然评价还不错，但是我觉得还没达到推荐的必要，所以没有写进安利篇内，其实主要是感情戏描述得太多了，让单身汪引起不适，哼 ￣へ￣">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773b292706.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773b087ecf.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773afd5655.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773afd554b.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773b023517.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773afd53f5.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773b034e40.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/18/5b2773afb3f85.jpg">
+<meta property="og:updated_time" content="2018-06-18T09:06:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="P站爬虫 —— 第一次优化">
+<meta name="twitter:description" content="前言自从答辩完开始，已经浪了一周了(大部分时间都是在玩游戏啦…)，期间通关了一款 RPG恐怖解密小游戏 《Feather Of Praying》，虽然评价还不错，但是我觉得还没达到推荐的必要，所以没有写进安利篇内，其实主要是感情戏描述得太多了，让单身汪引起不适，哼 ￣へ￣">
+<meta name="twitter:image" content="https://i.loli.net/2018/06/18/5b2773b292706.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/18/P站爬虫——LevelUp/">
+
+
+
+
+
+  <title>P站爬虫 —— 第一次优化 | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://i.loli.net/2018/05/26/5b094a5730644.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a5686ad5.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">18</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/18/P站爬虫——LevelUp/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">P站爬虫 —— 第一次优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-18T16:06:00+08:00">
+                2018-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/06/18/5b2773b292706.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>自从答辩完开始，已经浪了一周了(大部分时间都是在玩游戏啦…)，期间通关了一款 RPG恐怖解密小游戏 《Feather Of Praying》，虽然评价还不错，但是我觉得还没达到推荐的必要，所以没有写进安利篇内，其实主要是感情戏描述得太多了，让单身汪引起不适，哼 ￣へ￣</p>
+<a id="more"></a>
+<p>昨天开始继续跟进爬虫，基于 <a href="https://chllan.cc/2018/06/09/P%E7%AB%99%E7%88%AC%E8%99%AB%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E7%89%88/" target="_blank" rel="noopener">上一版</a> 这里主要更新了两部分：</p>
+<ol>
+<li>登录</li>
+<li>布隆算法优化 UrlManager</li>
+</ol>
+<h1 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h1><h2 id="登录流程分析"><a href="#登录流程分析" class="headerlink" title="登录流程分析"></a>登录流程分析</h2><p>登录主要是为了拿到能够为所欲为的 cookie，P站登录主要分为两部分，下面简单介绍一下登录过程</p>
+<h3 id="1-访问登录页面，拿到-临时cookie-和-postKey"><a href="#1-访问登录页面，拿到-临时cookie-和-postKey" class="headerlink" title="1. 访问登录页面，拿到 临时cookie 和 postKey"></a>1. 访问登录页面，拿到 临时cookie 和 postKey</h3><p>url： <code>https://accounts.pixiv.net/login?lang=zh&amp;source=pc&amp;view_type=page&amp;ref=wwwtop_accounts_index</code></p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773b087ecf.png" alt=""></p>
+<p>临时cookie 和 postkey 我们等会再解释</p>
+<h3 id="2-访问-登录接口拿到-真正的-cookie"><a href="#2-访问-登录接口拿到-真正的-cookie" class="headerlink" title="2. 访问 登录接口拿到 真正的 cookie"></a>2. 访问 登录接口拿到 真正的 cookie</h3><p>url：<code>https://accounts.pixiv.net/api/login?lang=zh</code></p>
+<p>在上一步中，如果我们点击了登录，就会自动向这个地址发送请求，如下图：</p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773afd5655.png" alt=""></p>
+<p>可以发现，我们输入的 用户名、密码、以及登录页面生成的 postKey 都作为参数发送到这里了。</p>
+<h4 id="PostKey"><a href="#PostKey" class="headerlink" title="PostKey"></a>PostKey</h4><p>PostKey 是访问登录页面生成的，在登录时候传递给 登录API，我猜想其主要作用是：<strong>验证用户是否是从登录页面进行登录的</strong>，总之就是一个获取 cookie 必要条件之一啦</p>
+<h4 id="临时-cookie"><a href="#临时-cookie" class="headerlink" title="临时 cookie"></a>临时 cookie</h4><p>临时 cookie 访问 登录页面获取的，并且在访问 登录API 的时候必须加上此 cookie，不然就会提示 403 错误，其目的应该也是保证用户从是从登录页面进行访问的。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>上面的分析只是提供一个思路，具体的东西自己去抓包就能发现(包括访问需要构造的请求头啥的)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"></span><br><span class="line">__author__ = <span class="string">'Lanc4r'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">	登录P站，获取 cookie，为所欲为~</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Loginer</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, username, password)</span>:</span></span><br><span class="line">		self._username = username</span><br><span class="line">		self._password = password</span><br><span class="line">		self._loginPage = <span class="string">'https://accounts.pixiv.net/login?lang=zh&amp;source=pc&amp;view_type=page&amp;ref=wwwtop_accounts_index'</span></span><br><span class="line">		self._loginAPI = <span class="string">'https://accounts.pixiv.net/api/login?lang=zh'</span></span><br><span class="line">		self._header4LoginPage = &#123;<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'</span>, </span><br><span class="line">									<span class="string">'method'</span>: <span class="string">'GET'</span>, <span class="string">'referer'</span>: <span class="string">'https://www.pixiv.net/'</span>, <span class="string">'accept-language'</span>: <span class="string">'zh-CN,zh;q=0.9'</span>, <span class="string">'pragma'</span>: <span class="string">'no-cache'</span>, </span><br><span class="line">									<span class="string">'accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>&#125;</span><br><span class="line">		self._header4LoginAPI = &#123;<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'</span>, </span><br><span class="line">									<span class="string">'method'</span>: <span class="string">'POST'</span>, <span class="string">'referer'</span>: <span class="string">'https://accounts.pixiv.net/login?lang=zh&amp;source=pc&amp;view_type=page&amp;ref=wwwtop_accounts_index'</span>,</span><br><span class="line">									<span class="string">'origin'</span>: <span class="string">'https://accounts.pixiv.net'</span>, <span class="string">'accept'</span>: <span class="string">'application/json'</span>, <span class="string">'accept-language'</span>: <span class="string">'zh-CN,zh;q=0.9'</span>, <span class="string">'pragma'</span>: <span class="string">'no-cache'</span>&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 通过 用户名 和 密码获取 爬虫所需要的 cookie</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getCookie</span><span class="params">(self)</span>:</span></span><br><span class="line">		index = requests.get(self._loginPage, headers=self._header4LoginPage)</span><br><span class="line">		<span class="comment"># 先获取 临时 cookie 和 postKey</span></span><br><span class="line">		tempCookies = index.cookies.get_dict()	 <span class="comment">#访问 loginAPI 时候需要带上 cookie </span></span><br><span class="line"></span><br><span class="line">		soup = BeautifulSoup(index.text, <span class="string">'lxml'</span>)</span><br><span class="line">		data = soup.find(<span class="string">'input'</span>, &#123;<span class="string">'name'</span>: <span class="string">'post_key'</span>&#125;)</span><br><span class="line">		postKey = data[<span class="string">'value'</span>];</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 构造 登录所需要的数据</span></span><br><span class="line">		payload = &#123;<span class="string">'pixiv_id'</span>: self._username, <span class="string">'password'</span>: self._password, <span class="string">'source'</span>: <span class="string">'pc'</span>, <span class="string">'ref'</span>: <span class="string">'wwwtop_accounts_index'</span>, </span><br><span class="line">					<span class="string">'return_to'</span>: <span class="string">'https://www.pixiv.net/'</span>, <span class="string">'post_key'</span>: postKey, <span class="string">'captcha'</span>: <span class="string">''</span>, <span class="string">'g_recaptcha_response'</span>: <span class="string">''</span>&#125;</span><br><span class="line">		result = requests.post(self._loginAPI, data=payload, headers=self._header4LoginAPI, cookies=tempCookies)</span><br><span class="line">		cookies = result.cookies.get_dict()</span><br><span class="line">		<span class="keyword">return</span> cookies.get(<span class="string">'PHPSESSID'</span>, <span class="keyword">None</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="之前的错误思路"><a href="#之前的错误思路" class="headerlink" title="之前的错误思路"></a>之前的错误思路</h2><p>在上一篇中我说过，真正的 cookie 需要通过 JS 来构造，所以需要去撸 JS 代码才能拿到正确的 cookie。先看一张图</p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773afd554b.png" alt=""></p>
+<p>上部分是登录成功后访问 首页 获取的 cookie(注意是通过 requests 获取的)，而下面是通过抓包直接复制出来的，少了很多对吧。再加上 主页 里有这样一段代码(只截取了部分)：</p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773b023517.png" alt=""></p>
+<p>很明显啊有木有，一定是 js 修改的啦，只要撸一下代码，然后自己构造就好了，ok，昨天我就这样整整看了两个多小时….</p>
+<p>看了两个小时无果，我就在想，这么多东西不一定全有用吧，于是乎我开始一个个的删除测试，终于发现，起作用的只有一个 <code>PHPSESSID=xxxxxx</code></p>
+<p>并且还有一个坑点：一定要拿 <code>https://accounts.pixiv.net/api/login?lang=zh</code> 返回的 cookie，不要拿 首页 <code>https://www.pixiv.net/</code> 返回的 cookie，因为只有第一个能起作用，不要问我为什么，我不知道…</p>
+<p>所以 JS 的确构造了部分 Cookie，但是它构造的那部分我们根本用不到….</p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773afd53f5.jpg" alt=""></p>
+<h1 id="布隆算法优化"><a href="#布隆算法优化" class="headerlink" title="布隆算法优化"></a>布隆算法优化</h1><p>心脏，是最强壮的肌肉! ( •̀ ω •́ )✧</p>
+<p>不好意思，不好意思，拿错剧本了，重来重来 (/▽＼)</p>
+<p>布隆算法，又叫布隆过滤器 (Bloom Filter)，是由Burton Howard Bloom于1970年提出，用于判断一个元素是否在集合中，常用于 垃圾邮件过滤的黑白名单方法、爬虫(Crawler)的网址判重。这里我就不多讲解了，给出两个参考资料，大佬讲得已经很棒了</p>
+<p><a href="https://www.itcodemonkey.com/article/1219.html" target="_blank" rel="noopener">漫画：什么是布隆算法？</a><br><a href="http://www.cnblogs.com/allensun/archive/2011/02/16/1956532.html" target="_blank" rel="noopener">布隆过滤器 (Bloom Filter) 详解</a></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一般爬虫主要是为了判断 Url 是否重复，而 Url 一般占用空间都蛮大的，所以 HashSet 不适合。但我们这里只是判断 ID 啊，4 Bytes 存储已经够够的，一亿条数据也就 380MB 左右，并且布隆算法也是针对于数据比较多的情况，所以这里我还是觉得只用 HashSet 就已经行了。但是为了记录下学习的过程，写了一份 布隆算法优化的 UrlManager。</p>
+<h2 id="布隆算法优化-UrlManager"><a href="#布隆算法优化-UrlManager" class="headerlink" title="布隆算法优化 UrlManager"></a>布隆算法优化 UrlManager</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"></span><br><span class="line">__author__ = <span class="string">'Lanc4r'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">	使用 布隆算法 优化 地址管理器~</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> mmh3</span><br><span class="line"><span class="keyword">from</span> BitArray <span class="keyword">import</span> BitArray</span><br><span class="line"></span><br><span class="line">BIT_SIZE = <span class="number">5000000</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UrlManagerLevelUp</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self._newIDs = []											<span class="comment"># 待爬取的ID队列</span></span><br><span class="line">		self._bitArray = BitArray(BIT_SIZE)							<span class="comment"># 保存以爬取的 id 队列</span></span><br><span class="line">		</span><br><span class="line">	<span class="comment"># 判断是否还有待爬取得数据</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">hasNewID</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> len(self._newIDs) &gt; <span class="number">0</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getNewID</span><span class="params">(self)</span>:</span></span><br><span class="line">		newID = self._newIDs.pop(<span class="number">0</span>)</span><br><span class="line">		self._add(str(newID))						<span class="comment"># 将以爬取过的 ID 保存起来</span></span><br><span class="line">		<span class="keyword">return</span> newID</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 添加新的 ID 到队列中</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_addNewID</span><span class="params">(self, newID)</span>:</span></span><br><span class="line">		self._newIDs.append(newID)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 将 新 ID 的位置放入到 bitArray 中</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_add</span><span class="params">(self, newId)</span>:</span></span><br><span class="line">		pointList = self._getPositions(newId)</span><br><span class="line">		list(map(self._bitArray.set, pointList))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 添加新的 IDs 到队列中</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">addNewIDs</span><span class="params">(self, ids)</span>:</span></span><br><span class="line">		list(map(self._addNewID, [newID <span class="keyword">for</span> newID <span class="keyword">in</span> ids <span class="keyword">if</span> <span class="keyword">not</span> self._contains(str(newID))]))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 判断 新 ID 是否已经存在</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_contains</span><span class="params">(self, newId)</span>:</span></span><br><span class="line">		pointList = self._getPositions(newId)</span><br><span class="line">		res = <span class="keyword">True</span></span><br><span class="line">		<span class="keyword">for</span> point <span class="keyword">in</span> pointList:</span><br><span class="line">			res = res <span class="keyword">and</span> self._bitArray.test(point)</span><br><span class="line">		<span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getFileName</span><span class="params">(self, url)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> url.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 通过 对传入的 ID 进行多次 hash 获取位置</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_getPositions</span><span class="params">(self, newId)</span>:</span></span><br><span class="line">		point1 = mmh3.hash(newId, <span class="number">41</span>) % BIT_SIZE</span><br><span class="line">		point2 = mmh3.hash(newId, <span class="number">42</span>) % BIT_SIZE</span><br><span class="line">		point3 = mmh3.hash(newId, <span class="number">43</span>) % BIT_SIZE</span><br><span class="line">		point4 = mmh3.hash(newId, <span class="number">44</span>) % BIT_SIZE</span><br><span class="line">		point5 = mmh3.hash(newId, <span class="number">45</span>) % BIT_SIZE</span><br><span class="line">		point6 = mmh3.hash(newId, <span class="number">46</span>) % BIT_SIZE</span><br><span class="line">		point7 = mmh3.hash(newId, <span class="number">47</span>) % BIT_SIZE</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> [point1, point2, point3, point4, point5, point6, point7]</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">temp</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self._newIDs</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 仅用于测试</span></span><br><span class="line"><span class="meta">	@property</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> len(self._newIDs)</span><br></pre></td></tr></table></figure>
+<h2 id="BitArray"><a href="#BitArray" class="headerlink" title="BitArray"></a>BitArray</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line">__author__ = <span class="string">'Lanc4r'</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">	基于 https://github.com/wanji/bitmap 修改~</span></span><br><span class="line"><span class="string">	Python 创建 位数组 (3.6版)</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">BIT_SIZE = <span class="number">5000000</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BitArray</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    BitMap class</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    BITMASK = [<span class="number">0x01</span>, <span class="number">0x02</span>, <span class="number">0x04</span>, <span class="number">0x08</span>, <span class="number">0x10</span>, <span class="number">0x20</span>, <span class="number">0x40</span>, <span class="number">0x80</span>]</span><br><span class="line">    BIT_CNT = [bin(i).count(<span class="string">"1"</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">256</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, maxnum=<span class="number">0</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Create a BitMap</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        nbytes = int((maxnum + <span class="number">7</span>) / <span class="number">8</span>)</span><br><span class="line">        self.bitmap = array.array(<span class="string">'B'</span>, [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(nbytes)])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Destroy the BitMap</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self, pos)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Set the value of bit@pos to 1</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.bitmap[int(pos / <span class="number">8</span>)] |= self.BITMASK[pos % <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset</span><span class="params">(self, pos)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Reset the value of bit@pos to 0</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.bitmap[int(pos / <span class="number">8</span>)] &amp;= ~self.BITMASK[pos % <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">flip</span><span class="params">(self, pos)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Flip the value of bit@pos</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.bitmap[int(pos / <span class="number">8</span>)] ^= self.BITMASK[pos % <span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Count bits set</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> sum([self.BIT_CNT[x] <span class="keyword">for</span> x <span class="keyword">in</span> self.bitmap])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Return size</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> len(self.bitmap) * <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(self, pos)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Return bit value</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> (self.bitmap[int(pos / <span class="number">8</span>)] &amp; self.BITMASK[pos % <span class="number">8</span>]) != <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">any</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Test if any bit is set</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.count() &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">none</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Test if no bit is set</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.count() == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">all</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Test if all bits are set</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> (self.count() + <span class="number">7</span>) / <span class="number">8</span> * <span class="number">8</span> == self.size()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">nonzero</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Get all non-zero bits</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> xrange(self.size()) <span class="keyword">if</span> self.test(i)]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tostring</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Convert BitMap to string</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span>.join([(<span class="string">"%s"</span> % bin(x)[<span class="number">2</span>:]).zfill(<span class="number">8</span>)</span><br><span class="line">                        <span class="keyword">for</span> x <span class="keyword">in</span> self.bitmap[::<span class="number">-1</span>]])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Overloads string operator</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.tostring()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Return a bit when indexing like a array</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.test(item)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, key, value)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Sets a bit when indexing like a array</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> value <span class="keyword">is</span> <span class="keyword">True</span>:</span><br><span class="line">            self.set(key)</span><br><span class="line">        <span class="keyword">elif</span> value <span class="keyword">is</span> <span class="keyword">False</span>:</span><br><span class="line">            self.reset(key)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">"Use a boolean value to assign to a bitfield"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tohexstring</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Returns a hexadecimal string</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        val = self.tostring()</span><br><span class="line">        st = <span class="string">"&#123;0:0x&#125;"</span>.format(int(val, <span class="number">2</span>))</span><br><span class="line">        <span class="keyword">return</span> st.zfill(len(self.bitmap)*<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fromhexstring</span><span class="params">(cls, hexstring)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Construct BitMap from hex string</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        bitstring = format(int(hexstring, <span class="number">16</span>), <span class="string">"0"</span> + str(len(hexstring)/<span class="number">4</span>) + <span class="string">"b"</span>)</span><br><span class="line">        <span class="keyword">return</span> cls.fromstring(bitstring)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fromstring</span><span class="params">(cls, bitstring)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Construct BitMap from string</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        nbits = len(bitstring)</span><br><span class="line">        bm = cls(nbits)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(nbits):</span><br><span class="line">            <span class="keyword">if</span> bitstring[-i<span class="number">-1</span>] == <span class="string">'1'</span>:</span><br><span class="line">                bm.set(i)</span><br><span class="line">            <span class="keyword">elif</span> bitstring[-i<span class="number">-1</span>] != <span class="string">'0'</span>:</span><br><span class="line">                <span class="keyword">raise</span> Exception(<span class="string">"Invalid bit string!"</span>)</span><br><span class="line">        <span class="keyword">return</span> bm</span><br></pre></td></tr></table></figure>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://github.com/wanji/bitmap" target="_blank" rel="noopener">wanji/bitmap</a><br><a href="https://www.cnblogs.com/cpselvis/p/6265825.html" target="_blank" rel="noopener">布隆过滤器(Bloom Filter)的原理和实现</a></p>
+<h1 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h1><p><img src="https://i.loli.net/2018/06/18/5b2773b034e40.png" alt=""></p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
+<li>多线程了解一下</li>
+<li>考虑写一个超时ID 管理器，保存访问超时的 ID</li>
+<li>Chrome Extension 推进</li>
+<li>精神状态….</li>
+</ul>
+<p>尽力去实现吧</p>
+<p><img src="https://i.loli.net/2018/06/18/5b2773afb3f85.jpg" alt=""></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>最近总是感觉很困，没什么精神，每天睡到午饭点才起，午饭让室友帮忙带，晚餐订外卖，一点都没有元气满满的样子呢 （；´д｀）ゞ</p>
+<p>感觉就像，中了诅咒一样！ 2333，我又开始中二了~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/09/P站爬虫——第一版/" rel="next" title="P站爬虫">
+                <i class="fa fa-chevron-left"></i> P站爬虫
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/29/火车票抢票软件bypass/" rel="prev" title="安利一款火车票抢票软件《12306Bypass》">
+                安利一款火车票抢票软件《12306Bypass》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a56a3649.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登录"><span class="nav-number">2.</span> <span class="nav-text">登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录流程分析"><span class="nav-number">2.1.</span> <span class="nav-text">登录流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-访问登录页面，拿到-临时cookie-和-postKey"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 访问登录页面，拿到 临时cookie 和 postKey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-访问-登录接口拿到-真正的-cookie"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 访问 登录接口拿到 真正的 cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PostKey"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">PostKey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#临时-cookie"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">临时 cookie</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#之前的错误思路"><span class="nav-number">2.3.</span> <span class="nav-text">之前的错误思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#布隆算法优化"><span class="nav-number">3.</span> <span class="nav-text">布隆算法优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布隆算法优化-UrlManager"><span class="nav-number">3.2.</span> <span class="nav-text">布隆算法优化 UrlManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BitArray"><span class="nav-number">3.3.</span> <span class="nav-text">BitArray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">3.4.</span> <span class="nav-text">Ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行截图"><span class="nav-number">4.</span> <span class="nav-text">运行截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化"><span class="nav-number">5.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">6.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

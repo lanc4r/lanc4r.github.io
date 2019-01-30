@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,源码,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="Java 姿势解锁 —— Lists.transform这个用法最初是在工作中读浩哥代码看到的，由于当时时间紧张，粗略看了一下以为就是个生成 List 的方法，于我而言其最多使用的地方在 Entity、Dto、From 间的互转，以至于在今后所有的涉及到转换的地方我都开始倾向于使用此方法，但是突然有一次就掉坑了…">
+<meta name="keywords" content="Java,后端,源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— Lists.transform">
+<meta property="og:url" content="http://yoursite.com/2018/09/01/Java姿势解锁Lists-transform/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="Java 姿势解锁 —— Lists.transform这个用法最初是在工作中读浩哥代码看到的，由于当时时间紧张，粗略看了一下以为就是个生成 List 的方法，于我而言其最多使用的地方在 Entity、Dto、From 间的互转，以至于在今后所有的涉及到转换的地方我都开始倾向于使用此方法，但是突然有一次就掉坑了…">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a81aaecd.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a8124f3b.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a80f280f.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a8116b65.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a81250e8.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a8124bfc.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a81366ee.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a813488d.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a813e1ba.png">
+<meta property="og:image" content="https://i.loli.net/2018/09/01/5b8a9a8112584.jpg">
+<meta property="og:updated_time" content="2018-09-08T15:01:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— Lists.transform">
+<meta name="twitter:description" content="Java 姿势解锁 —— Lists.transform这个用法最初是在工作中读浩哥代码看到的，由于当时时间紧张，粗略看了一下以为就是个生成 List 的方法，于我而言其最多使用的地方在 Entity、Dto、From 间的互转，以至于在今后所有的涉及到转换的地方我都开始倾向于使用此方法，但是突然有一次就掉坑了…">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/01/5b8a9a81aaecd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/01/Java姿势解锁Lists-transform/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— Lists.transform | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://i.loli.net/2018/05/26/5b094a5730644.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a5686ad5.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">09月</div>
+			<div class="post-day">01</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/01/Java姿势解锁Lists-transform/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— Lists.transform</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-01T21:59:59+08:00">
+                2018-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/09/01/5b8a9a81aaecd.png" alt=""></p>
+<h1 id="Java-姿势解锁-——-Lists-transform"><a href="#Java-姿势解锁-——-Lists-transform" class="headerlink" title="Java 姿势解锁 —— Lists.transform"></a>Java 姿势解锁 —— Lists.transform</h1><p>这个用法最初是在工作中读浩哥代码看到的，由于当时时间紧张，粗略看了一下以为就是个生成 List 的方法，于我而言其最多使用的地方在 Entity、Dto、From 间的互转，以至于在今后所有的涉及到转换的地方我都开始倾向于使用此方法，但是突然有一次就掉坑了…</p>
+<a id="more"></a>
+<h2 id="先看看一段正常的代码"><a href="#先看看一段正常的代码" class="headerlink" title="先看看一段正常的代码"></a>先看看一段正常的代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListsTransformTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">        List&lt;User&gt; userList = Lists.newArrayList(<span class="keyword">new</span> User(<span class="string">"Alex"</span>, <span class="number">12</span>, <span class="string">"Play"</span>), <span class="keyword">new</span> User(<span class="string">"August"</span>, <span class="number">18</span>, <span class="string">"Play"</span>), <span class="keyword">new</span> User(<span class="string">"Ada"</span>, <span class="number">11</span>, <span class="string">"Play"</span>));</span><br><span class="line">        </span><br><span class="line">        List&lt;UserForm&gt; userFormList =  <span class="keyword">new</span> ArrayList&lt;UserForm&gt;(userList.size());</span><br><span class="line">        userFormList = Lists.transform(userList, <span class="keyword">new</span> Function&lt;User, UserForm&gt;()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> UserForm <span class="title">apply</span><span class="params">(User input)</span> </span>&#123;</span><br><span class="line">                UserForm form = <span class="keyword">new</span> UserForm();</span><br><span class="line">                form.setName(input.getName());</span><br><span class="line">                form.setAge(input.getAge());</span><br><span class="line">                form.setHobby(input.getHobby());</span><br><span class="line">                <span class="keyword">return</span> form;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">            System.out.println(form);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String name;</span><br><span class="line">    Integer age;</span><br><span class="line">    String hobby;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Integer age, String hobby)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.hobby = hobby;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", hobby="</span> + hobby + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserForm</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    String name;</span><br><span class="line">    Integer age;</span><br><span class="line">    String hobby;</span><br><span class="line">    Integer id;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"UserForm [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", hobby="</span> + hobby + <span class="string">", Id="</span> + id +<span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UserForm [name=Alex, age=12, hobby=Play, Id=null]</span><br><span class="line">UserForm [name=August, age=18, hobby=Play, Id=null]</span><br><span class="line">UserForm [name=Ada, age=11, hobby=Play, Id=null]</span><br></pre></td></tr></table></figure>
+<p>这段代码作用就是快速通过 <code>List&lt;User&gt;</code> 生成 <code>List&lt;UserForm&gt;</code>，没什么毛病对吧，接下来我们想在生成的 <code>List&lt;UserForm&gt;</code> 中修改 hobby 和 Id，看看会发生什么：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Random random = <span class="keyword">new</span> Random();</span><br><span class="line"><span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">    form.setHobby(<span class="string">"Study, It makes me happy~"</span>);</span><br><span class="line">    form.setId(String.valueOf(random.nextInt(<span class="number">20</span>)));</span><br><span class="line">    System.out.println(form);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">    System.out.println(form);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UserForm [name=Alex, age=12, hobby=Study, It makes me happy~, Id=15]</span><br><span class="line">UserForm [name=August, age=18, hobby=Study, It makes me happy~, Id=17]</span><br><span class="line">UserForm [name=Ada, age=11, hobby=Study, It makes me happy~, Id=2]</span><br><span class="line"></span><br><span class="line">UserForm [name=Alex, age=12, hobby=Play, Id=null]</span><br><span class="line">UserForm [name=August, age=18, hobby=Play, Id=null]</span><br><span class="line">UserForm [name=Ada, age=11, hobby=Play, Id=null]</span><br></pre></td></tr></table></figure>
+<p>咦！ 第一次迭代的时候输出结果和我们预期一样，但是第二次的结果怎么显示成这个样子？？</p>
+<p>这么神奇的吗？？</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a8124f3b.jpg" alt=""></p>
+<h2 id="Debug-分析问题"><a href="#Debug-分析问题" class="headerlink" title="Debug 分析问题"></a>Debug 分析问题</h2><p>带着疑惑，我们 Debug 走一下流程</p>
+<p>首先在执行 Lists.transform() 的时候会 <strong>先判断是否是 RandomAccess 类型</strong>，结合 RandomAccess 展开树我们可以发现，ArrayList 实现了 RandomAccess 接口</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a80f280f.png" alt=""></p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a8116b65.png" alt=""></p>
+<p>紧接着会创建 TransformingRandomAccessList 类，并赋值 fromList 和 function</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a81250e8.png" alt=""></p>
+<p>创建完成之后，function 是没有立即执行的，此时代码直接跳转到了 迭代 userFormList 的地方</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a8124bfc.png" alt=""></p>
+<p>到此时开始执行 TransformingRandomAccessList 中的 listIterator() 方法开始迭代生成数据，这时候每次都会执行 transform() 方法，传入 F(From) 来源 User 类型数据，生成 T(Traget) 目标 UserForm 类型数据</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a81366ee.png" alt=""></p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a813488d.png" alt=""></p>
+<p>说说我的理解：我们的 userFormList 在执行 Lists.transform 后是<strong>没有立刻被赋值的</strong>，它只是被转换成了 TransformingRandomAccessList 类型，此类型 <strong>重写了迭代器</strong>，每次当我们迭代 userFormList 时候，它才会调用 function 进行赋值。</p>
+<p>带着上面的理解我们来重新看一次这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Random random = <span class="keyword">new</span> Random();</span><br><span class="line"><span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">    form.setHobby(<span class="string">"Study, It makes me happy~"</span>);</span><br><span class="line">    form.setId(String.valueOf(random.nextInt(<span class="number">20</span>)));</span><br><span class="line">    System.out.println(form);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">    System.out.println(form);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>userFormList 在第一次迭代的时候会执行 Function 中的 <code>UserForm form = new UserForm();</code> 此时会创建新的 UserForm，然后进行 set 不同的值，在我们第二次进行 迭代的时候，此时又会执行 Function 中的 <code>UserForm form = new UserForm();</code> 这时候会再次创建 UserForm，当你 Debug 的时候会发现两次创建的 UserForm 地址是不一样的，这样就能解释为什么我们 set 的时候不起作用啦~</p>
+<p>带着上面得出的结论来看看源码中的官方文档：</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a813e1ba.png" alt=""></p>
+<p>可以说官方文档已经安排得明明白白的，它提到 <strong>Lists.transform</strong> 返回的每一个元素是 function 执行后的结果，其返回的 list 就是一个转换后的 <strong>“视图”</strong>，修改 原有的 list 会影响到现有的 list。并且 function 方法是不可逆的，生成的 list <strong>不支持</strong> <strong>add</strong>、<strong>addAll</strong>、<strong>set</strong> 方法，这个 function 是类似一种<strong>懒加载的机制，只有在需要的时候被调用</strong>，如果你想让返回的 List 不受此限制的话，需要自己动手 copy…</p>
+<p>最后它还提了一句，此方法返回的 list 在你进行序列化的时候可能出现一些奇怪的操作，所以不推荐序列化。</p>
+<h2 id="突破-set-无法成功"><a href="#突破-set-无法成功" class="headerlink" title="突破 set 无法成功"></a>突破 set 无法成功</h2><p>在了解这个方法之后，我发现这个方法限制还蛮多的，于是找到浩哥，问了一下此方法用意，原以为是有性能上的优化，结果发现只是为了代码简洁一点，性能对比还没有普通写法来得快…</p>
+<p><img src="https://i.loli.net/2018/09/01/5b8a9a8112584.jpg" alt=""></p>
+<p>之前我们发现需要 set 的时候不能再次迭代 List，所以只有写在 Function 中才能完成我们的迭代咯，于是我又模拟了一下最常见的情况，我们稍微修改一下现有的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    Integer age;</span><br><span class="line">    String hobby;</span><br><span class="line">    Integer id;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Integer age, String hobby, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.hobby = hobby;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", hobby="</span> + hobby + <span class="string">", id="</span> + id + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserForm</span></span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    Integer age;</span><br><span class="line">    String hobby;</span><br><span class="line">    String secret;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"UserForm [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", hobby="</span> + hobby + <span class="string">", Id="</span> + secret + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ttest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    List&lt;User&gt; userList = Lists.newArrayList(<span class="keyword">new</span> User(<span class="string">"Alex"</span>, <span class="number">12</span>, <span class="string">"Play"</span>, <span class="number">1</span>), <span class="keyword">new</span> User(<span class="string">"August"</span>, <span class="number">18</span>, <span class="string">"Play"</span>, <span class="number">2</span>), <span class="keyword">new</span> User(<span class="string">"Ada"</span>, <span class="number">11</span>, <span class="string">"Play"</span>, <span class="number">3</span>));</span><br><span class="line">    </span><br><span class="line">    Map&lt;Integer, String&gt; secretMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</span><br><span class="line">    secretMap.put(<span class="number">1</span>, <span class="string">"biubiubiu~"</span>);</span><br><span class="line">    secretMap.put(<span class="number">2</span>, <span class="string">"miaomiaomiao~"</span>);</span><br><span class="line">    secretMap.put(<span class="number">3</span>, <span class="string">"qiuqiuqiu~"</span>);</span><br><span class="line">    </span><br><span class="line">    List&lt;UserForm&gt; userFormList = <span class="keyword">new</span> ArrayList&lt;ListsTransformTest.UserForm&gt;(userList.size());</span><br><span class="line">    userFormList = Lists.transform(userList, <span class="keyword">new</span> Function&lt;User, UserForm&gt;()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> UserForm <span class="title">apply</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">            UserForm form = <span class="keyword">new</span> UserForm();</span><br><span class="line">            form.setName(user.getName());</span><br><span class="line">            form.setAge(user.getAge());</span><br><span class="line">            form.setHobby(user.getHobby());</span><br><span class="line">            form.setSecret(secretMap.get(user.getId()));</span><br><span class="line">            <span class="keyword">return</span> form;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这里： <code>form.setSecret(secretMap.get(user.getId()));</code> 这里编译的时候会报错：</p>
+<p><strong>Cannot refer to non-final local variable secretMap define in an enclosing scope.</strong></p>
+<p>提示 secretMap 不是 final 修饰的变量，难道还需要使用 final 类型的变量吗？ (至于为什么需要 final 修饰的变量，这个问题后面有时间再研究咯~)</p>
+<p>将上面的代码改一下就能生效啦：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ttest</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    List&lt;User&gt; userList = Lists.newArrayList(<span class="keyword">new</span> User(<span class="string">"Alex"</span>, <span class="number">12</span>, <span class="string">"Play"</span>, <span class="number">1</span>), <span class="keyword">new</span> User(<span class="string">"August"</span>, <span class="number">18</span>, <span class="string">"Play"</span>, <span class="number">2</span>), <span class="keyword">new</span> User(<span class="string">"Ada"</span>, <span class="number">11</span>, <span class="string">"Play"</span>, <span class="number">3</span>));</span><br><span class="line">    </span><br><span class="line">    Map&lt;Integer, String&gt; secretMap = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();</span><br><span class="line">    secretMap.put(<span class="number">1</span>, <span class="string">"biubiubiu~"</span>);</span><br><span class="line">    secretMap.put(<span class="number">2</span>, <span class="string">"miaomiaomiao~"</span>);</span><br><span class="line">    secretMap.put(<span class="number">3</span>, <span class="string">"qiuqiuqiu~"</span>);</span><br><span class="line">    <span class="keyword">final</span> Map&lt;Integer, String&gt; finalSecretMap = secretMap;</span><br><span class="line">    </span><br><span class="line">    List&lt;UserForm&gt; userFormList = <span class="keyword">new</span> ArrayList&lt;ListsTransformTest.UserForm&gt;(userList.size());</span><br><span class="line">    userFormList = Lists.transform(userList, <span class="keyword">new</span> Function&lt;User, UserForm&gt;()&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> UserForm <span class="title">apply</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">            UserForm form = <span class="keyword">new</span> UserForm();</span><br><span class="line">            form.setName(user.getName());</span><br><span class="line">            form.setAge(user.getAge());</span><br><span class="line">            form.setHobby(user.getHobby());</span><br><span class="line">            form.setSecret(finalSecretMap.get(user.getId()));</span><br><span class="line">            <span class="keyword">return</span> form;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (UserForm form : userFormList)&#123;</span><br><span class="line">        System.out.println(form);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再看看输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UserForm [name=Alex, age=12, hobby=Play, Id=biubiubiu~]</span><br><span class="line">UserForm [name=August, age=18, hobby=Play, Id=miaomiaomiao~]</span><br><span class="line">UserForm [name=Ada, age=11, hobby=Play, Id=qiuqiuqiu~]</span><br></pre></td></tr></table></figure>
+<p>Nice~~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/25/关于这些天关于我/" rel="next" title="关于这些天，关于我">
+                <i class="fa fa-chevron-left"></i> 关于这些天，关于我
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/08/Java姿势解锁——不可变集合/" rel="prev" title="Java 姿势解锁 —— 不可变集合">
+                Java 姿势解锁 —— 不可变集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a56a3649.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-姿势解锁-——-Lists-transform"><span class="nav-number">1.</span> <span class="nav-text">Java 姿势解锁 —— Lists.transform</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#先看看一段正常的代码"><span class="nav-number">1.1.</span> <span class="nav-text">先看看一段正常的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug-分析问题"><span class="nav-number">1.2.</span> <span class="nav-text">Debug 分析问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#突破-set-无法成功"><span class="nav-number">1.3.</span> <span class="nav-text">突破 set 无法成功</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

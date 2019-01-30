@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="Java 姿势解锁 —— 深拷贝与浅拷贝继上一次说道的地方，我们来把之前的坑填了~">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— 深拷贝与浅拷贝">
+<meta property="og:url" content="http://yoursite.com/2018/09/15/Java姿势解锁——深拷贝与浅拷贝/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="Java 姿势解锁 —— 深拷贝与浅拷贝继上一次说道的地方，我们来把之前的坑填了~">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/09/15/5b9cf2a1428e1.png">
+<meta property="og:updated_time" content="2018-09-15T12:22:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— 深拷贝与浅拷贝">
+<meta name="twitter:description" content="Java 姿势解锁 —— 深拷贝与浅拷贝继上一次说道的地方，我们来把之前的坑填了~">
+<meta name="twitter:image" content="https://i.loli.net/2018/09/15/5b9cf2a1428e1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/15/Java姿势解锁——深拷贝与浅拷贝/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— 深拷贝与浅拷贝 | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://i.loli.net/2018/05/26/5b094a5730644.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a5686ad5.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">09月</div>
+			<div class="post-day">15</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/15/Java姿势解锁——深拷贝与浅拷贝/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— 深拷贝与浅拷贝</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-15T20:59:59+08:00">
+                2018-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/09/15/5b9cf2a1428e1.png" alt=""></p>
+<h1 id="Java-姿势解锁-——-深拷贝与浅拷贝"><a href="#Java-姿势解锁-——-深拷贝与浅拷贝" class="headerlink" title="Java 姿势解锁 —— 深拷贝与浅拷贝"></a>Java 姿势解锁 —— 深拷贝与浅拷贝</h1><p>继上一次说道的地方，我们来把之前的坑填了~</p>
+<a id="more"></a>
+<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>浅拷贝主要涉及到两个方面：</p>
+<ul>
+<li>基本类型的值拷贝</li>
+<li>引用类型的地址拷贝</li>
+</ul>
+<p>目前有三种方法实现，我们来了解一下</p>
+<h3 id="第一种实现方式-——-System-arraycopy"><a href="#第一种实现方式-——-System-arraycopy" class="headerlink" title="第一种实现方式 —— System.arraycopy()"></a>第一种实现方式 —— System.arraycopy()</h3><p>还记得<a href="https://chllan.cc/2018/09/08/Java%E5%A7%BF%E5%8A%BF%E8%A7%A3%E9%94%81%E2%80%94%E2%80%94%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88/" target="_blank" rel="noopener">上一篇</a>中说到了，使用 <strong>Guava Immutable</strong> 实现的是一种不完全的 “深拷贝”，可能说得有点问题，因为它根本就是 “浅拷贝”，毕竟底层使用的 <strong>arraycopy()</strong> ╮(╯▽╰)╭</p>
+<p>System.arraycopy() 是一个 native 方法，底层是用 C 写的，虽然现在没机会撸源码，但搜到一老哥写的文章，可以说写得是很不错啦：</p>
+<p><a href="https://blog.csdn.net/wangyangzhizhou/article/details/79504818" target="_blank" rel="noopener">System.arraycopy</a></p>
+<h4 id="基本类型拷贝"><a href="#基本类型拷贝" class="headerlink" title="基本类型拷贝"></a>基本类型拷贝</h4><p>下面直接写栗子来看一下这个方法，先试试基本类型的拷贝</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] src = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] dest = <span class="keyword">new</span> <span class="keyword">int</span>[src.length];</span><br><span class="line">System.arraycopy(src, <span class="number">0</span>, dest, <span class="number">0</span>, src.length);</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"After copy Src: "</span> + JsonUtil.toJson(src));</span><br><span class="line">System.out.println(<span class="string">"After copy Dest: "</span> + JsonUtil.toJson(dest));</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改原数组</span></span><br><span class="line">src[<span class="number">0</span>] = <span class="number">7</span>;</span><br><span class="line">System.out.println(<span class="string">"After modify Src: "</span> + JsonUtil.toJson(src));</span><br><span class="line">System.out.println(<span class="string">"After modify Dest: "</span> + JsonUtil.toJson(dest));</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">After copy Src: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">After copy Dest: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">After modify Src: [<span class="number">7</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">After modify Dest: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<p>ok，验证第一点，基本类型使用的是值拷贝，修改原数组不会改变目标数组</p>
+<h4 id="引用类型拷贝"><a href="#引用类型拷贝" class="headerlink" title="引用类型拷贝"></a>引用类型拷贝</h4><p>下面来试试引用类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    String name;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Person [name="</span> + name + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person[] src = &#123;<span class="keyword">new</span> Person(<span class="string">"Alex"</span>), <span class="keyword">new</span> Person(<span class="string">"Ada"</span>), <span class="keyword">new</span> Person(<span class="string">"Lancelot"</span>)&#125;;</span><br><span class="line">Person[] dest = <span class="keyword">new</span> Person[src.length];</span><br><span class="line">System.arraycopy(src, <span class="number">0</span>, dest, <span class="number">0</span>, src.length);;</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"After copy Src: "</span> + JsonUtil.toJson(src));</span><br><span class="line">System.out.println(<span class="string">"After copy Dest: "</span> + JsonUtil.toJson(dest));</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改目标数组</span></span><br><span class="line">dest[<span class="number">0</span>].setName(<span class="string">"Saber"</span>);</span><br><span class="line">System.out.println(<span class="string">"After modify Src: "</span> + JsonUtil.toJson(src));</span><br><span class="line">System.out.println(<span class="string">"After modify Dest: "</span> + JsonUtil.toJson(dest));</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">After copy Src: [&#123;<span class="string">"name"</span>:<span class="string">"Alex"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Ada"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Lancelot"</span>&#125;]</span><br><span class="line">After copy Dest: [&#123;<span class="string">"name"</span>:<span class="string">"Alex"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Ada"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Lancelot"</span>&#125;]</span><br><span class="line"></span><br><span class="line">After modify Src: [&#123;<span class="string">"name"</span>:<span class="string">"Saber"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Ada"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Lancelot"</span>&#125;]</span><br><span class="line">After modify Dest: [&#123;<span class="string">"name"</span>:<span class="string">"Saber"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Ada"</span>&#125;,&#123;<span class="string">"name"</span>:<span class="string">"Lancelot"</span>&#125;]</span><br></pre></td></tr></table></figure>
+<p>验证第二点，引用类型是地址拷贝，当修改目标数组的值后，原数组的内容也跟着改变啦~</p>
+<h3 id="第二种方式实现-——-类的构造方法"><a href="#第二种方式实现-——-类的构造方法" class="headerlink" title="第二种方式实现 —— 类的构造方法"></a>第二种方式实现 —— 类的构造方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    String name;</span><br><span class="line">    Hobby hobby;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, Hobby hobby)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.hobby = hobby;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(Person p)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = p.getName();</span><br><span class="line">        <span class="keyword">this</span>.hobby = p.getHobby();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Person [name="</span> + name + <span class="string">", hobby="</span> + hobby + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hobby</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    String hobby;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Hobby</span><span class="params">(String hobby)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.hobby = hobby;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hobby [hobby="</span> + hobby + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hobby hobby = <span class="keyword">new</span> Hobby(<span class="string">"Sleepin(￣o￣)"</span>);</span><br><span class="line">Person src = <span class="keyword">new</span> Person(<span class="string">"biubiubiu"</span>, hobby);</span><br><span class="line">Person dest = <span class="keyword">new</span> Person(src);</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"Before Modify Src: "</span> + src);</span><br><span class="line">System.out.println(<span class="string">"Before Modify Dest: "</span> + dest);</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line">src.setName(<span class="string">"miaomiaomiao"</span>);</span><br><span class="line">hobby.setHobby(<span class="string">"Studying~"</span>);</span><br><span class="line">System.out.println(<span class="string">"After Modify Src: "</span> + src);</span><br><span class="line">System.out.println(<span class="string">"After Modify Dest: "</span> + dest);</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Before Modify Src: Person [name=biubiubiu, hobby=Hobby [hobby=Sleepin(￣o￣)]]</span><br><span class="line">Before Modify Dest: Person [name=biubiubiu, hobby=Hobby [hobby=Sleepin(￣o￣)]]</span><br><span class="line"></span><br><span class="line">After Modify Src: Person [name=miaomiaomiao, hobby=Hobby [hobby=Studying~]]</span><br><span class="line">After Modify Dest: Person [name=biubiubiu, hobby=Hobby [hobby=Studying~]]</span><br></pre></td></tr></table></figure>
+<p>可以发现对于 dest，其 name 域依然没有改变，但是 hobby 域，src 和 dest 都发生改变了，所以其实对于 hobby 还是使用的地址复制，也就是浅拷贝啦~</p>
+<p>但是这里需要注意，String 类型并不是值拷贝，而是使用的 地址拷贝。因为 Java 字符串是放在静态变量区的，我们改变字符串其实只是改变其指向而已，原来指向的字符串是不会改变的~</p>
+<h3 id="第三种方式实现-——-Object-的-clone-方法"><a href="#第三种方式实现-——-Object-的-clone-方法" class="headerlink" title="第三种方式实现 —— Object 的 clone() 方法"></a>第三种方式实现 —— Object 的 clone() 方法</h3><p>clone() 方法是 Object 类的一个 native 方法，它需要类实现 <strong>Cloneable</strong> 接口，否则会抛出 <strong>CloneNotSupportedException</strong> 异常，下面举栗子来看看</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Age age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Age age, <span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", id="</span> + id + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span>  Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Age</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Age</span><span class="params">(<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Age [age="</span> + age + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">User user1 = <span class="keyword">new</span> User();</span><br><span class="line">Age age = <span class="keyword">new</span> Age(<span class="number">17</span>);</span><br><span class="line">user1.setId(<span class="number">7</span>);</span><br><span class="line">user1.setName(<span class="string">"Clearlove7"</span>);</span><br><span class="line">user1.setAge(age);</span><br><span class="line"></span><br><span class="line">User user2 = (User) user1.clone();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1.toString());</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2.toString());</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line">user1.setId(<span class="number">18</span>);</span><br><span class="line">user1.setName(<span class="string">"Alex"</span>);</span><br><span class="line">age.setAge(<span class="number">99</span>);</span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1.toString());</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2.toString());</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user1: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">user1: User [name=Alex, age=Age [age=<span class="number">99</span>], id=<span class="number">18</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">99</span>], id=<span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>可以发现，针对于 age 域依然是进行值传递的，所以 clone() 方法依旧算是一种 “浅拷贝”</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>理解深拷贝只要对比起浅拷贝就很容易啦：</p>
+<ul>
+<li>基本类型的值拷贝</li>
+<li>引用类型的值拷贝</li>
+</ul>
+<p>对于基本类型，和浅拷贝一样都是值的传递，但对于引用类型，深拷贝使用的也是值传递(实际上是传递了新的地址)，其实也就是重新开辟一块内存空间存放相同的值。因为有这个重新开辟内存空间的动作，所以<strong>深拷贝比起浅拷贝需要消耗更多的时间和空间</strong>。</p>
+<p>目前学习了两种实现方式，来了解一下：</p>
+<h3 id="第一种方式实现-——-重写-Object-的-clone-方法"><a href="#第一种方式实现-——-重写-Object-的-clone-方法" class="headerlink" title="第一种方式实现 —— 重写 Object 的 clone() 方法"></a>第一种方式实现 —— 重写 Object 的 clone() 方法</h3><p>在上面浅拷贝的第三种实现方式中，我们调用了 <code>super.clone()</code>，其实际上就是调用了 Object 的 clone 方法。现在我们需要在自己定义的类中 重写 clone 方法，而不再是简单的调用 Object 的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Age age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Age age, <span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", id="</span> + id + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span>  Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        User user = (User) <span class="keyword">super</span>.clone();</span><br><span class="line">        Age age = (Age) <span class="keyword">this</span>.age.clone();</span><br><span class="line">        user.setAge(age);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Age</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Age</span><span class="params">(<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Age [age="</span> + age + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">User user1 = <span class="keyword">new</span> User();</span><br><span class="line">Age age = <span class="keyword">new</span> Age(<span class="number">17</span>);</span><br><span class="line">user1.setId(<span class="number">7</span>);</span><br><span class="line">user1.setName(<span class="string">"Clearlove7"</span>);</span><br><span class="line">user1.setAge(age);</span><br><span class="line"></span><br><span class="line">User user2 = (User) user1.clone();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1.toString());</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2.toString());</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line">user1.setId(<span class="number">18</span>);</span><br><span class="line">user1.setName(<span class="string">"Alex"</span>);</span><br><span class="line">age.setAge(<span class="number">99</span>);</span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1.toString());</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2.toString());</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user1: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">user1: User [name=Alex, age=Age [age=<span class="number">99</span>], id=<span class="number">18</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>注意看，这一次 user2 中的 age 域并没有发生改变哟，因为并没有进行地址传递啦，主要看这里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//User 和 Age 都实现了 Cloneable 接口</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">    User user = (User) <span class="keyword">super</span>.clone();</span><br><span class="line">    Age age = (Age) <span class="keyword">this</span>.age.clone();</span><br><span class="line">    user.setAge(age);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这里 调用了 age 域的 clone 方法，他会创建一个新的 Age 对象，此时重新开辟了新的内存空间，传过来的也是新的地址，再将 age 域重新赋值一下~</span><br></pre></td></tr></table></figure>
+<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>这种方法可以实现深拷贝，但是也存在着很大的弊端，我们想象这样一种情况：</p>
+<p>A -&gt; B，A 中有个属性为 B<br>B -&gt; C，B 中有个属性为 C<br>C -&gt; D，C 中有个属性为 D</p>
+<p>当我们想 拷贝一个 A 时，需要从 D 开始，沿着继承树分别重写 D、C、B 的 clone 方法，当这个嵌套层更深的时候，会变得很麻烦，你需要写大量的代码，那样肯定会累死的…</p>
+<p>这种方法只适用于嵌套层次不是很深的情况，那么当深层嵌套的情况发生我们怎么做呢，看看第二种方式 (。・・)ノ</p>
+<h3 id="第二种方式实现-——-对象序列化"><a href="#第二种方式实现-——-对象序列化" class="headerlink" title="第二种方式实现 —— 对象序列化"></a>第二种方式实现 —— 对象序列化</h3><p>序列化是实现对象长期存储的方法，通过将对象的信息序列化成一段特殊结构的字节数据，可以方便的在网络中进行数据传输，或者是保存到本地进行长期存储~</p>
+<p>简单了解一下定义，重要的是看看栗子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Age age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Age age, <span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span>  Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", id="</span> + id + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Age</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Age</span><span class="params">(<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Age [age="</span> + age + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">User user1 = <span class="keyword">new</span> User();</span><br><span class="line">Age age = <span class="keyword">new</span> Age(<span class="number">17</span>);</span><br><span class="line">user1.setId(<span class="number">7</span>);</span><br><span class="line">user1.setName(<span class="string">"Clearlove7"</span>);</span><br><span class="line">user1.setAge(age);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 user1 序列化，并写入 ByteArrayOutputStream 输出流中</span></span><br><span class="line">ByteArrayOutputStream bos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(bos);</span><br><span class="line">oos.writeObject(user1);</span><br><span class="line">oos.flush();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 反序列化，从 ByteArrayInputStream 输入流中读取数据</span></span><br><span class="line">ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> ByteArrayInputStream(bos.toByteArray()));</span><br><span class="line">Object readObject = ois.readObject();</span><br><span class="line">User user2 = (User) readObject;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出序列化后生成字符串</span></span><br><span class="line">System.out.println(<span class="string">"Str: "</span> + readObject.toString());</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1);</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2);</span><br><span class="line">System.out.println();</span><br><span class="line"></span><br><span class="line">user1.setId(<span class="number">22</span>);</span><br><span class="line">user1.setName(<span class="string">"Alex"</span>);</span><br><span class="line">age.setAge(<span class="number">99</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"user1: "</span> + user1);</span><br><span class="line">System.out.println(<span class="string">"user2: "</span> + user2);</span><br><span class="line">System.out.println();</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Str: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">user1: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">user1: User [name=Alex, age=Age [age=<span class="number">99</span>], id=<span class="number">22</span>]</span><br><span class="line">user2: User [name=Clearlove7, age=Age [age=<span class="number">17</span>], id=<span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>可以发现，在我们改变 Age 对象数据后，通过反序列化生成的 User 对象值是没有改变的，达到我们想要的效果啦，nice~</p>
+<h4 id="挖坑"><a href="#挖坑" class="headerlink" title="挖坑"></a>挖坑</h4><p>序列化也是一大堆东西，放到下一次再说吧</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>最近好忙，忙到吐血，这周天一定要把拖了两周的事情给解决了 o(TヘTo)</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/08/Java姿势解锁——不可变集合/" rel="next" title="Java 姿势解锁 —— 不可变集合">
+                <i class="fa fa-chevron-left"></i> Java 姿势解锁 —— 不可变集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/07/记一次呼吸上层资本主义的空气/" rel="prev" title="记一次呼吸上层资本主义的空气">
+                记一次呼吸上层资本主义的空气 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a56a3649.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-姿势解锁-——-深拷贝与浅拷贝"><span class="nav-number">1.</span> <span class="nav-text">Java 姿势解锁 —— 深拷贝与浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浅拷贝"><span class="nav-number">1.1.</span> <span class="nav-text">浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种实现方式-——-System-arraycopy"><span class="nav-number">1.1.1.</span> <span class="nav-text">第一种实现方式 —— System.arraycopy()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本类型拷贝"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">基本类型拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用类型拷贝"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">引用类型拷贝</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种方式实现-——-类的构造方法"><span class="nav-number">1.1.2.</span> <span class="nav-text">第二种方式实现 —— 类的构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三种方式实现-——-Object-的-clone-方法"><span class="nav-number">1.1.3.</span> <span class="nav-text">第三种方式实现 —— Object 的 clone() 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝"><span class="nav-number">1.2.</span> <span class="nav-text">深拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种方式实现-——-重写-Object-的-clone-方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一种方式实现 —— 重写 Object 的 clone() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#思考"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种方式实现-——-对象序列化"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二种方式实现 —— 对象序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#挖坑"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">挖坑</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">2.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
