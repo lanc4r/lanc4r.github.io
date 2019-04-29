@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言在上一篇介绍存储区域的文章中，我们介绍了常量池，这次聊聊堆栈的相关内容~">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java姿势解锁 —— 数据存储(二)">
+<meta property="og:url" content="http://yoursite.com/2019/04/29/Java姿势解锁 —— 数据存储(二)/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言在上一篇介绍存储区域的文章中，我们介绍了常量池，这次聊聊堆栈的相关内容~">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/04/29/mmexport1511742661029-min.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/04/29/image1-min.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/04/29/image2-min.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/04/29/image3-min.png">
+<meta property="og:updated_time" content="2019-04-29T06:55:34.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java姿势解锁 —— 数据存储(二)">
+<meta name="twitter:description" content="前言在上一篇介绍存储区域的文章中，我们介绍了常量池，这次聊聊堆栈的相关内容~">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/04/29/mmexport1511742661029-min.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/29/Java姿势解锁 —— 数据存储(二)/">
+
+
+
+
+
+  <title>Java姿势解锁 —— 数据存储(二) | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://i.loli.net/2018/05/26/5b094a5730644.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a5686ad5.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">29</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/29/Java姿势解锁 —— 数据存储(二)/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java姿势解锁 —— 数据存储(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-29T15:00:05+08:00">
+                2019-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/04/29/mmexport1511742661029-min.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在上一篇介绍存储区域的文章中，我们介绍了常量池，这次聊聊堆栈的相关内容~</p>
+<a id="more"></a>
+<h1 id="堆内存-和-栈内存"><a href="#堆内存-和-栈内存" class="headerlink" title="堆内存 和 栈内存"></a>堆内存 和 栈内存</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>栈内存</strong>：位于 RAM 中，就是我们常听到的栈。有一个栈顶指针，通过指针移动进行压栈和出栈，从而分配和释放内存。这种方式的存储速度仅次于寄存器。Java中常用于存放 <strong>对象引用</strong> 和 <strong>基本数据类型</strong>，而<strong>不用于存储对象</strong>。</p>
+<p>在栈内存中，要求存放入其中的数据都是能够确定大小的，并且生命周期也必须是能够确定的。</p>
+<p><strong>堆内存</strong>：位于 RAM 中的一种通用内存池。其中存放的数据由 JVM 自动进行管理。堆相对于栈的好处来说：编译器不需要知道存储的数据在堆里存活多长。当需要一个对象时，使用 new 写一行代码，当执行这行代码时，会自动在堆里进行存储分配。同时，因为以上原因，用堆进行数据的存储分配和清理，需要花费更多的时间。</p>
+<p><strong>在堆内存中，其数据的存放大小可以被 JVM 动态的分配，所以无需事先告诉编译器数据的大小、生命周期等相关信息。</strong></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p><strong>堆与栈都是位于内存上的，并且它由 Java 自动化管理，不能人为去直接设置。</strong></p>
+<h2 id="栈内存和堆内存的比较"><a href="#栈内存和堆内存的比较" class="headerlink" title="栈内存和堆内存的比较"></a>栈内存和堆内存的比较</h2><h3 id="存储的数据类型的比较"><a href="#存储的数据类型的比较" class="headerlink" title="存储的数据类型的比较"></a>存储的数据类型的比较</h3><p>栈内存存放局部变量(基本类型和引用对象)，而堆内存中存放着对象(实体)</p>
+<h4 id="先说说栈"><a href="#先说说栈" class="headerlink" title="先说说栈"></a>先说说栈</h4><p>因为我们知道栈中需要存储的是能够确定大小和生命周期的东西，那我们就来看看到底什么东西是能够确定大小和生命周期的，注意这个确定时期是指在编译的时候，并不是在运行的时候，因为运行的时候肯定知道大小了嘛….</p>
+<p>首先是 <strong>8 种基本类型</strong>，它们实际上都是存储了一些占不同字节的二进制数据，所以<strong>只要知道了变量的类型就能知道这个变量占据多少个字节</strong>。<br>然后我们来看看引用对象，引用对象存储的是对象在内存中的地址，<strong>其实这个内存地址也是一串二进制的数据值</strong>(就像这样: java.util.Random@4e25154f)，所以它的大小也是固定的。</p>
+<p>在程序运行中，<strong>只有我们的局部变量是能够确定时间的</strong>，比如方法内定义的变量、方法的参数，它们随方法进栈执行，然后到方法执行完毕之后出栈，这时候局部变量的生命周期结束。</p>
+<p>所以为了满足栈的要求，也只有局部变量中的基本类型和引用变量存储在栈中。后面会有一个例子来演示的。</p>
+<h4 id="再说说堆"><a href="#再说说堆" class="headerlink" title="再说说堆"></a>再说说堆</h4><p>我们使用关键字 <code>new</code> 调用构造函数创建的类的对象数据都存在于堆中(只不过它的引用存在了栈中)。因为对象的数据在编译期是不会在内存中进行创建和存储的，只有在程序运行的期间才会根据需要进行动态的创建和存储。</p>
+<p>并且其释放资源的途径就是由 Java 的垃圾回收器来做的，我们根本不知道它什么时候会被回收，所以其生命周期也是不确定的。</p>
+<p>因为在程序运行之前，我们不能确定对象的大小、生命周期等内容，所以对象数据满足了堆的存储要求，它们存储于堆中。</p>
+<h3 id="存储速度的比较"><a href="#存储速度的比较" class="headerlink" title="存储速度的比较"></a>存储速度的比较</h3><p>栈内存的<strong>分配</strong>与<strong>清理</strong>速度都大于对内存，并且栈内存的存储速度仅次于寄存器</p>
+<h4 id="先说说分配速度"><a href="#先说说分配速度" class="headerlink" title="先说说分配速度"></a>先说说分配速度</h4><p>这个其实很好理解，一种数据给定了大小，一种数据没有给定大小，这意味前者你可以提前就做好准备，比如 5kb 大小，你发现诶，这儿正好有个 5k 大小的空间空着，那就放这吧。而后者是没有给定大小的，这意味着你需要在运行时候，得到具体大小之后再慢慢去找位置存放，这样肯定是需要花费更多的时间的。</p>
+<h4 id="再说说清理速度"><a href="#再说说清理速度" class="headerlink" title="再说说清理速度"></a>再说说清理速度</h4><p>这个就更好说了，一个是知道生命周期的，只要一出栈，直接清理掉，都不带犹豫的；而另一种数据是由垃圾回收器来释放，可能由于一些优化机制，垃圾回收器的执行效率可能会受到影响，导致清理的速度减弱(<strong>来自HL的瞎BB</strong>)。并且就数据量而言，<strong>栈中确定大小的数据也肯定比堆中不确定大小的数据清理的快</strong>(大部分情况都是堆中的数据量大于栈中的数据量)。</p>
+<h3 id="灵活性比较"><a href="#灵活性比较" class="headerlink" title="灵活性比较"></a>灵活性比较</h3><p><strong>由于栈和堆的存储机制的差异，导致堆内存的灵活性大于栈内存。</strong></p>
+<p>这个就不用多说了，毕竟一个是固定好的，给了你一堆条条框框的限制(栈)，还有一个充满着自由♂的气息(堆)。freedom is awesome~</p>
+<h2 id="总结的其它知识点"><a href="#总结的其它知识点" class="headerlink" title="总结的其它知识点"></a>总结的其它知识点</h2><p>前面比较了两种存储的差异，下面我们聊聊堆栈的其它知识点。其中有些是参考自网上的资料。</p>
+<h3 id="1-栈中的数据不可以实现数据共享"><a href="#1-栈中的数据不可以实现数据共享" class="headerlink" title="1. 栈中的数据不可以实现数据共享"></a>1. 栈中的数据不可以实现数据共享</h3><p>这点我要好好说一下，因为目前网上貌似流传着一个错误的栗子，它们秉承着如下观点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">栈有一个很重要的特殊性，就是存在栈中的数据可以共享。假设我们同时定义：</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">3</span>；</span><br><span class="line">编译器先处理<span class="keyword">int</span> a = <span class="number">3</span>；首先它会在栈中创建一个变量为a的引用，然后查找栈中是否有<span class="number">3</span>这个值，如果没找到，就将<span class="number">3</span>存放进来，</span><br><span class="line">然后将a指向<span class="number">3</span>。</span><br><span class="line">接着处理<span class="keyword">int</span> b = <span class="number">3</span>；在创建完b的引用变量后，因为在栈中已经有<span class="number">3</span>这个值，便将b直接指向<span class="number">3</span>。</span><br><span class="line">这样，就出现了a与b同时均指向<span class="number">3</span>的情况。这时，如果再令a=<span class="number">4</span>；那么编译器 会重新搜索栈中是否有<span class="number">4</span>值，如果没有，则将<span class="number">4</span>存放进来，</span><br><span class="line">并令a指向<span class="number">4</span>；如果已经有了，则直接将a指向这个地址。因此a值的改变不会影响到b的值。</span><br><span class="line">要注意这 种数据的共享与两个对象的引用同时指向一个对象的这种共享是不同的，因为这种情况a的修改并不会影响到b, </span><br><span class="line">它是由编译器完成的，它有利于节省空间。而一个对象引用变量修改了这个对象的内部状态，会影响到另一个对象引用变量。</span><br></pre></td></tr></table></figure>
+<p><img src="https://view.moezx.cc/images/2019/04/29/image1-min.png" alt=""></p>
+<p><img src="https://view.moezx.cc/images/2019/04/29/image2-min.png" alt=""></p>
+<p>上面我找的网上两个文章的截图，似乎大家都觉得：<strong>当栈中存在一个值之后，再有相同的值是不会再次放进去了</strong>，于是我做了这样一个实验：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StoreTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">    	<span class="keyword">int</span> b = <span class="number">100</span>;</span><br><span class="line">    	<span class="keyword">int</span> c = <span class="number">233</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码我们执行 javac 后进行反编译得到如下结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">Classfile StoreTest.class</span><br><span class="line">  Last modified <span class="number">2019</span>-<span class="number">4</span>-<span class="number">28</span>; size <span class="number">296</span> bytes</span><br><span class="line">  MD5 checksum b097c476aeb5d44ed5eef68774e7aef9</span><br><span class="line">  Compiled from <span class="string">"StoreTest.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AboutStore</span>.<span class="title">StoreTest</span></span></span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: <span class="number">52</span></span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #3.#12         // java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">   #2 = Class              #13            // AboutStore/StoreTest</span><br><span class="line">   #3 = Class              #14            // java/lang/Object</span><br><span class="line">   #4 = Utf8               &lt;init&gt;</span><br><span class="line">   #5 = Utf8               ()V</span><br><span class="line">   #6 = Utf8               Code</span><br><span class="line">   #7 = Utf8               LineNumberTable</span><br><span class="line">   #8 = Utf8               main</span><br><span class="line">   #9 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #10 = Utf8               SourceFile</span><br><span class="line">  #11 = Utf8               StoreTest.java</span><br><span class="line">  #12 = NameAndType        #4:#5          // "&lt;init&gt;":()V</span><br><span class="line">  #13 = Utf8               AboutStore/StoreTest</span><br><span class="line">  #14 = Utf8               java/lang/Object</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> AboutStore.StoreTest();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">1</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">         <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">3</span>: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>;</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">1</span>, locals=<span class="number">4</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: bipush        <span class="number">100</span></span><br><span class="line">         <span class="number">2</span>: istore_1</span><br><span class="line">         <span class="number">3</span>: bipush        <span class="number">100</span></span><br><span class="line">         <span class="number">5</span>: istore_2</span><br><span class="line">         <span class="number">6</span>: sipush        <span class="number">233</span></span><br><span class="line">         <span class="number">9</span>: istore_3</span><br><span class="line">        <span class="number">10</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">5</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">6</span>: <span class="number">3</span></span><br><span class="line">        line <span class="number">7</span>: <span class="number">6</span></span><br><span class="line">        line <span class="number">8</span>: <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">SourceFile: <span class="string">"StoreTest.java"</span></span><br></pre></td></tr></table></figure>
+<p>大家注意这部分(bipush 和 sipush 是两个压栈的指令，具体后面分析 Class 文件的时候再聊聊吧)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stack=<span class="number">1</span>, locals=<span class="number">4</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: bipush        <span class="number">100</span></span><br><span class="line">         <span class="number">2</span>: istore_1</span><br><span class="line">         <span class="number">3</span>: bipush        <span class="number">100</span></span><br><span class="line">         <span class="number">5</span>: istore_2</span><br><span class="line">         <span class="number">6</span>: sipush        <span class="number">233</span></span><br><span class="line">         <span class="number">9</span>: istore_3</span><br><span class="line">        <span class="number">10</span>: <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>可以发现第一次将 100 值压入栈中，按照上面的理论理应来说第二次是不会再次将 100 压入栈中才对，但是却是执行了两次压栈，噫，跟说好的不一样啊，带着这样的以为我去网上找了找资料，发现知乎上的一个回答：</p>
+<p><a href="https://www.zhihu.com/question/26711836" target="_blank" rel="noopener">关于java栈的数据共享问题？ - 知乎</a></p>
+<p>貌似缘由出自一位文字功底不错的老哥错误的言论，被大家广泛转载，所以造成了当时许多书籍、帖子、博客都在传播着这个知识…..</p>
+<p><strong>知乎上还有些回答也能证明这个答案是错误的：</strong><br>想想一下，如果每次压栈都需要去检索一下是否存在这个值的话，是不是效率也太低了，举一个极端的栗子，如果栈中的数据达到了 1G，每次压栈操作都检索 1G 的数据中是否存在即将入栈的值，那么这个程序的运行速度可能会急死你….</p>
+<p><strong>再多说两点：</strong></p>
+<p>其实最开始我也没觉得这有什么毛病(⊙﹏⊙)，当时想得就是举个反编译的栗子，证明两个 100 只入栈了一次，结果出来的瞬间发现并非那么简单。所以网络上的东西还需要自己多想想，试着证明一下，毕竟实践是检验真理的唯一标准嘛。</p>
+<p>以后对于我不确定的东西，或者是自己猜想的东西，我决定用醒目的字体标注一下，可别误人子弟了ㄟ( ▔, ▔ )ㄏ</p>
+<h3 id="2-Integer-valueOf-方法"><a href="#2-Integer-valueOf-方法" class="headerlink" title="2. Integer.valueOf() 方法"></a>2. Integer.valueOf() 方法</h3><p>大家应该很熟悉下面的栗子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Integer i1 = <span class="number">100</span>;</span><br><span class="line">        Integer i2 = <span class="number">100</span>;</span><br><span class="line">        Integer j1 = <span class="number">233</span>;</span><br><span class="line">        Integer j2 = <span class="number">233</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"i1 == i2 : "</span> + (i1 == i2));</span><br><span class="line">        System.out.println(<span class="string">"j1 == j2 : "</span> + (j1 == j2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果：</span><br><span class="line">i1 == i2 : <span class="keyword">true</span></span><br><span class="line">j1 == j2 : <span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>这段代码的栗子是第一次学习这门语言的时候会说的，我记得当时是讲慎用 <code>==</code> 符号，因为可能会出现一些意想不到的后果，然后就举了这个例子，Integer 在 <code>[-128, 127]</code> 之间使用 <code>==</code> 比较时候，值为 <code>true</code>，超过这个范围就是 <code>false</code>。不过，为什么呢？</p>
+<p>我们在第一行代码那打一个断点，然后 debug 运行，他进入到如下方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an &#123;<span class="doctag">@code</span> Integer&#125; instance representing the specified</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@code</span> int&#125; value.  If a new &#123;<span class="doctag">@code</span> Integer&#125; instance is not</span></span><br><span class="line"><span class="comment"> * required, this method should generally be used in preference to</span></span><br><span class="line"><span class="comment"> * the constructor &#123;<span class="doctag">@link</span> #Integer(int)&#125;, as this method is likely</span></span><br><span class="line"><span class="comment"> * to yield significantly better space and time performance by</span></span><br><span class="line"><span class="comment"> * caching frequently requested values.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This method will always cache values in the range -128 to 127,</span></span><br><span class="line"><span class="comment"> * inclusive, and may cache other values outside of this range.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  i an &#123;<span class="doctag">@code</span> int&#125; value.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> an &#123;<span class="doctag">@code</span> Integer&#125; instance representing &#123;<span class="doctag">@code</span> i&#125;.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span>  1.5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">        <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于自动装箱的机制，第一行代码实际上为 ：<code>Integer i1 = Integer.valueOf(100)</code>，我们发现它在这里做了一个判断，如果数值在 <code>[-128, 127]</code> 之间的值，直接返回缓存内的数据，我们来看看缓存内的东西到底是啥：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Integer cache[];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// high value may be configured by property</span></span><br><span class="line">        <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">        String integerCacheHighPropValue =</span><br><span class="line">            sun.misc.VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>);</span><br><span class="line">        <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> i = parseInt(integerCacheHighPropValue);</span><br><span class="line">                i = Math.max(i, <span class="number">127</span>);</span><br><span class="line">                <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                h = Math.min(i, Integer.MAX_VALUE - (-low) -<span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span>( NumberFormatException nfe) &#123;</span><br><span class="line">                <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        high = h;</span><br><span class="line"></span><br><span class="line">        cache = <span class="keyword">new</span> Integer[(high - low) + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> j = low;</span><br><span class="line">        <span class="comment">// 当类被加载的时候，就会把 [-128, 127] 的值存储于 cache[] 数组中，可以理解为被缓存了起来...</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cache.length; k++)</span><br><span class="line">            cache[k] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">        <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以嘛，由于对 <code>[-128, 127]</code> 之间的值做了缓存，所以只要在这之间的值都取得是缓存的数据，自然地址也是一样的咯。而在这个范围之外的数据，会重新 <code>new Integer()</code> 创建一个新的对象，导致两次地址不同。</p>
+<h3 id="3-关于堆栈数据初始化的问题"><a href="#3-关于堆栈数据初始化的问题" class="headerlink" title="3. 关于堆栈数据初始化的问题"></a>3. 关于堆栈数据初始化的问题</h3><p>先来看看下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">        System.out.println(p.a);</span><br><span class="line">        System.out.println(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在编译期，<strong>System.out.println(a);</strong> 会报错，提示 <strong>The local variable a may not have been initialized</strong>，局部变量没有被初始化。我们知道变量需要初始化之后才能使用，然后 <strong>System.out.println(p.a)</strong>; 编译能够通过，并且输出的值是 <strong>0</strong>。并且我们知道 main 方法中的 a 是局部变量是存储在栈中的，而 Person 中的 a 是成员变量是存储于堆中的，所以我们得到下面这个结论：</p>
+<p><strong>栈内数据不会初始化，而堆内的数据会初始化。</strong></p>
+<h3 id="4-最后看一个网上的栗子，其介绍了堆栈数据存储的流程。"><a href="#4-最后看一个网上的栗子，其介绍了堆栈数据存储的流程。" class="headerlink" title="4. 最后看一个网上的栗子，其介绍了堆栈数据存储的流程。"></a>4. 最后看一个网上的栗子，其介绍了堆栈数据存储的流程。</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BirthDate</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> day;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> month;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> year;   </span><br><span class="line">       </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BirthDate</span><span class="params">(<span class="keyword">int</span> d, <span class="keyword">int</span> m, <span class="keyword">int</span> y)</span> </span>&#123;  </span><br><span class="line">        day = d;   </span><br><span class="line">        month = m;   </span><br><span class="line">        year = y;  </span><br><span class="line">    &#125;  </span><br><span class="line">   省略get,set方法………  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;  </span><br><span class="line">        <span class="keyword">int</span> date = <span class="number">9</span>;  </span><br><span class="line">        Test test = <span class="keyword">new</span> Test();        </span><br><span class="line">        test.change(date);   </span><br><span class="line">        BirthDate d1 = <span class="keyword">new</span> BirthDate(<span class="number">7</span>,<span class="number">7</span>,<span class="number">1970</span>);         </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change1</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;  </span><br><span class="line">        i = <span class="number">1234</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://view.moezx.cc/images/2019/04/29/image3-min.png" alt=""></p>
+<p>对于以上这段代码，date为局部变量，i,d,m,y都是形参为局部变量，day，month，year为成员变量。下面分析一下代码执行时候的变化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. main方法开始执行：<span class="keyword">int</span> date = <span class="number">9</span>;</span><br><span class="line">date局部变量，基础类型，引用和值都存在栈中。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>. Test test = <span class="keyword">new</span> Test();</span><br><span class="line">test为对象引用，存在栈中，对象(<span class="keyword">new</span> Test())存在堆中。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. test.change(date);</span><br><span class="line">调用change(<span class="keyword">int</span> i)方法，i为局部变量，引用和值存在栈中。当方法change执行完成后，i就会从栈中消失。</span><br><span class="line"></span><br><span class="line"><span class="number">4</span>. BirthDate d1= <span class="keyword">new</span> BirthDate(<span class="number">7</span>,<span class="number">7</span>,<span class="number">1970</span>);  </span><br><span class="line">调用BirthDate类的构造函数生成对象。d1为对象引用，存在栈中；对象(<span class="keyword">new</span> BirthDate())存在堆中；</span><br><span class="line">其中d,m,y为局部变量存储在栈中，且它们的类型为基础类型，因此它们的数据也存储在栈中；</span><br><span class="line">day,month,year为BirthDate对象的的成员变量，它们存储在堆中存储的<span class="keyword">new</span> BirthDate()对象里面；</span><br><span class="line">当BirthDate构造方法执行完之后，d,m,y将从栈中消失。</span><br><span class="line"></span><br><span class="line"><span class="number">5</span>.main方法执行完之后。</span><br><span class="line">date变量，test，d1引用将从栈中消失；</span><br><span class="line"><span class="keyword">new</span> Test(),<span class="keyword">new</span> BirthDate()将等待垃圾回收器进行回收。</span><br></pre></td></tr></table></figure>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://blog.csdn.net/ghost_Programmer/article/details/40891735" target="_blank" rel="noopener">java中数据的5种存储位置(堆与栈)</a><br><a href="https://blog.csdn.net/qq_26805137/article/details/52996910" target="_blank" rel="noopener">java存储机制（栈、堆、方法区详解）</a><br><a href="https://blog.csdn.net/qq_32575047/article/details/81214241" target="_blank" rel="noopener">Java之堆栈的区别</a><br><a href="https://blog.csdn.net/chensi16114/article/details/52144109" target="_blank" rel="noopener">栈内存与堆内存在数据共享方面的区别</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>“HL 的周末放映室” 已经停更三周了，五一要到了，这次决定把《魔戒》三部曲补一下，生活一定要变得有趣起来啊，HL~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/25/Java姿势解锁 —— 数据存储(一)/" rel="next" title="Java姿势解锁 —— 数据存储(一)">
+                <i class="fa fa-chevron-left"></i> Java姿势解锁 —— 数据存储(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.loli.net/2018/05/26/5b094a56a3649.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆内存-和-栈内存"><span class="nav-number">2.</span> <span class="nav-text">堆内存 和 栈内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">2.1.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈内存和堆内存的比较"><span class="nav-number">2.2.</span> <span class="nav-text">栈内存和堆内存的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储的数据类型的比较"><span class="nav-number">2.2.1.</span> <span class="nav-text">存储的数据类型的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先说说栈"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">先说说栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再说说堆"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">再说说堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储速度的比较"><span class="nav-number">2.2.2.</span> <span class="nav-text">存储速度的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先说说分配速度"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">先说说分配速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再说说清理速度"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">再说说清理速度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灵活性比较"><span class="nav-number">2.2.3.</span> <span class="nav-text">灵活性比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结的其它知识点"><span class="nav-number">2.3.</span> <span class="nav-text">总结的其它知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-栈中的数据不可以实现数据共享"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 栈中的数据不可以实现数据共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Integer-valueOf-方法"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. Integer.valueOf() 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-关于堆栈数据初始化的问题"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 关于堆栈数据初始化的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-最后看一个网上的栗子，其介绍了堆栈数据存储的流程。"><span class="nav-number">2.3.4.</span> <span class="nav-text">4. 最后看一个网上的栗子，其介绍了堆栈数据存储的流程。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-number">3.</span> <span class="nav-text">Ref</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
