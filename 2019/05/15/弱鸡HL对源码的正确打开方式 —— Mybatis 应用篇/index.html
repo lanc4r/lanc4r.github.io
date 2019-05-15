@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,源码,Mybatis,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这次聊聊 Mybatis 的应用方面数据，也是 Mybatis 的最后一篇啦，Nice~">
+<meta name="keywords" content="Java,后端,源码,Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="弱鸡HL对源码的正确打开方式 —— Mybatis应用篇">
+<meta property="og:url" content="http://yoursite.com/2019/05/15/弱鸡HL对源码的正确打开方式 —— Mybatis 应用篇/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言这次聊聊 Mybatis 的应用方面数据，也是 Mybatis 的最后一篇啦，Nice~">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/15/lanc4r-mybatisappbg.png">
+<meta property="og:updated_time" content="2019-05-15T09:17:40.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="弱鸡HL对源码的正确打开方式 —— Mybatis应用篇">
+<meta name="twitter:description" content="前言这次聊聊 Mybatis 的应用方面数据，也是 Mybatis 的最后一篇啦，Nice~">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/05/15/lanc4r-mybatisappbg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/15/弱鸡HL对源码的正确打开方式 —— Mybatis 应用篇/">
+
+
+
+
+
+  <title>弱鸡HL对源码的正确打开方式 —— Mybatis应用篇 | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/05/01/lanc4rbg3.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">15</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/弱鸡HL对源码的正确打开方式 —— Mybatis 应用篇/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">弱鸡HL对源码的正确打开方式 —— Mybatis应用篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-15T16:00:05+08:00">
+                2019-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/05/15/lanc4r-mybatisappbg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次聊聊 Mybatis 的应用方面数据，也是 Mybatis 的最后一篇啦，Nice~</p>
+<a id="more"></a>
+<p>其实之前是没准备做应用方面的笔记的，因为觉得这种东西，就算现在记了，如果不用的话，到时候还是会忘记，等到用的时候仍然会去查，所以干脆把第一步省略得了….</p>
+<p>但在了解的过程中发现有些东西还是蛮有意思的，遂临时决定把重要的地方简单记录一下。废话不多说，开干吧。</p>
+<h1 id="Mybatis-应用"><a href="#Mybatis-应用" class="headerlink" title="Mybatis 应用"></a>Mybatis 应用</h1><p>主要讲一下两个部分：</p>
+<ol>
+<li>体验 <strong>自定义类型处理器(Typehandler)</strong>、<strong>结果处理器(ResultHandler)</strong>、<strong>自定义对象工厂</strong>、<strong>自定义拦截器(Plugin)</strong></li>
+<li>体验 <strong>三种映射SQL的方法</strong></li>
+</ol>
+<h2 id="自定义类型处理器-TypeHandler"><a href="#自定义类型处理器-TypeHandler" class="headerlink" title="自定义类型处理器 TypeHandler"></a>自定义类型处理器 TypeHandler</h2><p>Mybatis 默认含有许多的类型处理器，它们被用在 <strong>参数化SQL</strong> 和 <strong>结果映射</strong> 的过程中(具体可以看之前的 Mybatis 分析)。同时 Mybatis 也允许我们自定义类型处理器，举个栗子一看就明白了：</p>
+<h3 id="User-表结构"><a href="#User-表结构" class="headerlink" title="User 表结构"></a>User 表结构</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`grade`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`has_cat`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure>
+<p>我们的目的是映射 <code>grade</code> 和 <code>has_cat</code> 字段，具体映射规则如下：</p>
+<p><code>grade</code> 字段中：<code>1 -&gt; A; 2 -&gt; B; 3 -&gt; C;</code> 其余的情况全部返回空<br><code>has_cat</code> 字段中：<code>0 -&gt; False; 1 -&gt; True;</code> 其余情况返回空</p>
+<p><strong>这里我总结了一下自定义 TypeHandler 的几个步骤</strong></p>
+<ol>
+<li>创建自己的 TypeHandler</li>
+<li>使用 自定义Handler 完成映射<ul>
+<li>直接在 SQL 映射文件中进行精确配置</li>
+<li>Mybatis 配置文件中进行全局配置</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-创建自己的-TypeHandler"><a href="#1-创建自己的-TypeHandler" class="headerlink" title="1. 创建自己的 TypeHandler"></a>1. 创建自己的 TypeHandler</h3><p>这里有两种方式来完成创建，分别是 <strong>继承 BaseTypeHandler<t> 类</t></strong> 和 <strong>实现 TypeHandler<t> 接口</t></strong></p>
+<p><strong>继承 BaseTypeHandler<t> 类</t></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将 JDBC 的 Integer 和 Java 的 Boolean 进行转换，这里规定 0 -&gt; False; 1 -&gt; True</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@MappedJdbcTypes</span>(JdbcType.INTEGER)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BooleanIntegerTypeHandler</span> <span class="keyword">extends</span> <span class="title">BaseTypeHandler</span>&lt;<span class="title">Boolean</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNonNullParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, Boolean parameter, JdbcType jdbcType)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 通过 Boolean 值判断应该设置什么样的值到数据库中</span></span><br><span class="line">        <span class="keyword">int</span> hasCat = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (Boolean.TRUE == parameter) &#123;</span><br><span class="line">            hasCat = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ps.setInt(i, hasCat);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">getNullableResult</span><span class="params">(ResultSet rs, String columnName)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 通过不同的 int 值返回不同的 Boolean 值</span></span><br><span class="line">        <span class="keyword">int</span> hasCat = rs.getInt(columnName);</span><br><span class="line">        <span class="keyword">if</span> (hasCat == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.FALSE;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hasCat == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.TRUE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">getNullableResult</span><span class="params">(ResultSet rs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 通过不同的 int 值返回不同的 Boolean 值</span></span><br><span class="line">        <span class="keyword">int</span> hasCat = rs.getInt(columnIndex);</span><br><span class="line">        <span class="keyword">if</span> (hasCat == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.FALSE;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hasCat == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.TRUE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">getNullableResult</span><span class="params">(CallableStatement cs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 通过不同的 int 值返回不同的 Boolean 值</span></span><br><span class="line">        <span class="keyword">int</span> hasCat = cs.getInt(columnIndex);</span><br><span class="line">        <span class="keyword">if</span> (hasCat == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.FALSE;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hasCat == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Boolean.TRUE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>实现 TypeHandler<t> 接口</t></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这个类型转换器是将 数据库中的 Integer 类型 和 Java 中的 String 类型进行相互转换&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 这里以 grade 字段为例：1 -&gt; A; 2 -&gt; B; 3 -&gt; C;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// @MappedTypes(String.class) 注意：这里还可以使用 @MappedTypes 来定义转换的 Java 类型，这样就不用给</span></span><br><span class="line"><span class="comment">// TypeHandler&lt;&gt; 接口指定泛型了</span></span><br><span class="line"><span class="meta">@MappedJdbcTypes</span>(JdbcType.INTEGER)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringIntegerTypeHandler</span> <span class="keyword">implements</span> <span class="title">TypeHandler</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, String parameter, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 这里判断传入的 parameter 是 A、B、C、D 中的那个值，从而进行转换</span></span><br><span class="line">        <span class="keyword">int</span> grade = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">switch</span> (parameter) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"A"</span>:</span><br><span class="line">            grade = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"B"</span>:</span><br><span class="line">            grade = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"C"</span>:</span><br><span class="line">            grade = <span class="number">3</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 然后设置值</span></span><br><span class="line">        ps.setInt(i, grade);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(ResultSet rs, String columnName)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据返回的 1、2、3 决定返回不同的字符</span></span><br><span class="line">        <span class="keyword">int</span> grade = rs.getInt(columnName);</span><br><span class="line">        String resultStr = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">switch</span> (grade) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            resultStr = <span class="string">"A"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            resultStr = <span class="string">"B"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            resultStr = <span class="string">"C"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(ResultSet rs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 根据返回的 1、2、3 决定返回不同的字符</span></span><br><span class="line">        <span class="keyword">int</span> grade = rs.getInt(columnIndex);</span><br><span class="line">        String resultStr = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">switch</span> (grade) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            resultStr = <span class="string">"A"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            resultStr = <span class="string">"B"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            resultStr = <span class="string">"C"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(CallableStatement cs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 根据返回的 1、2、3 决定返回不同的字符</span></span><br><span class="line">        <span class="keyword">int</span> grade = cs.getInt(columnIndex);</span><br><span class="line">        String resultStr = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">switch</span> (grade) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            resultStr = <span class="string">"A"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            resultStr = <span class="string">"B"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            resultStr = <span class="string">"C"</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-使用-自定义Handler-完成映射"><a href="#2-使用-自定义Handler-完成映射" class="headerlink" title="2. 使用 自定义Handler 完成映射"></a>2. 使用 自定义Handler 完成映射</h3><h4 id="SQL-映射文件中进行精确配置"><a href="#SQL-映射文件中进行精确配置" class="headerlink" title="SQL 映射文件中进行精确配置"></a>SQL 映射文件中进行精确配置</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"DebugMybatis.entity.User"</span> <span class="attr">id</span>=<span class="string">"userMap"</span> &gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 使用自定义的 typeHandler 来进行类型转换 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"has_cat"</span> <span class="attr">property</span>=<span class="string">"hasCat"</span> <span class="attr">typeHandler</span>=<span class="string">"DebugMybatis.utils.BooleanIntegerTypeHandler"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"grade"</span> <span class="attr">property</span>=<span class="string">"grade"</span> <span class="attr">typeHandler</span>=<span class="string">"DebugMybatis.utils.StringIntegerTypeHandler"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUsers"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    select * from user</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">    InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">    SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">    SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        List&lt;User&gt; selectList = session.selectList(<span class="string">"NewsMapper.selectUsers"</span>);</span><br><span class="line">        <span class="keyword">if</span> (selectList != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (User user : selectList) &#123;</span><br><span class="line">                System.out.println(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">User[id=<span class="number">1</span>, name=Alex, grade=A, hasCat=<span class="keyword">true</span>]</span><br><span class="line">User[id=<span class="number">2</span>, name=Ada, grade=C, hasCat=<span class="keyword">false</span>]</span><br><span class="line">User[id=<span class="number">3</span>, name=Leon, grade=B, hasCat=<span class="keyword">false</span>]</span><br><span class="line">User[id=<span class="number">4</span>, name=Lorrain, grade=, hasCat=<span class="keyword">true</span>]</span><br><span class="line">User[id=<span class="number">5</span>, name=Divid, grade=A, hasCat=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="Mybatis-配置文件中进行全局配置"><a href="#Mybatis-配置文件中进行全局配置" class="headerlink" title="Mybatis 配置文件中进行全局配置"></a>Mybatis 配置文件中进行全局配置</h4><p>这次我们定义一个 <strong>StringStringTypeHandler</strong>，让它把所有数据库中查询出来的 <strong>String</strong> 类型数据前全部加上 <code>biubiubiu_</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 这个类型转换器是将 数据库中的 String 类型 转换为 Java 中的 String 类型，但是在所有的字符前加上 "biubiubiu_"</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@MappedJdbcTypes</span>(JdbcType.VARCHAR)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringStringTypeHandler</span> <span class="keyword">implements</span> <span class="title">TypeHandler</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BIUBIUBIU = <span class="string">"biubiubiu_"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, String parameter, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 保存值的时候不做任何修改</span></span><br><span class="line">        ps.setString(i, parameter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(ResultSet rs, String columnName)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// 返回值前加上 "biubiubiu_"</span></span><br><span class="line">        String resultStr = rs.getString(columnName);</span><br><span class="line">        <span class="keyword">return</span> BIUBIUBIU + resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(ResultSet rs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        String resultStr = rs.getString(columnIndex);</span><br><span class="line">        <span class="keyword">return</span> BIUBIUBIU + resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(CallableStatement cs, <span class="keyword">int</span> columnIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        String resultStr = cs.getString(columnIndex);</span><br><span class="line">        <span class="keyword">return</span> BIUBIUBIU + resultStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>SQL 映射文件 和 运行代码不做变动，此时输出结果为：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">User[id=<span class="number">1</span>, name=biubiubiu_Alex, grade=A, hasCat=<span class="keyword">true</span>]</span><br><span class="line">User[id=<span class="number">2</span>, name=biubiubiu_Ada, grade=C, hasCat=<span class="keyword">false</span>]</span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=B, hasCat=<span class="keyword">false</span>]</span><br><span class="line">User[id=<span class="number">4</span>, name=biubiubiu_Lorrain, grade=, hasCat=<span class="keyword">true</span>]</span><br><span class="line">User[id=<span class="number">5</span>, name=biubiubiu_Divid, grade=A, hasCat=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="为了证明是全局都有效，这时候我们再试着查询-News-表中的数据"><a href="#为了证明是全局都有效，这时候我们再试着查询-News-表中的数据" class="headerlink" title="为了证明是全局都有效，这时候我们再试着查询 News 表中的数据"></a>为了证明是全局都有效，这时候我们再试着查询 News 表中的数据</h3><p><strong><big>表结构</big></strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`news`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">5</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'主键'</span>,</span><br><span class="line">  <span class="string">`title`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span> <span class="keyword">COMMENT</span> <span class="string">'标题'</span>,</span><br><span class="line">  <span class="string">`author`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span> <span class="keyword">COMMENT</span> <span class="string">'作者名'</span>,</span><br><span class="line">  <span class="string">`desc`</span> <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span> <span class="keyword">COMMENT</span> <span class="string">'描述'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure>
+<p><strong><big>News类</big></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">News</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String author;</span><br><span class="line">    <span class="keyword">private</span> String desc;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"News[id="</span> + id + <span class="string">", title="</span> + title + <span class="string">", author="</span> + author + <span class="string">", desc="</span> + desc + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><big>SQL映射文件</big></strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectNews"</span> <span class="attr">resultType</span>=<span class="string">"DebugMybatis.entity.News"</span>&gt;</span></span><br><span class="line">  	select * from news</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong><big>运行代码</big></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;News&gt; selectList2 = session.selectList(<span class="string">"NewsMapper.selectNews"</span>);</span><br><span class="line"><span class="keyword">if</span> (selectList2 != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (News news : selectList2) &#123;</span><br><span class="line">        System.out.println(news);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><big>运行结果</big></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">News[id=<span class="number">1</span>, title=biubiubiu_蓝莲花, author=biubiubiu_许巍, desc=biubiubiu_真好听~]</span><br><span class="line">News[id=<span class="number">2</span>, title=biubiubiu_WOW, author=biubiubiu_Nice, desc=biubiubiu_World Of The Warcraft]</span><br></pre></td></tr></table></figure>
+<p>由结果可以看出，<strong><big>定义在 Mybatis 配置文件中的类型转换器对全局的 SQL 映射都起作用。</big></strong></p>
+<h3 id="简单BB"><a href="#简单BB" class="headerlink" title="简单BB"></a>简单BB</h3><p>当然还有在插入数据的时候也能完成类型的转换，这里我就不演示啦，主要重写一下 <code>setParameter()</code> 方法就行了~</p>
+<h2 id="结果处理器-ResultHandler"><a href="#结果处理器-ResultHandler" class="headerlink" title="结果处理器 ResultHandler"></a>结果处理器 ResultHandler</h2><p>咱们先看看官方是如何介绍的：</p>
+<blockquote>
+<p>ResultHandler 参数允许你按你喜欢的方式处理每一行。你可以将它添加到 List 中、创建 Map 和 Set，或者丢弃每个返回值都可以，它取代了仅保留执行语句过后的总结果列表的死板结果。你可以使用 ResultHandler 做很多事，并且这是 MyBatis 自身内部会使用的方法，以创建结果集列表。</p>
+<p>Since 3.4.6, ResultHandler passed to a CALLABLE statement is used on every REFCURSOR output parameter of the stored procedure if there is any.(我们将通过函数回调的方式将 ResultHandler 传递给调用方，由 ResultHandler 来处理每一行的结果)</p>
+</blockquote>
+<p>这个很好理解的，来看看下面这个栗子：</p>
+<p><strong>我对 User 类增加了一个 happiness 字段</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String grade;</span><br><span class="line">    <span class="keyword">private</span> Boolean hasCat;</span><br><span class="line">    <span class="keyword">private</span> String happiness;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User[id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", grade="</span> + grade + <span class="string">", hasCat="</span> + hasCat + <span class="string">", happiness="</span></span><br><span class="line">                + happiness + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，此时 <strong>数据库是没有这个字段哒，我们将通过 hasCat 字段的值来设置 happiness 的值，如果 hasCat 为 true，我们就设置 happiness 为 yes，否则设置为 false</strong>。果然有猫就很幸福啊~</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultHandlerTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">        SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">        List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 查询时传入 ResultHandler 使用回调函数的方式来处理结果</span></span><br><span class="line">            session.select(<span class="string">"NewsMapper.selectUsers"</span>, <span class="keyword">new</span> ResultHandler() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleResult</span><span class="params">(ResultContext resultContext)</span> </span>&#123;</span><br><span class="line">                    <span class="comment">// 获取每一个结果</span></span><br><span class="line">                    User user = (User) resultContext.getResultObject();</span><br><span class="line">                    <span class="keyword">if</span> (Boolean.TRUE == user.getHasCat()) &#123;</span><br><span class="line">                        user.setHappiness(<span class="string">"yes"</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        user.setHappiness(<span class="string">"no"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    userList.add(user);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">for</span> (User user : userList) &#123;</span><br><span class="line">                System.out.println(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            session.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.969</span> [main] DEBUG NewsMapper.selectUsers - ==&gt;  Preparing: select * from user </span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.989</span> [main] DEBUG NewsMapper.selectUsers - ==&gt; Parameters: </span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.998</span> [main] TRACE NewsMapper.selectUsers - &lt;==    Columns: id, name, grade, has_cat</span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.998</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">1</span>, Alex, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.999</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">2</span>, Ada, <span class="number">3</span>, <span class="number">0</span></span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.999</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">3</span>, Leon, <span class="number">2</span>, <span class="number">0</span></span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">11.999</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">4</span>, Lorrain, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">12.000</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">5</span>, Divid, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="number">08</span>:<span class="number">36</span>:<span class="number">12.000</span> [main] DEBUG NewsMapper.selectUsers - &lt;==      Total: <span class="number">5</span></span><br><span class="line">User[id=<span class="number">1</span>, name=biubiubiu_Alex, grade=A, hasCat=<span class="keyword">true</span>, happiness=yes]</span><br><span class="line">User[id=<span class="number">2</span>, name=biubiubiu_Ada, grade=C, hasCat=<span class="keyword">false</span>, happiness=no]</span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=B, hasCat=<span class="keyword">false</span>, happiness=no]</span><br><span class="line">User[id=<span class="number">4</span>, name=biubiubiu_Lorrain, grade=, hasCat=<span class="keyword">true</span>, happiness=yes]</span><br><span class="line">User[id=<span class="number">5</span>, name=biubiubiu_Divid, grade=A, hasCat=<span class="keyword">null</span>, happiness=no]</span><br></pre></td></tr></table></figure>
+<p><strong>标记</strong><br>注意一下这个 <strong>ResultHandler 是通过回调函数的方式来完成的</strong>，之前我还自己重写了一个实现 <strong>ResultHandler</strong> 的类，调用 <strong>select</strong> 结果获取不到数据……</p>
+<h2 id="自定义对象对象工厂"><a href="#自定义对象对象工厂" class="headerlink" title="自定义对象对象工厂"></a>自定义对象对象工厂</h2><p>前面我们讲了 <strong>TypeHandler</strong> 和 <strong>ResultHandler</strong>。<strong>TypeHandler</strong>是对<strong>传入 SQL 语句的参数</strong>(包括 插入、更新时候传入的值) 和 <strong>返回结果的每一个参数</strong>进行处理；而 <strong>ResultHandler</strong> 可以对<strong>返回的每一行数据进行处理</strong>，最简单的栗子就是它可以通过其中几个字段来计算某个字段的值，这个功能在 <strong>TypeHandler</strong> 是做不到的，因为它只能一个字段一个字段的获取，并不能一次性获取一行多个字段的数据。</p>
+<p>而这要说的对象工厂可以让你在<strong>创建对象来接收数据返回值的时候</strong>，能够对这个对象做一些初始化的处理。还记的我们在 Mybatis 进阶篇中讲过，在创建结果对象的时候会调用 <strong>ObjectFactory</strong>，这里的 <strong>ObjectFactory</strong> 就是对象工厂啦。官方对其的解释如下：</p>
+<blockquote>
+<p>MyBatis 每次创建结果对象的新实例时，它都会使用一个对象工厂（ObjectFactory）实例来完成。 默认的对象工厂需要做的仅仅是实例化目标类，要么通过默认构造方法，要么在参数映射存在的时候通过参数构造方法来实例化。 如果想覆盖对象工厂的默认行为，则可以通过创建自己的对象工厂来实现。</p>
+</blockquote>
+<p>ok，废话不多说我们来试试自定义的对象工厂。</p>
+<p>首先我们对 <strong>User 对象增加一个 种族字段 race，并且规定所有新建的 User 对象其种族都是人族 HUMAN</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String grade;</span><br><span class="line">    <span class="keyword">private</span> Boolean hasCat;</span><br><span class="line">    <span class="keyword">private</span> String race;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User[id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", grade="</span> + grade + <span class="string">", hasCat="</span> + hasCat + <span class="string">", race="</span> + race + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候我们可以使用自定义的对象工厂啦，需要注意的是只有在对象的类型是 User 的时候我们才会设置其初始的种族。下面是<strong>自定义的 ObjectFactory</strong>，他需要继承 <strong>DefaultObjectFactory</strong> 类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyObjectFactory</span> <span class="keyword">extends</span> <span class="title">DefaultObjectFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String race = <span class="string">"HUMAN"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理默认构造器的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">create</span><span class="params">(Class type)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断是否是 User 的对象</span></span><br><span class="line">        <span class="keyword">if</span> (User.class == type) &#123;</span><br><span class="line">            User user = (User) <span class="keyword">super</span>.create(type);</span><br><span class="line">            user.setRace(race);</span><br><span class="line">            <span class="keyword">return</span> user;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.create(type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行Demo</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">    InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">    SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">    SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        List&lt;User&gt; selectList = session.selectList(<span class="string">"NewsMapper.selectUsers"</span>);</span><br><span class="line">        <span class="keyword">if</span> (selectList != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (User user : selectList) &#123;</span><br><span class="line">                System.out.println(user);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.449</span> [main] DEBUG NewsMapper.selectUsers - ==&gt;  Preparing: select * from user </span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.468</span> [main] DEBUG NewsMapper.selectUsers - ==&gt; Parameters: </span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.477</span> [main] TRACE NewsMapper.selectUsers - &lt;==    Columns: id, name, grade, has_cat</span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.477</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">1</span>, Alex, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.479</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">2</span>, Ada, <span class="number">3</span>, <span class="number">0</span></span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.479</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">3</span>, Leon, <span class="number">2</span>, <span class="number">0</span></span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.479</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">4</span>, Lorrain, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.479</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">5</span>, Divid, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="number">16</span>:<span class="number">44</span>:<span class="number">54.479</span> [main] DEBUG NewsMapper.selectUsers - &lt;==      Total: <span class="number">5</span></span><br><span class="line">User[id=<span class="number">1</span>, name=biubiubiu_Alex, grade=A, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">2</span>, name=biubiubiu_Ada, grade=C, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=B, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">4</span>, name=biubiubiu_Lorrain, grade=, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">5</span>, name=biubiubiu_Divid, grade=A, hasCat=<span class="keyword">null</span>, race=HUMAN]</span><br></pre></td></tr></table></figure>
+<p>可以看到 <strong>每一个被创建的 User 对象默认就有了初始的种族 HUMAN</strong>。当然这里还有一种更方面的设置，我们直接子在配置文件中设置我们需要的参数 和 值。具体用法如下</p>
+<p><strong>在 Mybatis 文件中设置 Property 属性</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注册自定义的对象工厂 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">objectFactory</span> <span class="attr">type</span>=<span class="string">"DebugMybatis.utils.MyObjectFactory"</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 将需要的键和值写到配置文件中 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"race"</span> <span class="attr">value</span>=<span class="string">"HUMAN"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">objectFactory</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>接着重写一下 setProperties() 方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyObjectFactory</span> <span class="keyword">extends</span> <span class="title">DefaultObjectFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Properties properties = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理默认构造器的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">create</span><span class="params">(Class type)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断是否是 User 的对象</span></span><br><span class="line">        <span class="keyword">if</span> (User.class == type) &#123;</span><br><span class="line">            User user = (User) <span class="keyword">super</span>.create(type);</span><br><span class="line">            <span class="comment">// 这里取配置文件中设置的值咯</span></span><br><span class="line">            user.setRace(properties.getProperty(<span class="string">"race"</span>));</span><br><span class="line">            <span class="keyword">return</span> user;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.create(type);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 我们在配置文件中设置的 Property 数据全部会被加载到 properties 参数中，我们只需要记录一下就好啦</span></span><br><span class="line">        MyObjectFactory.properties = properties;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果是一样的，就不展示啦。</p>
+<p><strong><big>有参数的构造方法尝试</big></strong></p>
+<p>上面所举的栗子其实使用 <strong>ResultHandler</strong> 也是能够完成的，就比如 race 这个字段，我们完全可以在创建好对象之后设置嘛。然后我就开始思考这个 ObjectFactory 有没有合适的用武之地……</p>
+<p>既然 race 字段能够在创建好对象后能够赋值，那如果修改为 <strong>race 只能在创建对象的时候被赋值</strong>呢，也就是说 race 一但被赋值就不能改变了，就像下面这个样子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String grade;</span><br><span class="line">    <span class="keyword">private</span> Boolean hasCat;</span><br><span class="line">    <span class="comment">// 只有 race 属性没有 get/set 方法，要想赋值 race 字段的值只有通过 User(String race) 方法来设置</span></span><br><span class="line">    <span class="keyword">private</span> String race;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String race)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.race = race;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"User[id="</span> + id + <span class="string">", name="</span> + name + <span class="string">", grade="</span> + grade + <span class="string">", hasCat="</span> + hasCat + <span class="string">", race="</span> + race + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个时候如果再使用我们的 <strong>ResultHandler</strong> 就不起作用了嘛，因为都没有 set 方法嘛，什么？说反射的请离开评委席谢谢。</p>
+<p><strong>接着需要在自定义的 ObjectFactory 中设置好调用带有参数的构造方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyObjectFactory</span> <span class="keyword">extends</span> <span class="title">DefaultObjectFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Properties properties = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理待参数的构造方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(Class&lt;T&gt; type, List&lt;Class&lt;?&gt;&gt; constructorArgTypes, List&lt;Object&gt; constructorArgs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (User.class == type) &#123;</span><br><span class="line">            constructorArgTypes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            constructorArgs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            <span class="comment">// 添加参数类型，多个依次排列</span></span><br><span class="line">            constructorArgTypes.add(String.class);</span><br><span class="line">            <span class="comment">// 设置参数的值，过个依次排列</span></span><br><span class="line">            constructorArgs.add(properties.getProperty(<span class="string">"race"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.create(type, constructorArgTypes, constructorArgs);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span> </span>&#123;</span><br><span class="line">        MyObjectFactory.properties = properties;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>运行结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.896</span> [main] DEBUG NewsMapper.selectUsers - ==&gt;  Preparing: select * from user </span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.916</span> [main] DEBUG NewsMapper.selectUsers - ==&gt; Parameters: </span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.925</span> [main] TRACE NewsMapper.selectUsers - &lt;==    Columns: id, name, grade, has_cat</span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.926</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">1</span>, Alex, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.927</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">2</span>, Ada, <span class="number">3</span>, <span class="number">0</span></span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.927</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">3</span>, Leon, <span class="number">2</span>, <span class="number">0</span></span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.927</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">4</span>, Lorrain, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.928</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">5</span>, Divid, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="number">17</span>:<span class="number">53</span>:<span class="number">51.928</span> [main] DEBUG NewsMapper.selectUsers - &lt;==      Total: <span class="number">5</span></span><br><span class="line">User[id=<span class="number">1</span>, name=biubiubiu_Alex, grade=A, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">2</span>, name=biubiubiu_Ada, grade=C, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=B, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">4</span>, name=biubiubiu_Lorrain, grade=, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">5</span>, name=biubiubiu_Divid, grade=A, hasCat=<span class="keyword">null</span>, race=HUMAN]</span><br></pre></td></tr></table></figure>
+<p><strong><big>依然存有的疑惑</big></strong></p>
+<p><strong>User 类的无参构造方法是必须的</strong>，不然就会报错</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> org.apache.ibatis.exceptions.PersistenceException: </span><br><span class="line">### Error querying database.  Cause: org.apache.ibatis.executor.ExecutorException: No constructor found in DebugMybatis.entity.User matching [java.lang.Long, java.lang.String, java.lang.Long, java.lang.Long]</span><br><span class="line">### The error may exist in NewsMapper.xml</span><br><span class="line">### The error may involve NewsMapper.selectUsers</span><br><span class="line">### The error occurred while handling results</span><br><span class="line">### SQL: select * from user</span><br><span class="line">### Cause: org.apache.ibatis.executor.ExecutorException: No constructor found in DebugMybatis.entity.User matching [java.lang.Long, java.lang.String, java.lang.Long, java.lang.Long]</span><br><span class="line">	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:<span class="number">30</span>)</span><br><span class="line">	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:<span class="number">150</span>)</span><br><span class="line">	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:<span class="number">141</span>)</span><br><span class="line">	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:<span class="number">136</span>)</span><br><span class="line">	at DebugMybatis.TypeHandlerTest.main(TypeHandlerTest.java:<span class="number">22</span>)</span><br><span class="line">Caused by: org.apache.ibatis.executor.ExecutorException: No constructor found in DebugMybatis.entity.User matching [java.lang.Long, java.lang.String, java.lang.Long, java.lang.Long]</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.createByConstructorSignature(DefaultResultSetHandler.java:<span class="number">668</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.createResultObject(DefaultResultSetHandler.java:<span class="number">621</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.createResultObject(DefaultResultSetHandler.java:<span class="number">594</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:<span class="number">396</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:<span class="number">355</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:<span class="number">330</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:<span class="number">303</span>)</span><br><span class="line">	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:<span class="number">196</span>)</span><br><span class="line">	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:<span class="number">64</span>)</span><br><span class="line">	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:<span class="number">79</span>)</span><br><span class="line">	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:<span class="number">63</span>)</span><br><span class="line">	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:<span class="number">326</span>)</span><br><span class="line">	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:<span class="number">156</span>)</span><br><span class="line">	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:<span class="number">109</span>)</span><br><span class="line">	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:<span class="number">83</span>)</span><br><span class="line">	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:<span class="number">148</span>)</span><br></pre></td></tr></table></figure>
+<p>简单看了一下貌似需要一个和数据库对应的字段的构造方法，不知道是不是姿势出现了问题，或者是受了 TypeHandler 的影响，后面再研究一下吧，毕竟这一篇的重点不在这里(才不是因为懒呢)。</p>
+<h2 id="自定义-Mybatis-拦截器-Plugins"><a href="#自定义-Mybatis-拦截器-Plugins" class="headerlink" title="自定义 Mybatis 拦截器(Plugins)"></a>自定义 Mybatis 拦截器(Plugins)</h2><p>老规矩先看看官方给的解释</p>
+<blockquote>
+<p>MyBatis 允许你在已映射语句执行过程中的某一点进行拦截调用。默认情况下，MyBatis 允许使用插件来拦截的方法调用包括：<br>Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)<br>ParameterHandler (getParameterObject, setParameters)<br>ResultSetHandler (handleResultSets, handleOutputParameters)<br>StatementHandler (prepare, parameterize, batch, update, query)</p>
+<p>这些类中方法的细节可以通过查看每个方法的签名来发现，或者直接查看 MyBatis 发行包中的源代码。 如果你想做的不仅仅是监控方法的调用，那么你最好相当了解要重写的方法的行为。 因为如果在试图修改或重写已有方法的行为的时候，你很可能在破坏 MyBatis 的核心模块。 这些都是更低层的类和方法，所以使用插件的时候要特别当心。</p>
+</blockquote>
+<p>之前在讲代理模式的时候提到过 <strong>Mybatis 的 Plugin ，它应用的就是代理模式</strong>，正如上述官网的介绍：它能对特定的行为进行拦截调用，这里我们就举栗一个 select 语句把，<code>在执行前打出 biubiubiu~~，在执行后打出 piupiupiu~~</code></p>
+<p>还记我们在总结篇里画的那个执行的流程图吗，里面说道 <strong>SqlSession 其实是靠着 Executor 来执行 SQL 语句的(当然更下一级是 StatementHandler)</strong>，所以我们想<strong>拦截 select 语句其实就是拦截 Executor 的 Query 方法</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.executor.Executor.query(MappedStatement, Object, RowBounds, ResultHandler)</span><br></pre></td></tr></table></figure>
+<p><strong>自定义Plugin 需要实现 Interceptor</strong>，Like This：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Intercepts</span>(&#123; <span class="meta">@Signature</span>(</span><br><span class="line">    type = Executor.class,  <span class="comment">// 被拦截的接口类型</span></span><br><span class="line">    method = <span class="string">"query"</span>,       <span class="comment">// 拦截接口对应的方法</span></span><br><span class="line">    args = &#123; MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class &#125;  <span class="comment">// 接口需要的参数</span></span><br><span class="line">) &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Invocation invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        init();</span><br><span class="line">        <span class="comment">// 调用原接口得到的结果</span></span><br><span class="line">        Object result = invocation.proceed();</span><br><span class="line">        afterProceed();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">plugin</span><span class="params">(Object target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Plugin.wrap(target, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProperties</span><span class="params">(Properties properties)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"biubiubiu~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">afterProceed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"piupiupiu~~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>修改 Mybatis 的配置文件</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注册自定义的 Plugin --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">interceptor</span>=<span class="string">"DebugMybatis.utils.MyPlugin"</span>&gt;</span><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>执行的代码都跟之前的一样，我们直接看输出结果吧</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">biubiubiu~</span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">03.756</span> [main] DEBUG org.apache.ibatis.transaction.jdbc.JdbcTransaction - Opening JDBC Connection</span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">08.986</span> [main] DEBUG org.apache.ibatis.datasource.pooled.PooledDataSource - Created connection <span class="number">1287934450</span>.</span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">08.986</span> [main] DEBUG org.apache.ibatis.transaction.jdbc.JdbcTransaction - Setting autocommit to <span class="keyword">false</span> on JDBC Connection [com.mysql.jdbc.JDBC4Connection@<span class="number">4</span>cc451f2]</span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">08.988</span> [main] DEBUG NewsMapper.selectUsers - ==&gt;  Preparing: select * from user </span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.007</span> [main] DEBUG NewsMapper.selectUsers - ==&gt; Parameters: </span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.016</span> [main] TRACE NewsMapper.selectUsers - &lt;==    Columns: id, name, grade, has_cat</span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.017</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">1</span>, Alex, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.018</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">2</span>, Ada, <span class="number">3</span>, <span class="number">0</span></span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.018</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">3</span>, Leon, <span class="number">2</span>, <span class="number">0</span></span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.018</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">4</span>, Lorrain, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.018</span> [main] TRACE NewsMapper.selectUsers - &lt;==        Row: <span class="number">5</span>, Divid, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="number">08</span>:<span class="number">42</span>:<span class="number">09.018</span> [main] DEBUG NewsMapper.selectUsers - &lt;==      Total: <span class="number">5</span></span><br><span class="line">piupiupiu~~</span><br><span class="line">User[id=<span class="number">1</span>, name=biubiubiu_Alex, grade=A, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">2</span>, name=biubiubiu_Ada, grade=C, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=B, hasCat=<span class="keyword">false</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">4</span>, name=biubiubiu_Lorrain, grade=, hasCat=<span class="keyword">true</span>, race=HUMAN]</span><br><span class="line">User[id=<span class="number">5</span>, name=biubiubiu_Divid, grade=A, hasCat=<span class="keyword">null</span>, race=HUMAN]</span><br></pre></td></tr></table></figure>
+<p>由上面的栗子可以看出，在执行查询之前输出了 biubiubiu，执行查询之后输出了 piupiupiu，拦截成功啦~</p>
+<p><strong>标记</strong><br>当然，强大的 Plugin 利用肯定不是如此，官方文档也介绍过了他可以对四个接口的多个方法进行拦截，总之具体的利用姿势还需要根据实际情况来完成，并且 Plugin 也支持在配置文件中设置参数。</p>
+<h2 id="三种执行SQL的方式"><a href="#三种执行SQL的方式" class="headerlink" title="三种执行SQL的方式"></a>三种执行SQL的方式</h2><p>Mybatis 有三种执行SQL语句的方式</p>
+<h3 id="通过配置文件"><a href="#通过配置文件" class="headerlink" title="通过配置文件"></a>通过配置文件</h3><p>这个方法就是前面所举的栗子，我们只需要创建一个 SQL 映射文件，Like this：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper</span></span><br><span class="line"><span class="meta">  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"><span class="meta">  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"NewsMapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectNews"</span> <span class="attr">resultType</span>=<span class="string">"DebugMybatis.entity.News"</span>&gt;</span></span><br><span class="line">  	select * from news</span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>直接通过下面这样的方式调用</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MappingSQLTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">        SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List&lt;News&gt; selectList = session.selectList(<span class="string">"NewsMapper.selectNews"</span>);</span><br><span class="line">            <span class="keyword">if</span> (selectList != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (News news : selectList) &#123;</span><br><span class="line">                    System.out.println(news);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            session.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.675</span> [main] DEBUG NewsMapper.selectNews - ==&gt;  Preparing: select * from news </span><br><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.693</span> [main] DEBUG NewsMapper.selectNews - ==&gt; Parameters: </span><br><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.703</span> [main] TRACE NewsMapper.selectNews - &lt;==    Columns: id, title, author, desc</span><br><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.703</span> [main] TRACE NewsMapper.selectNews - &lt;==        Row: <span class="number">1</span>, 蓝莲花, 许巍, 真好听~</span><br><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.704</span> [main] TRACE NewsMapper.selectNews - &lt;==        Row: <span class="number">2</span>, WOW, Nice, World Of The Warcraft</span><br><span class="line"><span class="number">12</span>:<span class="number">20</span>:<span class="number">18.705</span> [main] DEBUG NewsMapper.selectNews - &lt;==      Total: <span class="number">2</span></span><br><span class="line">News[id=<span class="number">1</span>, title=biubiubiu_蓝莲花, author=biubiubiu_许巍, desc=biubiubiu_真好听~]</span><br><span class="line">News[id=<span class="number">2</span>, title=biubiubiu_WOW, author=biubiubiu_Nice, desc=biubiubiu_World Of The Warcraft]</span><br></pre></td></tr></table></figure>
+<p>第一种方式除了容易把字符串拼错之外，也没什么缺点，并且老版的 Mybatis 用的就是这样的方式，属于均衡版。</p>
+<h3 id="通过Mapper映射类"><a href="#通过Mapper映射类" class="headerlink" title="通过Mapper映射类"></a>通过Mapper映射类</h3><p>Mapper 映射类其实就是<strong>创建一个和命名空间中同名的 Mapper 类</strong>，将其中定义的 SQL语句映射成对应的方法，包括名字、参数、返回类型啥啥啥的。</p>
+<p>我们建立一个 News 表的映射类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">NewsMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">List&lt;News&gt; <span class="title">selectNews</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>映射文件修改，需要将 namespace 修改为被映射类的全路径</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"DebugMybatis.Mapper.NewsMapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectNews"</span> <span class="attr">resultType</span>=<span class="string">"DebugMybatis.entity.News"</span>&gt;</span></span><br><span class="line">  	select * from news</span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>通过 SqlSession 获取映射类来调用方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">    InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">    SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">    SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 获取 SQL的映射类</span></span><br><span class="line">        NewsMapper newsMapper = session.getMapper(NewsMapper.class);</span><br><span class="line">        List&lt;News&gt; selectList = newsMapper.selectNews();</span><br><span class="line">        <span class="keyword">if</span> (selectList != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (News news : selectList) &#123;</span><br><span class="line">                System.out.println(news);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.960</span> [main] DEBUG DebugMybatis.Mapper.NewsMapper.selectNews - ==&gt;  Preparing: select * from news </span><br><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.978</span> [main] DEBUG DebugMybatis.Mapper.NewsMapper.selectNews - ==&gt; Parameters: </span><br><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.987</span> [main] TRACE DebugMybatis.Mapper.NewsMapper.selectNews - &lt;==    Columns: id, title, author, desc</span><br><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.987</span> [main] TRACE DebugMybatis.Mapper.NewsMapper.selectNews - &lt;==        Row: <span class="number">1</span>, 蓝莲花, 许巍, 真好听~</span><br><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.988</span> [main] TRACE DebugMybatis.Mapper.NewsMapper.selectNews - &lt;==        Row: <span class="number">2</span>, WOW, Nice, World Of The Warcraft</span><br><span class="line"><span class="number">12</span>:<span class="number">33</span>:<span class="number">36.988</span> [main] DEBUG DebugMybatis.Mapper.NewsMapper.selectNews - &lt;==      Total: <span class="number">2</span></span><br><span class="line">News[id=<span class="number">1</span>, title=biubiubiu_蓝莲花, author=biubiubiu_许巍, desc=biubiubiu_真好听~]</span><br><span class="line">News[id=<span class="number">2</span>, title=biubiubiu_WOW, author=biubiubiu_Nice, desc=biubiubiu_World Of The Warcraft]</span><br></pre></td></tr></table></figure>
+<h3 id="通过注解映射"><a href="#通过注解映射" class="headerlink" title="通过注解映射"></a>通过注解映射</h3><p>前两种方式都需要写 SQL映射文件，但通过注解方式进行映射就不需要写 SQL 映射文件。</p>
+<p><strong>首先创建一个新的 Mapper 类，使其映射 User 表的查询</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select</span>(<span class="string">"SELECT * FROM user WHERE id = #&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">selectUserById</span><span class="params">(Long userId)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>修改 mybatis 的配置文件</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">    // 指定映射类存在的包路径</span><br><span class="line">    <span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">"DebugMybatis.Mapper"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">    InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">    SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">    SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 这里的 UserMapper 并没有对应的 XML 映射文件</span></span><br><span class="line">        UserMapper userMapper = session.getMapper(UserMapper.class);</span><br><span class="line">        User user = userMapper.selectUserById(<span class="number">3L</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        session.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">14</span>:<span class="number">00</span>:<span class="number">55.020</span> [main] DEBUG DebugMybatis.Mapper.UserMapper.selectUserById - ==&gt;  Preparing: SELECT * FROM user WHERE id = ? </span><br><span class="line"><span class="number">14</span>:<span class="number">00</span>:<span class="number">55.040</span> [main] DEBUG DebugMybatis.Mapper.UserMapper.selectUserById - ==&gt; Parameters: <span class="number">3</span>(Long)</span><br><span class="line"><span class="number">14</span>:<span class="number">00</span>:<span class="number">55.049</span> [main] TRACE DebugMybatis.Mapper.UserMapper.selectUserById - &lt;==    Columns: id, name, grade, has_cat</span><br><span class="line"><span class="number">14</span>:<span class="number">00</span>:<span class="number">55.049</span> [main] TRACE DebugMybatis.Mapper.UserMapper.selectUserById - &lt;==        Row: <span class="number">3</span>, Leon, <span class="number">2</span>, <span class="number">0</span></span><br><span class="line"><span class="number">14</span>:<span class="number">00</span>:<span class="number">55.051</span> [main] DEBUG DebugMybatis.Mapper.UserMapper.selectUserById - &lt;==      Total: <span class="number">1</span></span><br><span class="line">User[id=<span class="number">3</span>, name=biubiubiu_Leon, grade=<span class="number">2</span>, hasCat=<span class="keyword">null</span>, race=HUMAN]</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上三种方法推荐使用 第二种，毕竟官方来自官方的推荐嘛。但如果你的 SQL 很简单的话，推荐使用第三种注解的方式，应为是真的简便…..</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>Mybatis 的应用远不止于此，好像比较重要的还有一个动态SQL，感觉那个跟 EL表达式有点类似，就算不会，学习的成本应该也不是很大啦，况且之前本来就没有讲应用的打算啦(才不是懒呢)，所以很自然地就跳过了….</p>
+<p>在学习的过程中还看到什么 <strong>插件开发</strong>、<strong>自定义注解</strong>啥啥啥的，好像都是一些高级利用姿势，咸鱼劝退….</p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://www.iteye.com/topic/1118373" target="_blank" rel="noopener">【myBatis】中select方法如何使用？返回值为void</a><br><a href="http://www.mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="noopener">MyBatis 官方文档</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>一个月的时间，磕磕绊绊地记录了自己学习 Mybatis 的过程，其实是没有想过能写完的哈哈哈，还以为会和之前一样半途而废。好歹算是写完了，剩下就是提升熟练度，目前还没有什么计划。</p>
+<p>最近公司搬新家，搬到了离我租房比较远地方，其实主要是要转 金台路 到14号线，我就很绝望。还记得实习那段时间每天从14号线转6号线，就在金台路下车，车门刚开，人还没开始下车，外面的人就开始往上挤，差点连车都下不了，真的是充满着无尽的阴影……</p>
+<p>但愿之后的上班点从金台路上车不那么挤吧….. </p>
+<p>然后最近准备跟棍基一起去看看房子，但愿有个特别合适的，这样就能养猫了。</p>
+<p>最后关于自己的未来规划，真的不想思考这些事情，麻烦麻烦，还是那句话：祖国哪里需要我，我就去哪里。╮（﹀_﹀）╭</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+            <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/12/从入门到迷路系列——心理学学习笔记(三)/" rel="next" title="从入门到迷路系列 —— 心理学学习笔记(斯金纳)">
+                <i class="fa fa-chevron-left"></i> 从入门到迷路系列 —— 心理学学习笔记(斯金纳)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mybatis-应用"><span class="nav-number">2.</span> <span class="nav-text">Mybatis 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义类型处理器-TypeHandler"><span class="nav-number">2.1.</span> <span class="nav-text">自定义类型处理器 TypeHandler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#User-表结构"><span class="nav-number">2.1.1.</span> <span class="nav-text">User 表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建自己的-TypeHandler"><span class="nav-number">2.1.2.</span> <span class="nav-text">1. 创建自己的 TypeHandler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用-自定义Handler-完成映射"><span class="nav-number">2.1.3.</span> <span class="nav-text">2. 使用 自定义Handler 完成映射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL-映射文件中进行精确配置"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">SQL 映射文件中进行精确配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mybatis-配置文件中进行全局配置"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">Mybatis 配置文件中进行全局配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为了证明是全局都有效，这时候我们再试着查询-News-表中的数据"><span class="nav-number">2.1.4.</span> <span class="nav-text">为了证明是全局都有效，这时候我们再试着查询 News 表中的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单BB"><span class="nav-number">2.1.5.</span> <span class="nav-text">简单BB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果处理器-ResultHandler"><span class="nav-number">2.2.</span> <span class="nav-text">结果处理器 ResultHandler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义对象对象工厂"><span class="nav-number">2.3.</span> <span class="nav-text">自定义对象对象工厂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义-Mybatis-拦截器-Plugins"><span class="nav-number">2.4.</span> <span class="nav-text">自定义 Mybatis 拦截器(Plugins)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三种执行SQL的方式"><span class="nav-number">2.5.</span> <span class="nav-text">三种执行SQL的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过配置文件"><span class="nav-number">2.5.1.</span> <span class="nav-text">通过配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过Mapper映射类"><span class="nav-number">2.5.2.</span> <span class="nav-text">通过Mapper映射类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过注解映射"><span class="nav-number">2.5.3.</span> <span class="nav-text">通过注解映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.5.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-number">4.</span> <span class="nav-text">Ref</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">5.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
