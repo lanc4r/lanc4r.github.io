@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SQL,数据库,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言学艺不精，整日被虐，这也不会，那也得学…….">
+<meta name="keywords" content="SQL,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库姿势解锁 —— SQL语句扫盲(连接、联合查询)">
+<meta property="og:url" content="http://yoursite.com/2019/05/18/数据库姿势解锁——SQL扫盲1/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言学艺不精，整日被虐，这也不会，那也得学…….">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/17/lanc4r-sql1bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/17/lanc4r-sql11.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/17/lanc4r-sql12.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/17/lanc4r-sql1veg.jpg">
+<meta property="og:updated_time" content="2019-05-17T16:04:50.881Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库姿势解锁 —— SQL语句扫盲(连接、联合查询)">
+<meta name="twitter:description" content="前言学艺不精，整日被虐，这也不会，那也得学…….">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/05/17/lanc4r-sql1bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/18/数据库姿势解锁——SQL扫盲1/">
+
+
+
+
+
+  <title>数据库姿势解锁 —— SQL语句扫盲(连接、联合查询) | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/05/01/lanc4rbg3.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">18</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/18/数据库姿势解锁——SQL扫盲1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库姿势解锁 —— SQL语句扫盲(连接、联合查询)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-18T00:00:05+08:00">
+                2019-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/05/17/lanc4r-sql1bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>学艺不精，整日被虐，这也不会，那也得学…….</p>
+<a id="more"></a>
+<h1 id="SQL常见用法"><a href="#SQL常见用法" class="headerlink" title="SQL常见用法"></a>SQL常见用法</h1><p>这次先介绍两种查询的方法。</p>
+<h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h2><p>首先聊聊这个连接查询，<strong>连接查询最核心的思想就是：一次查询需要的结果在多张表而非一张表中，这时候就需要使用到连接查询，也即是连接多张表进行查询(通常是需要横向扩充字段)</strong>。</p>
+<p>常见分类：<strong>内连接查询、外连接查询、交叉连接查询</strong>。</p>
+<h3 id="内连接查询"><a href="#内连接查询" class="headerlink" title="内连接查询"></a>内连接查询</h3><p>内连接查询生成的数据是需要连接条件满足才会显示出来。也就是说只有条件满足两边的数据才会显示出来，<strong>注意没有满足连接条件的数据是不会显示的哦</strong>，这里主要是和外连接做区别的(后面会讲到)。</p>
+<p>我们先举一个栗子，很容易就明白啦。看看 <code>学生</code> 和 <code>教室</code> 的关系，数据如下</p>
+<p><strong>学生表</strong></p>
+<p><img src="https://view.moezx.cc/images/2019/05/17/lanc4r-sql11.png" alt=""></p>
+<p><strong>教室表</strong></p>
+<p><img src="https://view.moezx.cc/images/2019/05/17/lanc4r-sql12.png" alt=""></p>
+<p>经典的一对多的关系嘛，不多说。现在有这样一个需求：我们在查询学生的数据信息时，需要把其上课的教室地点一并查出，并且没有匹配到的同学不予展示。这时候就需要用到我们的连接查询啦。</p>
+<p>连接查询的语法格式为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 查询展示的字段 <span class="keyword">FROM</span> 查询表 连接类型 连接查询表 [<span class="keyword">ON</span> 连接条件] [<span class="keyword">WHERE</span> 连接查询结果后筛选条件]</span><br></pre></td></tr></table></figure></p>
+<p>根据上面的格式我们可以写出满足我们条件的 SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">	* </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	student </span><br><span class="line"><span class="keyword">join</span> </span><br><span class="line">	classroom</span><br><span class="line"><span class="keyword">on</span> </span><br><span class="line">	student.classroom_no = classroom.classroom_no;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            2 | ClassRoom_2 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |            4 | ClassRoom_4 |</span><br><span class="line">|  7 | KongYi  |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>由上结果可以看出，<strong>学号为 5 和 10 的同学因为没有没有对应的教室导致连接条件不满足，就无法展示出来</strong>。</p>
+<p>当然我们还可以对这个查询出来的结果进行筛选，比如想取 <code>grade &gt;= 3</code> 的同学，我们可以这样构造我们的 SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">	* </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	student <span class="keyword">as</span> stu</span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> </span><br><span class="line">	classroom <span class="keyword">as</span> cla</span><br><span class="line"><span class="keyword">on</span> </span><br><span class="line">	stu.classroom_no = cla.classroom_no</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">	stu.grade &gt;= <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |            4 | ClassRoom_4 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>请注意上面的连接条件使用的是 <strong>等于(on stu.classroom_no = cla.classroom_no)</strong>，所以上面的内连接又叫做 等值连接。内连接通过其连接条件的不同可以分为三种：</p>
+<h4 id="等值连接"><a href="#等值连接" class="headerlink" title="等值连接"></a>等值连接</h4><p>连接条件使用的是 “=” 号，就如我们上面介绍的那样</p>
+<h4 id="不等连接"><a href="#不等连接" class="headerlink" title="不等连接"></a>不等连接</h4><p>连接条件使用的是除 “=” 号外的其他符号(如 &gt;、&lt;、&lt;&gt;、&gt;=、&lt;=、!&gt;和!&lt;)，这里就不举例啦，只要是连接条件用了除等号的条件就表示不等连接啦。</p>
+<h4 id="自然连接"><a href="#自然连接" class="headerlink" title="自然连接"></a>自然连接</h4><p>自然连接的作用是在连接后将重复的列删除，但这里注意 自然连接没有以 on 为关键字的查询条件。我自己测试一下，它会自动的匹配两张表中相同的列，然后将其作为条件进行连接，并且将重复的列删除。</p>
+<p>比如前面等值连接的就可以换成这个样子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">	* </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	student <span class="keyword">as</span> stu</span><br><span class="line"><span class="keyword">NATURAL</span> <span class="keyword">join</span></span><br><span class="line">	classroom <span class="keyword">as</span> cla;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+<span class="comment">--------------+----+---------+-------+-------------+</span></span><br><span class="line">| classroom_no | id | name    | grade | address     |</span><br><span class="line">+<span class="comment">--------------+----+---------+-------+-------------+</span></span><br><span class="line">|            1 |  1 | Alex    |     3 | ClassRoom_1 |</span><br><span class="line">|            3 |  2 | Divid   |     2 | ClassRoom_3 |</span><br><span class="line">|            2 |  3 | Ada     |     1 | ClassRoom_2 |</span><br><span class="line">|            1 |  4 | Jery    |     4 | ClassRoom_1 |</span><br><span class="line">|            4 |  6 | Ashilin |     3 | ClassRoom_4 |</span><br><span class="line">|            3 |  7 | KongYi  |     2 | ClassRoom_3 |</span><br><span class="line">|            1 |  8 | Lan     |     5 | ClassRoom_1 |</span><br><span class="line">|            3 |  9 | Max     |     4 | ClassRoom_3 |</span><br><span class="line">+<span class="comment">--------------+----+---------+-------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>由结果可以看出，<strong>自然连接自动的将俩表都存在的字段 classroom_no 作为了等值连接的查询条件</strong>，并且在最后结果中<strong>将 重复的 classroom_no 字段删除</strong>。</p>
+<p>看到这里我想到另一个操作，如果我们有多个 相同的字段是不是自然连接都会默认的将他们连接起来呢，想到这一点我修改了一下两张表的结构和值，如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">student 表</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+------+</span></span><br><span class="line">| id | name    | grade | classroom_no | type |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |    1 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |    1 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |    1 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |    1 |</span><br><span class="line">|  5 | Leon    |     5 |            0 |    5 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |    4 |</span><br><span class="line">|  7 | KongYi  |     2 |            3 |    2 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |    1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |    5 |</span><br><span class="line">| 10 | Clone   |     4 |            0 |    1 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+------+</span></span><br><span class="line"></span><br><span class="line">classroom 表</span><br><span class="line">+<span class="comment">--------------+-------------+------+</span></span><br><span class="line">| classroom_no | address     | type |</span><br><span class="line">+<span class="comment">--------------+-------------+------+</span></span><br><span class="line">|            1 | ClassRoom_1 |    1 |</span><br><span class="line">|            2 | ClassRoom_2 |    1 |</span><br><span class="line">|            3 | ClassRoom_3 |    2 |</span><br><span class="line">|            4 | ClassRoom_4 |    5 |</span><br><span class="line">|            5 | ClassRoom_5 |    3 |</span><br><span class="line">+<span class="comment">--------------+-------------+------+</span></span><br></pre></td></tr></table></figure>
+<p>这时候再使用连接查询的话，结果就发生了改变：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+<span class="comment">--------------+------+----+--------+-------+-------------+</span></span><br><span class="line">| classroom_no | type | id | name   | grade | address     |</span><br><span class="line">+<span class="comment">--------------+------+----+--------+-------+-------------+</span></span><br><span class="line">|            1 |    1 |  1 | Alex   |     3 | ClassRoom_1 |</span><br><span class="line">|            2 |    1 |  3 | Ada    |     1 | ClassRoom_2 |</span><br><span class="line">|            1 |    1 |  4 | Jery   |     4 | ClassRoom_1 |</span><br><span class="line">|            3 |    2 |  7 | KongYi |     2 | ClassRoom_3 |</span><br><span class="line">|            1 |    1 |  8 | Lan    |     5 | ClassRoom_1 |</span><br><span class="line">+<span class="comment">--------------+------+----+--------+-------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>上面的栗子其实等价于：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">	* </span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	student <span class="keyword">as</span> stu</span><br><span class="line"><span class="keyword">join</span> </span><br><span class="line">	classroom <span class="keyword">as</span> cla</span><br><span class="line"><span class="keyword">on</span>	</span><br><span class="line">	stu.classroom_no = cla.classroom_no <span class="keyword">and</span> stu.type = cla.type;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+<span class="comment">----+--------+-------+--------------+------+--------------+-------------+------+</span></span><br><span class="line">| id | name   | grade | classroom_no | type | classroom_no | address     | type |</span><br><span class="line">+<span class="comment">----+--------+-------+--------------+------+--------------+-------------+------+</span></span><br><span class="line">|  1 | Alex   |     3 |            1 |    1 |            1 | ClassRoom_1 |    1 |</span><br><span class="line">|  3 | Ada    |     1 |            2 |    1 |            2 | ClassRoom_2 |    1 |</span><br><span class="line">|  4 | Jery   |     4 |            1 |    1 |            1 | ClassRoom_1 |    1 |</span><br><span class="line">|  7 | KongYi |     2 |            3 |    2 |            3 | ClassRoom_3 |    2 |</span><br><span class="line">|  8 | Lan    |     5 |            1 |    1 |            1 | ClassRoom_1 |    1 |</span><br><span class="line">+<span class="comment">----+--------+-------+--------------+------+--------------+-------------+------+</span></span><br></pre></td></tr></table></figure>
+<p>由上我们可以对自然连接得出以下结论：</p>
+<ol>
+<li>自然连接<strong>算是一种特殊的等值连接</strong>，它与等值连接的区别在于：<strong>它会将重复的列去掉，并且自动的将两张表所有列名相同的列进行等值连接匹配</strong>。当没有相同列名的列的时候，就会将量表的结果进行笛卡尔积(左表条数 x 右表条数)。</li>
+<li>自然连接<strong>没有连接条件(简单说就是不能用 on 关键字加上连接条件)</strong>，因为它会自动的寻找俩表列名相同的列进行连接，这时候如果再使用 on 进行条件连接就会报错了。</li>
+</ol>
+<h3 id="外连接查询"><a href="#外连接查询" class="headerlink" title="外连接查询"></a>外连接查询</h3><p>外连接与内连接的区别就是：<strong>外连接能够将不满足连接条件的那部分数据也展示出来</strong>。</p>
+<p>举个简单的栗子<br>比如 <code>A表</code> 只有一个字段 <code>ID</code>，并且只有 <code>1、2、3</code> 三个值<br><code>B表</code> 也只有一个字段 <code>ID</code>、其中含有 <code>1、2、5</code> 三个值</p>
+<p>这时候如果使用内连接的话，那么只能匹配两条数据出来，即俩表ID为 1、2 的数据，但如果使用外连接就可以把 俩表ID 不相等的数据都匹配出来，这时候就有个问题了：</p>
+<p>既然是不相等的数据能被匹配出来，现在我们有 3 和 5 两个值，那么到底是让谁显示出来呢，基于这个让谁显示出来的问题，我们把外连接分为了：</p>
+<ul>
+<li><strong>左外连接</strong>：当连接条件不匹配的时候，左表数据正常显示，右表数据使用 NULL 值补充。简单说就是左表的数据全部查出来。</li>
+<li><strong>右外连接</strong>：当连接条件不匹配的时候，右表数据正常显示，左表数据使用 NULL 值补充。简单说就是右表的数据全部查出来。</li>
+<li><strong>全外连接</strong>：当连接条件不匹配的时候，俩表的数据都正常显示，左表数据 和 右表数据 都会在不匹配情况使用 NULL 值补充。简单说就是俩表的数据都会查询出来，只是它们不匹配的地方全部使用 NULL 值来补充。</li>
+</ul>
+<p>接着举栗上述 学生表 和 教室表的栗子。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">| id | name    | grade | classroom_no |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |</span><br><span class="line">|  5 | Leon    |     5 |            0 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |</span><br><span class="line">|  7 | KongYi  |     2 |            3 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |</span><br><span class="line">| 10 | Clone   |     4 |            0 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> classroom;</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br><span class="line">| classroom_no | address     |</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br><span class="line">|            1 | ClassRoom_1 |</span><br><span class="line">|            2 | ClassRoom_2 |</span><br><span class="line">|            3 | ClassRoom_3 |</span><br><span class="line">|            4 | ClassRoom_4 |</span><br><span class="line">|            5 | ClassRoom_5 |</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>这时候我们分别使用<strong>左外连接</strong>、<strong>右外连接</strong>、<strong>全外连接</strong> 三种连接方式来查询俩表：</p>
+<h4 id="左外连接"><a href="#左外连接" class="headerlink" title="左外连接"></a>左外连接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; left join</span><br><span class="line">    -&gt; classroom as cla</span><br><span class="line">    -&gt; on</span><br><span class="line">    -&gt; stu.classroom_no = cla.classroom_no;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            2 | ClassRoom_2 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  7 | KongYi  |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  9 | Max     |     4 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |            4 | ClassRoom_4 |</span><br><span class="line">|  5 | Leon    |     5 |            0 |         NULL | NULL        |</span><br><span class="line">| 10 | Clone   |     4 |            0 |         NULL | NULL        |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="右外连接"><a href="#右外连接" class="headerlink" title="右外连接"></a>右外连接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; right join</span><br><span class="line">    -&gt; classroom as cla</span><br><span class="line">    -&gt; on</span><br><span class="line">    -&gt; stu.classroom_no = cla.classroom_no;</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id   | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|    1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    2 | Divid   |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|    3 | Ada     |     1 |            2 |            2 | ClassRoom_2 |</span><br><span class="line">|    4 | Jery    |     4 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    6 | Ashilin |     3 |            4 |            4 | ClassRoom_4 |</span><br><span class="line">|    7 | KongYi  |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|    8 | Lan     |     5 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    9 | Max     |     4 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">| NULL | NULL    |  NULL |         NULL |            5 | ClassRoom_5 |</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="全外连接"><a href="#全外连接" class="headerlink" title="全外连接"></a>全外连接</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; full join</span><br><span class="line">    -&gt; classroom as cla</span><br><span class="line">    -&gt; on</span><br><span class="line">    -&gt; stu.classroom_no = cla.classroom_no;</span><br><span class="line">ERROR 1064 (42000): You have an error in your SQL syntax; <span class="keyword">check</span> the <span class="keyword">manual</span> that corresponds <span class="keyword">to</span> your MySQL <span class="keyword">server</span> <span class="keyword">version</span> <span class="keyword">for</span> the <span class="keyword">right</span> syntax <span class="keyword">to</span> <span class="keyword">use</span> near <span class="string">'full join</span></span><br><span class="line"><span class="string">classroom as cla</span></span><br><span class="line"><span class="string">on</span></span><br><span class="line"><span class="string">stu.classroom_no = cla.classroom_no'</span> <span class="keyword">at</span> line <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>额，查了一下发现 mysql 是不支持 full join 这样的用法的，如果想实现全外连接的操作的话，可以使用 左外连接 union 右外连接的操作，like this</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; left join</span><br><span class="line">    -&gt; classroom as cla</span><br><span class="line">    -&gt; on</span><br><span class="line">    -&gt; stu.classroom_no = cla.classroom_no</span><br><span class="line">    -&gt; union</span><br><span class="line">    -&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; right join</span><br><span class="line">    -&gt; classroom as cla</span><br><span class="line">    -&gt; on</span><br><span class="line">    -&gt; stu.classroom_no = cla.classroom_no;</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id   | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|    1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    4 | Jery    |     4 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    8 | Lan     |     5 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|    3 | Ada     |     1 |            2 |            2 | ClassRoom_2 |</span><br><span class="line">|    2 | Divid   |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|    7 | KongYi  |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|    9 | Max     |     4 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|    6 | Ashilin |     3 |            4 |            4 | ClassRoom_4 |</span><br><span class="line">|    5 | Leon    |     5 |            0 |         NULL | NULL        |</span><br><span class="line">|   10 | Clone   |     4 |            0 |         NULL | NULL        |</span><br><span class="line">| NULL | NULL    |  NULL |         NULL |            5 | ClassRoom_5 |</span><br><span class="line">+<span class="comment">------+---------+-------+--------------+--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<p>这里使用到的 Union 关键字是使用的联合查询，这个在后面聊聊。</p>
+<h3 id="交叉连接"><a href="#交叉连接" class="headerlink" title="交叉连接"></a>交叉连接</h3><p>前面说的内连接、外连接其实都遵循了一个连接条件，根据连接条件的不同匹配模式区分成了内连接 和 外连接。但是这里的<strong>交叉连接它简直就是直接放弃了连接条件，取出两张表的笛卡尔积</strong>，看一下用法你就明白了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student as stu</span><br><span class="line">    -&gt; cross join</span><br><span class="line">    -&gt; classroom as cla;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">| id | name    | grade | classroom_no | classroom_no | address     |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+--------------+-------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |            1 | ClassRoom_1 |</span><br><span class="line">|  1 | Alex    |     3 |            1 |            2 | ClassRoom_2 |</span><br><span class="line">|  1 | Alex    |     3 |            1 |            3 | ClassRoom_3 |</span><br><span class="line">|  1 | Alex    |     3 |            1 |            4 | ClassRoom_4 |</span><br><span class="line">|  1 | Alex    |     3 |            1 |            5 | ClassRoom_5 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            1 | ClassRoom_1 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            2 | ClassRoom_2 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            3 | ClassRoom_3 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            4 | ClassRoom_4 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |            5 | ClassRoom_5 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            1 | ClassRoom_1 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            2 | ClassRoom_2 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            3 | ClassRoom_3 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            4 | ClassRoom_4 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |            5 | ClassRoom_5 |</span><br><span class="line">.........</span><br></pre></td></tr></table></figure>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>搜索的时候看到了一个概念叫做自连接，其实与前面的区别就是 左表 和 右表 都是同一张表而已，自己连自己。栗子我就不举了，我想不出有什么样的利用场景，总感觉使用一个 where 判断一下条件就行了….</p>
+<h2 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h2><p>前面讲的连接查询都有一个特点：查询结果列数增加了(横向扩展)，毕竟是连接了两个表嘛，所以<strong>相当于把两个表每一行的数据横向拼接了起来</strong>。而我们的联合查询也是用于多表数据的组装，但是它并不是横向拼接，而是纵向拼接，<strong>既然是纵向拼接这就表示 俩表查询出的列数必须是相等的</strong>！</p>
+<p>联合查询不像连接查询，它没有那么多花里胡哨的东西，只有两种用法 <code>Union</code> 和 <code>Union All</code>，简单记就是 <strong>Union 会去重</strong>，而 <strong>Union All  不会</strong>，看一个栗子就明白啦：</p>
+<p>依然是上面的 学生表 和 教室表，这次我们想把俩表中的教室编号都查询出来，这时候就可以使用联合查询了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from student;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">| id | name    | grade | classroom_no |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">|  1 | Alex    |     3 |            1 |</span><br><span class="line">|  2 | Divid   |     2 |            3 |</span><br><span class="line">|  3 | Ada     |     1 |            2 |</span><br><span class="line">|  4 | Jery    |     4 |            1 |</span><br><span class="line">|  5 | Leon    |     5 |            7 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |</span><br><span class="line">|  7 | KongYi  |     2 |            3 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |</span><br><span class="line">| 10 | Clone   |     4 |            0 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line"></span><br><span class="line">mysql&gt; select * from classroom;</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br><span class="line">| classroom_no | address     |</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br><span class="line">|            1 | ClassRoom_1 |</span><br><span class="line">|            2 | ClassRoom_2 |</span><br><span class="line">|            3 | ClassRoom_3 |</span><br><span class="line">|            4 | ClassRoom_4 |</span><br><span class="line">|            5 | ClassRoom_5 |</span><br><span class="line">+<span class="comment">--------------+-------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; classroom_no</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student</span><br><span class="line">    -&gt; union</span><br><span class="line">    -&gt; select</span><br><span class="line">    -&gt; classroom_no</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; classroom;</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">| classroom_no |</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">|            1 |</span><br><span class="line">|            3 |</span><br><span class="line">|            2 |</span><br><span class="line">|            7 |</span><br><span class="line">|            4 |</span><br><span class="line">|            0 |</span><br><span class="line">|            5 |</span><br><span class="line">+<span class="comment">--------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="Union-All"><a href="#Union-All" class="headerlink" title="Union All"></a>Union All</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; classroom_no</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student</span><br><span class="line">    -&gt; union all</span><br><span class="line">    -&gt; select</span><br><span class="line">    -&gt; classroom_no</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; classroom;</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">| classroom_no |</span><br><span class="line">+<span class="comment">--------------+</span></span><br><span class="line">|            1 |</span><br><span class="line">|            3 |</span><br><span class="line">|            2 |</span><br><span class="line">|            1 |</span><br><span class="line">|            7 |</span><br><span class="line">|            4 |</span><br><span class="line">|            3 |</span><br><span class="line">|            1 |</span><br><span class="line">|            3 |</span><br><span class="line">|            0 |</span><br><span class="line">|            1 |</span><br><span class="line">|            2 |</span><br><span class="line">|            3 |</span><br><span class="line">|            4 |</span><br><span class="line">|            5 |</span><br><span class="line">+<span class="comment">--------------+</span></span><br></pre></td></tr></table></figure>
+<p>以上简单的演示了一下 Union 和 Union All 的区别，其实关于 Union 还有一点点东西要说的：</p>
+<h4 id="where-和-union"><a href="#where-和-union" class="headerlink" title="where 和 union"></a>where 和 union</h4><p>为什么把 where 放在一起讲呢，其实是因为 <strong>union 在几乎所有的情况下都能代替 where</strong>。举个栗子就明白了</p>
+<p>比如我们想查询所有 <code>grade &gt;= 3</code> 或是 <code>classroom_no &gt;= 3</code> 的学生，最简单的你可能会像下面这样构造你的 SQL 语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; *</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student</span><br><span class="line">    -&gt; where</span><br><span class="line">    -&gt; grade &gt;= 4 or</span><br><span class="line">    -&gt; classroom_no &gt;= 4;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">| id | name    | grade | classroom_no |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">|  4 | Jery    |     4 |            1 |</span><br><span class="line">|  5 | Leon    |     5 |            7 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |</span><br><span class="line">| 10 | Clone   |     4 |            0 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="标记"><a href="#标记" class="headerlink" title="标记"></a>标记</h4><p>前面我们说了 <strong>union 在几乎所有的情况下都能代替 where，但是 where 却很多情况都不能代替 union</strong>，就如最初始的那个栗子，我们想把 <strong>student</strong> 表 和 <strong>classroom</strong> 表的 <strong>classroom_no</strong> 都查出来，这时候 where 就做不到了，只能使用 union 来查询。</p>
+<p>同时还有 union all 的情况也是 where 无法模拟的，比如前一个栗子中我们需要将重复的列展示出来我们会这样构造 SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from student where grade &gt;= 4</span><br><span class="line">    -&gt; union all</span><br><span class="line">    -&gt; select * from student where classroom_no &gt;= 4;</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">| id | name    | grade | classroom_no |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br><span class="line">|  4 | Jery    |     4 |            1 |</span><br><span class="line">|  5 | Leon    |     5 |            7 |</span><br><span class="line">|  8 | Lan     |     5 |            1 |</span><br><span class="line">|  9 | Max     |     4 |            3 |</span><br><span class="line">| 10 | Clone   |     4 |            0 |</span><br><span class="line">|  5 | Leon    |     5 |            7 |</span><br><span class="line">|  6 | Ashilin |     3 |            4 |</span><br><span class="line">+<span class="comment">----+---------+-------+--------------+</span></span><br></pre></td></tr></table></figure>
+<p>当这时候使用 where 就不能满足这个条件啦。</p>
+<h4 id="最后BB一点：联合查询区分多表的操作"><a href="#最后BB一点：联合查询区分多表的操作" class="headerlink" title="最后BB一点：联合查询区分多表的操作"></a>最后BB一点：联合查询区分多表的操作</h4><p>依然是上面查询 <code>classroom_no</code> 的栗子，我们可以区分当前的数据的 <code>classroom_no</code> 来源于哪张表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select</span><br><span class="line">    -&gt; classroom_no,'student' as tabelName</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; student</span><br><span class="line">    -&gt; union</span><br><span class="line">    -&gt; select</span><br><span class="line">    -&gt; classroom_no,'classroom' as tabelName</span><br><span class="line">    -&gt; from</span><br><span class="line">    -&gt; classroom;</span><br><span class="line">+<span class="comment">--------------+-----------+</span></span><br><span class="line">| classroom_no | tabelName |</span><br><span class="line">+<span class="comment">--------------+-----------+</span></span><br><span class="line">|            1 | student   |</span><br><span class="line">|            3 | student   |</span><br><span class="line">|            2 | student   |</span><br><span class="line">|            7 | student   |</span><br><span class="line">|            4 | student   |</span><br><span class="line">|            0 | student   |</span><br><span class="line">|            1 | classroom |</span><br><span class="line">|            2 | classroom |</span><br><span class="line">|            3 | classroom |</span><br><span class="line">|            4 | classroom |</span><br><span class="line">|            5 | classroom |</span><br><span class="line">+<span class="comment">--------------+-----------+</span></span><br></pre></td></tr></table></figure>
+<p>当然这样做一个点是不好的，就是去重效果其实消失了，因为加上了一个 tableName 字段，所以<strong>只要不是两个字段都相同就不算是重复</strong>。</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>这个系列会持续更新下去的，因为目前公司框架的原因，大部分都使用的是单表查询，上周突然被要求写一下俩表的连接查询，突然发现：不！会！写！</p>
+<p><img src="https://view.moezx.cc/images/2019/05/17/lanc4r-sql1veg.jpg" alt=""></p>
+<p> 我知道积跬步以至千里，但我希望当初说出这句话的那个人，他所处的时代是没有“有生之年”这一说法的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/15/弱鸡HL对源码的正确打开方式 —— Mybatis 应用篇/" rel="next" title="弱鸡HL对源码的正确打开方式 —— Mybatis应用篇">
+                <i class="fa fa-chevron-left"></i> 弱鸡HL对源码的正确打开方式 —— Mybatis应用篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL常见用法"><span class="nav-number">2.</span> <span class="nav-text">SQL常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接查询"><span class="nav-number">2.1.</span> <span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内连接查询"><span class="nav-number">2.1.1.</span> <span class="nav-text">内连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等值连接"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">等值连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不等连接"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">不等连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自然连接"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">自然连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外连接查询"><span class="nav-number">2.1.2.</span> <span class="nav-text">外连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#左外连接"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">左外连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#右外连接"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">右外连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全外连接"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">全外连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉连接"><span class="nav-number">2.1.3.</span> <span class="nav-text">交叉连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自连接"><span class="nav-number">2.1.4.</span> <span class="nav-text">自连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合查询"><span class="nav-number">2.2.</span> <span class="nav-text">联合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Union"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">Union</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Union-All"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">Union All</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#where-和-union"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">where 和 union</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标记"><span class="nav-number">2.2.0.4.</span> <span class="nav-text">标记</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后BB一点：联合查询区分多表的操作"><span class="nav-number">2.2.0.5.</span> <span class="nav-text">最后BB一点：联合查询区分多表的操作</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">3.</span> <span class="nav-text">随笔</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
