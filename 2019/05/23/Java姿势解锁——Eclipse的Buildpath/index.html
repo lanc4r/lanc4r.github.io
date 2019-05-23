@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这次说说 Eclipse 的 Buildpath。">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java姿势解锁 —— Eclipse 的 BuildPath">
+<meta property="og:url" content="http://yoursite.com/2019/05/23/Java姿势解锁——Eclipse的Buildpath/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言这次说说 Eclipse 的 Buildpath。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildbg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp8.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp2.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp3.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp4.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp5.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp6.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp7.png">
+<meta property="og:updated_time" content="2019-05-23T15:23:40.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java姿势解锁 —— Eclipse 的 BuildPath">
+<meta name="twitter:description" content="前言这次说说 Eclipse 的 Buildpath。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildbg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/23/Java姿势解锁——Eclipse的Buildpath/">
+
+
+
+
+
+  <title>Java姿势解锁 —— Eclipse 的 BuildPath | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/05/01/lanc4rbg3.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">23</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/23/Java姿势解锁——Eclipse的Buildpath/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java姿势解锁 —— Eclipse 的 BuildPath</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-23T23:30:05+08:00">
+                2019-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildbg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次说说 Eclipse 的 Buildpath。</p>
+<a id="more"></a>
+<p>这东西在第一次使用 Eclipse 的时候就产生了疑惑，这里终于下定决心去了解一下，看看内部到底是怎么运作的。目前的打算是将这部分做成一个小系列吧，主要就是去弄懂身边常常被忽视的小知识，应该还会有后期的(小声BB)</p>
+<h1 id="Buildpath"><a href="#Buildpath" class="headerlink" title="Buildpath"></a>Buildpath</h1><p>第一次在 Eclipse 中需要引入第三方 Jar 包的时候，回想一下我们的操作：</p>
+<ol>
+<li>将 Jar 复制到 Lib 目录下</li>
+<li>右击选择 Add to Build Path</li>
+</ol>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp1.png" alt=""></p>
+<p>那么这个 <strong>BuildPath 到底是个什么东西啊？为什么需要加到 BuildPath才能使用呢？</strong></p>
+<p>要回答上面的问题我们可以换一种方式来思考：<strong>Eclipse 总归是一个 IDE，它的所有操作其实追其本质都是对 Java 命令的操作</strong>，只是它将 Java 的命令图形化了，当我们点击上面按钮，添加配置，它就会去地调用Java 相应的命令完成操作。</p>
+<p>那么可以这样思考问题，<strong>当我们抛开IDE的时候，如何引用第三方jar包进行程序的编写呢？</strong></p>
+<p>这里已 <code>mysql-connector.jar</code> 为例，抛开IDE，使用java代码连接数据库。</p>
+<p>写一个简单的 Demo，内容如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> biubiubiu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BuildPathDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1.注册驱动</span></span><br><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">        String url = <span class="string">"jdbc:mysql://localhost:3306/havafun"</span>;</span><br><span class="line">        String username = <span class="string">"root"</span>;</span><br><span class="line">        String password = <span class="string">"123456"</span>;</span><br><span class="line">        Connection conn = DriverManager.getConnection(url, username, password);</span><br><span class="line"></span><br><span class="line">        String sql = <span class="string">"select * from news where id=1"</span>;</span><br><span class="line">        PreparedStatement prepareStatement = conn.prepareStatement(sql);</span><br><span class="line">        ResultSet resultSet = prepareStatement.executeQuery();</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">            System.out.println(resultSet.getString(<span class="string">"title"</span>));</span><br><span class="line">            System.out.println(resultSet.getString(<span class="string">"desc"</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 关闭连接</span></span><br><span class="line">        prepareStatement.close();</span><br><span class="line">        conn.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们使用到了 <code>mysql-connector-java.jar</code> 这样连接的 jar 包，我们先将 我们的 <code>BuildPathDemo.java</code> 和 <code>jar包</code> 放到一个路径下，现在的目录结构就像下面这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">└─src</span><br><span class="line">    └─biubiubiu</span><br><span class="line">        HelloWorld.java</span><br><span class="line">        mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
+<p>这时候我们执行 <code>javac BuildPathDemo.java</code> 命令，得出结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  biubiubiu javac BuildPathDemo.java</span><br><span class="line">➜  biubiubiu ls</span><br><span class="line">BuildPathDemo.class      BuildPathDemo.java       mysql-connector-java.jar</span><br></pre></td></tr></table></figure>
+<p>可以看到编译成功，并且成功输出 编译后的字节码文件 <code>BuildPathDemo.class</code>。</p>
+<p>这时候我们试着运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  src java biubiubiu.BuildPathDemo</span><br><span class="line">Exception in thread "main" java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br><span class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</span><br><span class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)</span><br><span class="line">	at java.lang.Class.forName0(Native Method)</span><br><span class="line">	at java.lang.Class.forName(Class.java:264)</span><br><span class="line">	at biubiubiu.BuildPathDemo.main(BuildPathDemo.java:13)</span><br></pre></td></tr></table></figure>
+<p>(注意这里我是在 src 目录下执行的，关于为什么需要在 src 目录下执行我们待会再讲，先挖个坑。)</p>
+<p>报错提示 找不到 <code>com.mysql.jdbc.Driver</code> 这个类，13行的代码是通过反射去获取 <code>com.mysql.jdbc.Driver</code> 这个的类信息，并且这个类存在于我们导入的第三方 jar 包中，但现在提示没有，<strong>说明我们目前的 jar包 并没能成功使用</strong>。</p>
+<p>这时候我们来看看 java 命令中是否存在一些一些参数让我们在运行的时候指定到 jar 包的位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">➜  src java</span><br><span class="line">用法: java [-options] class [args...]</span><br><span class="line">           (执行类)</span><br><span class="line">   或  java [-options] -jar jarfile [args...]</span><br><span class="line">           (执行 jar 文件)</span><br><span class="line">其中选项包括:</span><br><span class="line">    -d32	  使用 32 位数据模型 (如果可用)</span><br><span class="line">    -d64	  使用 64 位数据模型 (如果可用)</span><br><span class="line">    -server	  选择 "server" VM</span><br><span class="line">                  默认 VM 是 server,</span><br><span class="line">                  因为您是在服务器类计算机上运行。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    -cp &lt;目录和 zip/jar 文件的类搜索路径&gt;</span><br><span class="line">    -classpath &lt;目录和 zip/jar 文件的类搜索路径&gt;</span><br><span class="line">                  用 : 分隔的目录, JAR 档案</span><br><span class="line">                  和 ZIP 档案列表, 用于搜索类文件。</span><br><span class="line">    -D&lt;名称&gt;=&lt;值&gt;</span><br><span class="line">                  设置系统属性</span><br><span class="line">    -verbose:[class|gc|jni]</span><br><span class="line">                  启用详细输出</span><br><span class="line">    -version      输出产品版本并退出</span><br><span class="line">    -version:&lt;值&gt;</span><br><span class="line">                  警告: 此功能已过时, 将在</span><br><span class="line">                  未来发行版中删除。</span><br><span class="line">                  需要指定的版本才能运行</span><br><span class="line">    -showversion  输出产品版本并继续</span><br><span class="line">    -jre-restrict-search | -no-jre-restrict-search</span><br><span class="line">                  警告: 此功能已过时, 将在</span><br><span class="line">                  未来发行版中删除。</span><br><span class="line">                  在版本搜索中包括/排除用户专用 JRE</span><br><span class="line">    -? -help      输出此帮助消息</span><br><span class="line">    -X            输出非标准选项的帮助</span><br><span class="line">    -ea[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">    -enableassertions[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">                  按指定的粒度启用断言</span><br><span class="line">    -da[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">    -disableassertions[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">                  禁用具有指定粒度的断言</span><br><span class="line">    -esa | -enablesystemassertions</span><br><span class="line">                  启用系统断言</span><br><span class="line">    -dsa | -disablesystemassertions</span><br><span class="line">                  禁用系统断言</span><br><span class="line">    -agentlib:&lt;libname&gt;[=&lt;选项&gt;]</span><br><span class="line">                  加载本机代理库 &lt;libname&gt;, 例如 -agentlib:hprof</span><br><span class="line">                  另请参阅 -agentlib:jdwp=help 和 -agentlib:hprof=help</span><br><span class="line">    -agentpath:&lt;pathname&gt;[=&lt;选项&gt;]</span><br><span class="line">                  按完整路径名加载本机代理库</span><br><span class="line">    -javaagent:&lt;jarpath&gt;[=&lt;选项&gt;]</span><br><span class="line">                  加载 Java 编程语言代理, 请参阅 java.lang.instrument</span><br><span class="line">    -splash:&lt;imagepath&gt;</span><br><span class="line">                  使用指定的图像显示启动屏幕</span><br></pre></td></tr></table></figure>
+<p>可以看到其中的 <code>-classpath</code> 或是 <code>-cp</code> 参数用于指定依赖的 .class 文件的路径，ok，我们在 java 命令上指定引用 jar包的路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  src java -cp biubiubiu/mysql-connector-java.jar: biubiubiu.BuildPathDemo</span><br><span class="line">蓝莲花</span><br><span class="line">真好听~</span><br></pre></td></tr></table></figure>
+<p><strong>执行成功，这里简单说明一下</strong><br>这里 <code>-cp</code> 指定了 jar包所在目录，但是后面接了一个 <code>:</code> 号，这是什么意思呢。这里的<strong>冒号表示分隔符，你可以通过它指定多个目录</strong>。比如你引入了 5个jar包，它们分别位于5个不同的目录，这时候你就需要指定5个jar包的位置啦。</p>
+<p><strong>通过这个栗子我们做出如下理解</strong><br><strong>Eclipse 的 Buildpath 其实就是保存第三方 jar 包的位置</strong>，这样当我们需要使用 第三方 jar 包的时候，就将其添加到 Buildpath 中，<strong>Eclipse 就会自动去这个 Buildpath 中寻找</strong>，如果没有找到的话当然就报错啦。</p>
+<p>注意这里 Eclipse 会有编辑的检测，所以其实我们在编译的时候就需要将 jar 包加入 Buildpath 中，这样 Eclipse 就知道去哪里寻找当前项目需要的类。</p>
+<p>但 BuildPath 可不止只有这个管理 类库的操作，他还有很多的东西，我们打开某个工程的 Buildpath设置 <code>Build Path—&gt;Configure Build Path</code>，可以发现有如下的操作</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp8.png" alt=""></p>
+<p>一共有四个选项卡：下面简单介绍一下它们分别是干啥的</p>
+<h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p><strong>指定源文件路径 和 输出文件路径</strong>。源文件路径就是我们的 <code>.java</code> 文件所在地址嘛，而输出文件路径对应的就是保存 编译后的 <code>.class</code> 文件啦。</p>
+<p>比如你创建新项目的时候，就会让你指定好输出的路径 (普通的Java工程默认指定: bin 目录)</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp2.png" alt=""></p>
+<p>如上图，默认指定的路径为 <code>bin</code> 目录，但是我们在 Eclipse 中是看不到的(我也不知道为什么，好像是被隐藏了)，不过在文件系统中能够发现。比如我们添加了一个 java 文件，Eclipse 其实就会自动调用 <code>javac</code> 命令编译产生 <code>.class</code> 文件(可以自己测试一下，添加一个 java 文件，然后再对应 bin 文件中查看情况)。<br>我们来模拟 Eclipse 的编译操作：指<strong>定编译的 java 路径，同时也指定输出的 .class 文件的路径</strong>，其实就是模拟 Eclipse 指定的 src 和 bin 目录啦。</p>
+<p>我们先来看看 javac 的可选参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">用法: javac &lt;options&gt; &lt;source files&gt;</span><br><span class="line">其中, 可能的选项包括:</span><br><span class="line">  -g                         生成所有调试信息</span><br><span class="line">  -g:none                    不生成任何调试信息</span><br><span class="line">  -g:&#123;lines,vars,source&#125;     只生成某些调试信息</span><br><span class="line">  -nowarn                    不生成任何警告</span><br><span class="line">  -verbose                   输出有关编译器正在执行的操作的消息</span><br><span class="line">  -deprecation               输出使用已过时的 API 的源位置</span><br><span class="line">  -classpath &lt;路径&gt;            指定查找用户类文件和注释处理程序的位置</span><br><span class="line">  -cp &lt;路径&gt;                   指定查找用户类文件和注释处理程序的位置</span><br><span class="line">  -sourcepath &lt;路径&gt;           指定查找输入源文件的位置</span><br><span class="line">  -bootclasspath &lt;路径&gt;        覆盖引导类文件的位置</span><br><span class="line">  -extdirs &lt;目录&gt;              覆盖所安装扩展的位置</span><br><span class="line">  -endorseddirs &lt;目录&gt;         覆盖签名的标准路径的位置</span><br><span class="line">  -proc:&#123;none,only&#125;          控制是否执行注释处理和/或编译。</span><br><span class="line">  -processor &lt;class1&gt;[,&lt;class2&gt;,&lt;class3&gt;...] 要运行的注释处理程序的名称; 绕过默认的搜索进程</span><br><span class="line">  -processorpath &lt;路径&gt;        指定查找注释处理程序的位置</span><br><span class="line">  -parameters                生成元数据以用于方法参数的反射</span><br><span class="line">  -d &lt;目录&gt;                    指定放置生成的类文件的位置</span><br><span class="line">  -s &lt;目录&gt;                    指定放置生成的源文件的位置</span><br><span class="line">  -h &lt;目录&gt;                    指定放置生成的本机标头文件的位置</span><br><span class="line">  -implicit:&#123;none,class&#125;     指定是否为隐式引用文件生成类文件</span><br><span class="line">  -encoding &lt;编码&gt;             指定源文件使用的字符编码</span><br><span class="line">  -source &lt;发行版&gt;              提供与指定发行版的源兼容性</span><br><span class="line">  -target &lt;发行版&gt;              生成特定 VM 版本的类文件</span><br><span class="line">  -profile &lt;配置文件&gt;            请确保使用的 API 在指定的配置文件中可用</span><br><span class="line">  -version                   版本信息</span><br><span class="line">  -help                      输出标准选项的提要</span><br><span class="line">  -A关键字[=值]                  传递给注释处理程序的选项</span><br><span class="line">  -X                         输出非标准选项的提要</span><br><span class="line">  -J&lt;标记&gt;                     直接将 &lt;标记&gt; 传递给运行时系统</span><br><span class="line">  -Werror                    出现警告时终止编译</span><br><span class="line">  @&lt;文件名&gt;                     从文件读取选项和文件名</span><br></pre></td></tr></table></figure>
+<p>需要用到的是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-d &lt;目录&gt;                    指定放置生成的类文件的位置</span><br><span class="line">-s &lt;目录&gt;                    指定放置生成的源文件的位置</span><br></pre></td></tr></table></figure>
+<p>通过这两个参数我们指定源文件 和 目标文件的路径，为了测试我们现在创建这样的目录结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">└─bin</span><br><span class="line">└─src</span><br><span class="line">    └─com</span><br><span class="line">        └─lan</span><br><span class="line">            └─biu</span><br><span class="line">                TestDemo.java</span><br></pre></td></tr></table></figure>
+<p>可以看到编译前 bin 目录还没有任何数据，现在我们通过 <code>-s</code> 和 <code>-d</code> 来指定 源文件 和 目标文件的地址。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -s src/ -d bin/ src/com/lan/biu/TestDemo.java</span><br></pre></td></tr></table></figure>
+<p>执行后的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">└─bin</span><br><span class="line">    └─com</span><br><span class="line">        └─lan</span><br><span class="line">            └─biu</span><br><span class="line">                TestDemo.class  </span><br><span class="line">└─src</span><br><span class="line">    └─com</span><br><span class="line">        └─lan</span><br><span class="line">            └─biu</span><br><span class="line">                TestDemo.java</span><br></pre></td></tr></table></figure>
+<p>在指定路径编译后就会<strong>在 bin 包下生成和 src 相同的包结构路径的 class 文件，注意是生成相同的包结构数据</strong>。</p>
+<p>这时候如果我们需要运行的话，是需要指定包路径的，这里顺带说说之前挖的<strong>带包名问题</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  bin java com.lan.biu.TestDemo</span><br><span class="line">biubiubiu~</span><br></pre></td></tr></table></figure>
+<p>注意我是在 bin 目录下执行的，这里简单解释一下，<strong>我们在运行的时候需要指定包结构，这里其实就相当于是指定路径</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java com.lan.biu.TestDemo -&gt; java com/lan/biu/TestDemo</span><br></pre></td></tr></table></figure>
+<p>因为这里的 com 文件是处于 bin 目录下，所以我们在运行的时候需要到 bin 目录下运行，否则就会提示 找不到主类，就像这样(我在 bin 的上层目录下执行)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  TestJavaCommand java com.lan.biu.TestDemo</span><br><span class="line">错误: 找不到或无法加载主类 com.lan.biu.TestDemo</span><br></pre></td></tr></table></figure>
+<p>因为这时候相当于去找 <code>TestJavaCommand/com/lan/biu</code> 目录下的 class 文件，当然是没有的嘛，真实的目录是在 <code>TestJavaCommand/bin/com/lan/biu</code>  中。同理如果你在 bin 子目录寻找也是无法找到的。</p>
+<h2 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h2><p>Project 中主要<strong>保存的是当前项目所依赖的当前工作空间的其他项目</strong>。</p>
+<p>什么意思呢，比如现在我有两个项目 <strong>TestProject</strong> 和 <strong>TestRelationProject</strong></p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp3.png" alt=""></p>
+<p>其中 TestRelationProject 中的 TestMain 引用了来自  TestProject 的 TestDemo 类，就像下面这样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lanc4r.tiannalu;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用了来自 TestProject 工程的类</span></span><br><span class="line"><span class="keyword">import</span> com.lanc4r.biubiubiu.TestDemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestMain</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestDemo.testSyso();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候我们就需要在 Project 中添加所依赖的工程啦。</p>
+<h2 id="Library"><a href="#Library" class="headerlink" title="Library"></a>Library</h2><p><strong>Libaray 就是管理当前工程引用的 系统运行库（JRE）、第三方的功能扩展库、工作空间中的其他工程，甚至外部的类文件。</strong></p>
+<p><strong>Add JARs</strong>：是添加当前项目目录中的的jar文件。<br><strong>Add External JARs</strong>：是添加当前项目之外的外部目录中的jar文件。<br><strong>Add Variable</strong>：是添加变量。<br><strong>Add Library</strong>：是添加JRE系统的库。<br><strong>Add Class Folder</strong>：添加当前项目中编译之后的.class文件。<br><strong>Add External Class Folder</strong>：添加当前项目之外的.class文件。</p>
+<p>以上是摘自一位老哥的博客：<a href="https://blog.csdn.net/u013991521/article/details/48295115" target="_blank" rel="noopener">Eclipse中Build Path的使用介绍—学习笔记</a></p>
+<h3 id="HL瞎BB"><a href="#HL瞎BB" class="headerlink" title="HL瞎BB"></a>HL瞎BB</h3><p>其实我对于这个 Library 理解就是字面的意思：<strong><big>类库</big></strong>。它存放了所有<strong>编译和运行时期</strong>需要的 .class文件(你可以把 jar包理解为 .class 文件的集合)。</p>
+<p>想想最开始所举的 Buildpath 的栗子，<strong>Eclipse 需要一片空间来存放所有当前工程之外的类库，而这片空间就是 Library 了</strong>。在我们想在 Eclipse 中引用一个 jar包的时候，就需要将其添加到 Eclipse 专门存储的地方 —— Library，这样在编译的时候 Eclipse 就知道：奥，你想引入这个类，我去我的类库给你找找吧。</p>
+<p>至于上面的各种添加形式，简单就是导入类的形式不同咯，它们本质都是一样的，都是将工程之外的需要引用的类放到 Eclipse 专门存放地方，方便 Eclipse 进行管理。</p>
+<h3 id="有个疑问"><a href="#有个疑问" class="headerlink" title="有个疑问"></a>有个疑问</h3><p>在我们新建工程的时候，有个地方能够让我们选择 JRE</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp4.png" alt=""></p>
+<p>这其中可以选择配置 JRE</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp5.png" alt=""></p>
+<p>最上面说到，默认情况下，<strong>下面被勾选的 JRE 将会在新的项目创建的时候加入到 Buildpath 中</strong>。</p>
+<p>然后我们在选择编辑 JRE 的时候可以当前 JRE 的 HOME 目录，以及其中包含的包。</p>
+<p>所以我现在有个这样的问题，当我们使用 IDE 的时候，<strong>创建项目的同时我们就将 JRE 添加到了项目中，也就是说，Eclipse 帮我们在创建项目的时候就加入了 JRE 这个类库</strong>，所以我们才能够创建一个 JRE 类库中的类(比如 System 类)，并且使用 <code>System.out.println(&quot;hello world~&quot;);</code> 输出语句输出 HelloWorld。</p>
+<p>但是在我们脱离了 IDE 之后，通过一些编辑器编写，命令行的形式来运行 Java 代码。<strong>这种情况下谁来帮我们帮我们添加运行时候的类库呢？</strong></p>
+<p>我们先试试将项目中的 JRE 这个类库删除之后，看看会报出什么错误</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lanc4r.biubiubiu;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello world~"</span>);</span><br><span class="line">        System.out.println(<span class="string">"hello world2~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">以下是报错信息</span><br><span class="line"></span><br><span class="line">Multiple markers at <span class="keyword">this</span> line</span><br><span class="line">	- The type java.lang.Object cannot be resolved. It is indirectly referenced from </span><br><span class="line">	 required .class files</span><br><span class="line">	- The type java.lang.String cannot be resolved. It is indirectly referenced from required .class </span><br><span class="line"> </span><br><span class="line"> <span class="function">Implicit <span class="keyword">super</span> constructor <span class="title">Object</span><span class="params">()</span> is undefined <span class="keyword">for</span> <span class="keyword">default</span> constructor. Must define an explicit constructo</span></span><br><span class="line"><span class="function"> </span></span><br><span class="line"><span class="function"> String cannot be resolved to a type</span></span><br><span class="line"><span class="function"> System cannot be  resolved</span></span><br></pre></td></tr></table></figure>
+<p>可以发现我们删除 JRE 类库之后，各种报错，<strong>Object</strong>、<strong>String</strong>、<strong>System</strong> 都找不到了，这是正常的反应，因为我们 JRE 类库删除了，这些类都是存在于 JRE 类库中的。</p>
+<p>但是我们的命令行呢，为什么我没有手动加入JRE包编译也不会报错呢？为什么还能够正常运行？是在那个阶段进行类库的加载呢？在哪配置了 JRE的默认加载？通过谁来加载外部 Jar包？</p>
+<p><strong>这个问题先立个 Flag，等后面有机会了解一下这方面的知识。</strong></p>
+<h2 id="Order-And-Export"><a href="#Order-And-Export" class="headerlink" title="Order And Export"></a>Order And Export</h2><p>首先看这个标签页的名称能得出的信息是：它的用作是 <strong>修改顺序</strong> 和 <strong>导出设置</strong>。</p>
+<p>先看看 Eclipse 官方给出的解释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In the Build class path order list, you can click the Up and Down buttons to move the selected path entry </span><br><span class="line">up or down in the build path order for this new project.</span><br><span class="line">Checked list entries are marked as exported. Exported entries are visible to projects that require the project. </span><br><span class="line">Use the Select All and Deselect All to change the checked state of all entries. </span><br><span class="line">Source folders are always exported, and can not be deselected.</span><br></pre></td></tr></table></figure>
+<p>在 <strong>Order And Eport</strong> 中你可以修改这些已经选择的库的Buildpath顺序。<strong>被选择的库被标记为导出之后，当某一项目依赖与这个导出的项目的时候，这些被标记为导出的类库就对此项目是可见的</strong>。Source 文件夹一定会被导出，且不可修改为不导出。</p>
+<h3 id="Order"><a href="#Order" class="headerlink" title="Order"></a>Order</h3><p>首先是关于这个排序的问题，这个应该是涉及到 类库的加载顺序问题，等到下次了解明白了之后再说说吧，先放着。</p>
+<h3 id="Export"><a href="#Export" class="headerlink" title="Export"></a>Export</h3><p>在看官方的解释没怎么明白的情况下，我又去搜了一下网上给出的解释…..</p>
+<p>之前我以为只要是勾选上的资源，在导出的时候就会一并导出…….然后事实证明我还是太天真了，我自己测试了一下不同的导出情况，选择是否导出 <code>Blog/lib</code> 这个目录的资源。</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp6.png" alt=""></p>
+<p>对比了一下勾选和不勾选的区别，其实就是在生成的 <code>.classpath</code> 文件中的不同，就像下面这样</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">➜  export_train diff -c TestExportProjectt/.classpath TestExportProjectt6/.classpath</span><br><span class="line">*** TestExportProjectt/.classpath	Wed May 22 23:05:40 2019</span><br><span class="line">--- TestExportProjectt6/.classpath	Wed May 22 22:57:29 2019</span><br><span class="line">***************</span><br><span class="line">*** 2,8 ****</span><br><span class="line">  &lt;classpath&gt;</span><br><span class="line">  	&lt;classpathentry kind="src" path="src"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/&gt;</span><br><span class="line">! 	&lt;classpathentry kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">  	&lt;classpathentry combineaccessrules="false" exported="true" kind="src" path="/TestProject"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="output" path="bin"/&gt;</span><br><span class="line">  &lt;/classpath&gt;</span><br><span class="line">--- 2,8 ----</span><br><span class="line">  &lt;classpath&gt;</span><br><span class="line">  	&lt;classpathentry kind="src" path="src"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/&gt;</span><br><span class="line">! 	&lt;classpathentry exported="true" kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">  	&lt;classpathentry combineaccessrules="false" exported="true" kind="src" path="/TestProject"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="output" path="bin"/&gt;</span><br><span class="line">  &lt;/classpath&gt;</span><br></pre></td></tr></table></figure>
+<p>感叹号的地方表示不同之处</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  export_train diff TestExportProjectt/.classpath TestExportProjectt6/.classpath</span><br><span class="line">5c5</span><br><span class="line">&lt; 	&lt;classpathentry kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span> 	&lt;classpathentry exported="true" kind="lib" path="/Bolg/lib"/&gt;</span><br></pre></td></tr></table></figure>
+<p>当我们选择勾选的时候，这个 <code>classpathentry</code> 就会多出一条属性：<code>exported=&quot;true&quot;</code>。我们再结合着官网文档 和 Stack Overflow 的两个回答：</p>
+<p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp7.png" alt=""></p>
+<p><strong>Exported entries are visible to projects that require the project.</strong></p>
+<p><strong>A dependent project that expects some resource from the contributing project will not compile/run if the contributing project doesn’t export that resource.</strong></p>
+<p><strong>我们可以得出以下结论</strong><br>如果一个项目不选择导出它自己的资源，则其它依赖于此项目的项目都无法使用这个没有被导出的资源。</p>
+<p>举个简单例子(其实就是上面 5票的答案)</p>
+<p><strong>ProjectA</strong> 存在类库 <strong>LibA</strong>(可以是自定义的类库、一个 Jar包、或是一个文件夹，只要是能够被勾选的都算)。现在 <strong>ProjectB</strong> 依赖于 <strong>ProjectA</strong>，并且想使用它的 <strong>LibA</strong> 来做事情，但在导出的时候，<strong>ProjectA</strong> 选择不导出 <strong>LibA</strong>，这时候 <strong>ProjectB</strong> 就无法编译/运行了。</p>
+<p>原理上分析大概就是如此，但是实际我也不知道怎么进行测试，感觉上就只是跟 Eclipse 这个IDE 有关，就是 <strong>Eclipse 的一些项目管理的规定吧</strong>，我猜是这样哈，总之感觉跟 Java 没什么关系，所以这里就了解到这里了……</p>
+<p>总之至少推翻了之前的想法：<strong>并不是选择的了的东西就会随着你的导出项目而一并导出，它只是一个中 Eclipse 的项目管理产物，解决于项目之间依赖的问题</strong>。跟实际上你具体会导出什么没什么关系……</p>
+<h1 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h1><p><a href="https://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.jdt.doc.user/reference/ref-properties-build-path.htm" target="_blank" rel="noopener">Java Build Path</a><br><a href="https://blog.csdn.net/u013991521/article/details/48295115" target="_blank" rel="noopener">Eclipse中Build Path的使用介绍—学习笔记</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>好累…….</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/19/从入门到迷路系列——心理学学习笔记(四)/" rel="next" title="从入门到迷路系列 —— 心理学学习笔记(认知的发展历程)">
+                <i class="fa fa-chevron-left"></i> 从入门到迷路系列 —— 心理学学习笔记(认知的发展历程)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Buildpath"><span class="nav-number">2.</span> <span class="nav-text">Buildpath</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Source"><span class="nav-number">2.1.</span> <span class="nav-text">Source</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Project"><span class="nav-number">2.2.</span> <span class="nav-text">Project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Library"><span class="nav-number">2.3.</span> <span class="nav-text">Library</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HL瞎BB"><span class="nav-number">2.3.1.</span> <span class="nav-text">HL瞎BB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有个疑问"><span class="nav-number">2.3.2.</span> <span class="nav-text">有个疑问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Order-And-Export"><span class="nav-number">2.4.</span> <span class="nav-text">Order And Export</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Order"><span class="nav-number">2.4.1.</span> <span class="nav-text">Order</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Export"><span class="nav-number">2.4.2.</span> <span class="nav-text">Export</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REF"><span class="nav-number">3.</span> <span class="nav-text">REF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
