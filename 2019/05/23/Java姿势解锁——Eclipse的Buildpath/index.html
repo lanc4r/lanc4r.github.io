@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp5.png">
 <meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp6.png">
 <meta property="og:image" content="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp7.png">
-<meta property="og:updated_time" content="2019-05-23T15:23:40.964Z">
+<meta property="og:updated_time" content="2019-05-24T15:38:17.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java姿势解锁 —— Eclipse 的 BuildPath">
 <meta name="twitter:description" content="前言这次说说 Eclipse 的 Buildpath。">
@@ -395,6 +395,12 @@
         </a>
       </span>
     
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
   </div>
   
 
@@ -453,6 +459,17 @@
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
                     <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
                   </a>
                 </span>
 
@@ -581,7 +598,7 @@
 <p>对比了一下勾选和不勾选的区别，其实就是在生成的 <code>.classpath</code> 文件中的不同，就像下面这样</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">➜  export_train diff -c TestExportProjectt/.classpath TestExportProjectt6/.classpath</span><br><span class="line">*** TestExportProjectt/.classpath	Wed May 22 23:05:40 2019</span><br><span class="line">--- TestExportProjectt6/.classpath	Wed May 22 22:57:29 2019</span><br><span class="line">***************</span><br><span class="line">*** 2,8 ****</span><br><span class="line">  &lt;classpath&gt;</span><br><span class="line">  	&lt;classpathentry kind="src" path="src"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/&gt;</span><br><span class="line">! 	&lt;classpathentry kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">  	&lt;classpathentry combineaccessrules="false" exported="true" kind="src" path="/TestProject"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="output" path="bin"/&gt;</span><br><span class="line">  &lt;/classpath&gt;</span><br><span class="line">--- 2,8 ----</span><br><span class="line">  &lt;classpath&gt;</span><br><span class="line">  	&lt;classpathentry kind="src" path="src"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/&gt;</span><br><span class="line">! 	&lt;classpathentry exported="true" kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">  	&lt;classpathentry combineaccessrules="false" exported="true" kind="src" path="/TestProject"/&gt;</span><br><span class="line">  	&lt;classpathentry kind="output" path="bin"/&gt;</span><br><span class="line">  &lt;/classpath&gt;</span><br></pre></td></tr></table></figure>
 <p>感叹号的地方表示不同之处</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  export_train diff TestExportProjectt/.classpath TestExportProjectt6/.classpath</span><br><span class="line">5c5</span><br><span class="line">&lt; 	&lt;classpathentry kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span> 	&lt;classpathentry exported="true" kind="lib" path="/Bolg/lib"/&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  export_train diff TestExportProjectt/.classpath TestExportProjectt6/.classpath</span><br><span class="line">5c5</span><br><span class="line">&lt; 	&lt;classpathentry kind="lib" path="/Bolg/lib"/&gt;</span><br><span class="line">---</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 	&lt;classpathentry exported=<span class="string">"true"</span> kind=<span class="string">"lib"</span> path=<span class="string">"/Bolg/lib"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当我们选择勾选的时候，这个 <code>classpathentry</code> 就会多出一条属性：<code>exported=&quot;true&quot;</code>。我们再结合着官网文档 和 Stack Overflow 的两个回答：</p>
 <p><img src="https://view.moezx.cc/images/2019/05/23/lanc4r-buildp7.png" alt=""></p>
 <p><strong>Exported entries are visible to projects that require the project.</strong></p>
@@ -789,7 +806,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
                 </a>
               </div>
