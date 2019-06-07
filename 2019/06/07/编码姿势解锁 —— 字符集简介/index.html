@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="字符集,字符编码,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言找到了一篇老博客，记录的时间是 2016年11月份，这里翻出来重新学习一下。">
+<meta name="keywords" content="字符集,字符编码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码姿势解锁 —— 字符集简介">
+<meta property="og:url" content="http://yoursite.com/2019/06/07/编码姿势解锁 —— 字符集简介/index.html">
+<meta property="og:site_name" content="合缘奇缘，一期一念">
+<meta property="og:description" content="前言找到了一篇老博客，记录的时间是 2016年11月份，这里翻出来重新学习一下。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-2.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-3.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-LE.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-BE.png">
+<meta property="og:updated_time" content="2019-06-07T04:20:52.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编码姿势解锁 —— 字符集简介">
+<meta name="twitter:description" content="前言找到了一篇老博客，记录的时间是 2016年11月份，这里翻出来重新学习一下。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '合缘奇缘，一期一念',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/07/编码姿势解锁 —— 字符集简介/">
+
+
+
+
+
+  <title>编码姿势解锁 —— 字符集简介 | 合缘奇缘，一期一念</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/05/25/lanc4rbg3.jpg')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>合</span><span>缘</span><span>奇</span><span>缘</span><span>，</span><span>一</span><span>期</span><span>一</span><span>念</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">07</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/编码姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">编码姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/07/编码姿势解锁 —— 字符集简介/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="合缘奇缘，一期一念">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编码姿势解锁 —— 字符集简介</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-07T12:00:05+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/编码姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">编码姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>找到了一篇老博客，记录的时间是 2016年11月份，这里翻出来重新学习一下。</p>
+<a id="more"></a>
+<h1 id="简单概念"><a href="#简单概念" class="headerlink" title="简单概念"></a>简单概念</h1><p>这篇主题是字符集，我们先了解几个概念</p>
+<h2 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h2><p><strong>字符是抽象的最小文本单位</strong>。它没有固定的形状（可能是一个字形），而且没有值。“A”是一个字符，“€”（德国、法国和许多其他欧洲国家通用货币的标志）也是一个字符。“中”“国”这是两个汉字字符。<strong>字符仅仅代表一个符号，没有任何实际值的意义</strong>。</p>
+<h2 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h2><p><strong>字符集是字符的集合</strong>。例如，汉字字符是中国人最先发明的字符，在中文、日文、韩文和越南文的书写中使用。这也说明了字符和字符集之间的关系，<strong>字符组成字符集（常见的有：Ascii、ISO8859-1，GB2312/GBK，Unicode）</strong>。</p>
+<h2 id="代码点"><a href="#代码点" class="headerlink" title="代码点"></a>代码点</h2><p><strong>字符集中的每个字符都被分配到一个“代码点”。每个代码点都有一个特定的唯一数值，称为标值</strong>。该标量值通常用十六进制表示。</p>
+<h2 id="代码单元"><a href="#代码单元" class="headerlink" title="代码单元"></a>代码单元</h2><p>在每种编码形式中，<strong>代码点被映射到一个或多个代码单元。“代码单元”是各个编码方式中的单个单元。代码单元的大小等效于特定编码方式的位数</strong>。</p>
+<h2 id="字符集和编码"><a href="#字符集和编码" class="headerlink" title="字符集和编码"></a>字符集和编码</h2><p>在之前我经常分不清楚 <strong>UTF-8</strong> 和 <strong>Unicode</strong> 的关系，其实它们的关系就是 编码和字符集的关系。<br><strong>Unicode 是一种包含全世界所有字符的字符集，又叫统一码、万国码，它为世界650种语言进行统一编码</strong>，你简单理解世界上所有的语言字符都可以在其中找到。<br><strong>UTF 全称是：Unicode Transformation Format</strong>，翻译过来就是 <strong>Unicode 编码方式</strong>，那么 <code>8</code> 呢，其实表示的是 <strong>Unicode 的其中一种编码方式，它规定最小的是单位是 8 bit，也即是 1 byte，这就造就 UTF-8 是变长的属性</strong>。当然 Unicode 的编码方式<br>还包含 <strong>UTF-16</strong>、<strong>UTF-32</strong>，它们最小的单位分别是：<strong>16bit</strong> 和 <strong>32bit</strong>。</p>
+<p>你可以这样理解，想想最熟悉的 ASCII 码表，其中一个字符对应着一个数字，比如小写字母 a 对应就是 97。其实 Unicode 和 ASCII 是一样的，也是一个字符对应着一个数字，只是 Unicode 这个表大一些罢了。</p>
+<p>至于<strong>编码，其实就是对这个字符对应的数字编码</strong>，比如一个汉字 “瞬”，它对应着 Unicode 的值是 ： <strong>30636</strong>，这时候用 UTF-16 编码为 <strong>0x77AC</strong>，但如果通过 UTF-8 来编码的话结果就不是 <strong>0x77AC</strong> 而是 <strong>0xE79EAC</strong>。<strong>不管是 0x77AC 还是 0xE79EAC，它们最后解码后一定会得到值：30636</strong>。</p>
+<p>所以<strong>编码其实就是把字符集中字符对应的数值以特殊的形式保存起来</strong>，这样做有一些好处，比如节省存储空间，增加容错性，这个待会说~</p>
+<h2 id="计算机中的存储"><a href="#计算机中的存储" class="headerlink" title="计算机中的存储"></a>计算机中的存储</h2><p>我们知道计算机中是二进制的世界，那么它是怎么存储我们的字符的呢？当然就是<strong>存储字符对应的数值</strong>啦，其实也就是我们的代码点，<strong>如果字符被编码，它只需要存储编码后的值就行啦</strong>。比如“瞬”在计算机中存储为 <strong>0x77AC</strong>，或是编码后的样子 <strong>0xE79EAC</strong>。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>这里还有一个问题，<strong>我们只是存储了其代码点，但是如何从代码点映射到相应的字符呢？比如 Unicode 字符集，这个字符集到底存储在哪里呢？</strong></p>
+<h2 id="常见的字符集和编码"><a href="#常见的字符集和编码" class="headerlink" title="常见的字符集和编码"></a>常见的字符集和编码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">ASCII及其扩展字符集</span><br><span class="line">作用：表语英语及西欧语言。</span><br><span class="line">位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。</span><br><span class="line">范围：ASCII从00到7F，扩展从00到FF。</span><br><span class="line"></span><br><span class="line">ISO-8859-1字符集</span><br><span class="line">作用：扩展ASCII，表示西欧、希腊语等。</span><br><span class="line">位数：8位，</span><br><span class="line">范围：从00到FF，兼容ASCII字符集。</span><br><span class="line"></span><br><span class="line">GB2312字符集</span><br><span class="line">作用：国家简体中文字符集，兼容ASCII。</span><br><span class="line">位数：使用2个字节表示，能表示7445个符号，包括6763个汉字，几乎覆盖所有高频率汉字。</span><br><span class="line">范围：高字节从A1到F7, 低字节从A1到FE。将高字节和低字节分别加上0XA0即可得到编码。</span><br><span class="line"></span><br><span class="line">BIG5字符集</span><br><span class="line">作用：统一繁体字编码。</span><br><span class="line">位数：使用2个字节表示，表示13053个汉字。</span><br><span class="line">范围：高字节从A1到F9，低字节从40到7E，A1到FE。</span><br><span class="line"></span><br><span class="line">GBK字符集</span><br><span class="line">作用：它是GB2312的扩展，加入对繁体字的支持，兼容GB2312。</span><br><span class="line">位数：使用2个字节表示，可表示21886个字符。</span><br><span class="line">范围：高字节从81到FE，低字节从40到FE。</span><br><span class="line"></span><br><span class="line">GB18030字符集</span><br><span class="line">作用：它解决了中文、日文、朝鲜语等的编码，兼容GBK。</span><br><span class="line">位数：它采用变字节表示(1 ASCII，2，4字节)。可表示27484个文字。</span><br><span class="line">范围：1字节从00到7F; 2字节高字节从81到FE，低字节从40到7E和80到FE；4字节第一三字节从81到FE，第二四字节从30到39。</span><br><span class="line"></span><br><span class="line">UCS字符集</span><br><span class="line">作用：国际标准 ISO 10646 定义了通用字符集 (Universal Character Set)。它是与UNICODE同类的组织，UCS-2和UNICODE兼容。</span><br><span class="line">位数：它有UCS-2和UCS-4两种格式，分别是2字节和4字节。</span><br><span class="line">范围：目前，UCS-4只是在UCS-2前面加了0×0000。</span><br><span class="line"></span><br><span class="line">UNICODE字符集</span><br><span class="line">作用：为世界650种语言进行统一编码，兼容ISO-8859-1。</span><br><span class="line">位数：UNICODE字符集有多个编码方式，分别是UTF-8，UTF-16和UTF-32。</span><br></pre></td></tr></table></figure>
+<h1 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h1><p>这次我们只讲最常见的字符集 Unicode，前面说过它是包含全世界所有字符的集合。<strong>在最开始的时候它只用 2个字节来编码字符</strong>，也即是 <strong>2的16次方 65535</strong> 个字符。但这样一个纷繁复杂的世界，只用 2个字节显然不能表示所有的字符，于是为了包罗万象，Unicode 的制定者 <a href="https://zh.wikipedia.org/wiki/%E7%B5%B1%E4%B8%80%E7%A2%BC%E8%81%AF%E7%9B%9F" target="_blank" rel="noopener">The Unicode Consortium</a> 扩展了 Unicode，<strong>使用 4个字节来表示(大概有 20亿+)</strong>，比如我们常用的 emoji 表情，它也被归纳进 Unicode 字符集中，这个大小应该能撑到人类文明灭亡那天吧….</p>
+<h2 id="Unicode-编码"><a href="#Unicode-编码" class="headerlink" title="Unicode 编码"></a>Unicode 编码</h2><h3 id="UTF-32"><a href="#UTF-32" class="headerlink" title="UTF-32"></a>UTF-32</h3><p>UTF-32 编码<strong>最小单位是 32 bit，也即是 4 byte</strong>。那么它是怎么存储字符的呢，举个栗子：字符 a，它的对应数值是 97，也即是 0x61，它占据的大小是 1个字节，<strong>如果我们使用 UTF-32 来存储字符a，却需要 4个字节来存储</strong>！因为它的最小的单位是 4个字节嘛，这样就会白白浪费掉 3个字节的数据。</p>
+<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><p>同理 UTF-32，它的<strong>最小单位是 16bit，2byte</strong>。它的存储方式就是2字节个一存的，所以它相对于 UTF-32 来说是变长的。比如某个字符所占大小是 3个字节，如果使用 UTF-16 编码来存的话，最终的大小就是 4个字节，因为它总是 2字节的递增的嘛。</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p><strong>UTF-8 最小单位是 8bit，1 byte，它通过单个字节的递增来达到变长的特性</strong>。比如我们在最开始时候说的字符 a，如果使用 UTF-8 来存储它的大小就是 1byte。下面我们来看一下不同大小的数值在 UTF-8 中是怎么存储的。</p>
+<h4 id="Unicode-第一版"><a href="#Unicode-第一版" class="headerlink" title="Unicode 第一版"></a>Unicode 第一版</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">U-0000 - U-007F: 0xxxxxxx</span><br><span class="line">U-0080 - U-07FF: 110xxxxx 10xxxxxx</span><br><span class="line">U-0800 - U-FFFF: 1110xxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure>
+<h4 id="Unicode第二版"><a href="#Unicode第二版" class="headerlink" title="Unicode第二版"></a>Unicode第二版</h4><p>因为第一版的 Unicode 只能存储2个字节的数据，<strong>到第二版后，UTF-8 最大字节数也从 3个字节变到 6个字节</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">U-00000000 - U-0000007F: 0xxxxxxx</span><br><span class="line">U-00000080 - U-000007FF: 110xxxxx 10xxxxxx</span><br><span class="line">U-00000800 - U-0000FFFF: 1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">U-00010000 - U-001FFFFF: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">U-00200000 - U-03FFFFFF: 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br><span class="line">U-04000000 - U-7FFFFFFF: 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure></p>
+<p>从上面的情况我们可以看出，因为 <strong>UTF-8 为了实现变长的功能，它牺牲了一些位置做了标志位</strong>，待会再说为什么这里需要这种标志位。所以这里导致了一个问题，比如一个大小为 <strong>0x8F</strong>的字符，它本来只会占据一个字节，但是如果使用 UTF-8 来存储的话就会占据了两个字节。</p>
+<p>还有如果我们想存储的数据大部分都是汉字的话，此时使用 UTF-16 编码就比 UTF-8 会节省空间，因为汉字的编码大多在 <strong>0x3FFF 左右(在 U-0800 - U-FFFF 范围内)，这时使用 UTF-8 来存储的话就是三个字节，但是使用 UTF-16 编码就只会使用两个字节啦</strong>。所以 UTF-8 也并不总是最好的，如果你是想要节省空间，最好是根据所存储的数据来选择编码方式；但如果不是那么在乎存储空间，还是推荐使用 UTF-8 的编码方式，因为普遍啊，大家都用，到你这儿也不用再去转码。</p>
+<h4 id="UTF-8-的标志位"><a href="#UTF-8-的标志位" class="headerlink" title="UTF-8 的标志位"></a>UTF-8 的标志位</h4><p>我们知道 UTF-8 是变长的编码格式，也就是一串字符，可能第一个占据 1个字节，第二个占据 2个字节，第三个占据 3个字节。那么它怎么知道当前的这个字符应该占据几个字节呢，这就是标志位的作用啦，比如当它第一次开始读的时候，发现第一个字节数据是 <strong>110xxxxx</strong> 的形式，它就知道了：奥，当前这字符需要两个字节，于是再读后面一个字节，将当前两个字节进行解码得到字符。<br>如果是 <strong>1110xxxx</strong> 的形式，它就再读后面两个字节，将三个字节数据进行解码得到字符。</p>
+<p>至于后面为什么是 <strong>10xxxxxx</strong> 的形式我就是猜的了，你看看决定读取字节个数的标志位，都是 <code>11</code>开头的，比如 <code>110</code>、<code>1110</code>，这里使用 <code>10</code> 刚好可以和标志位区分开来：如果要是不写的话，那么这个字节的大小可能正好是 <strong>110xxxxx</strong>，这时候又会把其当做第一个字符来读取了，这样就不对啦。</p>
+<h4 id="乱码的形成和容错"><a href="#乱码的形成和容错" class="headerlink" title="乱码的形成和容错"></a>乱码的形成和容错</h4><p>乱码的形成主要原因就是编码方式不一致嘛，比如你一个 <strong>UTF-8</strong> 编码的字符串：<strong>(0x2F)(0xE7A3A7)(0xD8A9)</strong>，这时你使用 <strong>UTF-16</strong> 编码来解码的话，就会变成 <strong>(0x2FE7)(0xA3A7)(0xD8A9)</strong> 这时候当然解出来的字符和之前 <strong>UTF-8</strong> 想表达的字符就不同了啦。并且 <strong>UTF-8</strong> 编码中，每个字节都会有标志位的存在，这些在解码的时候是需要被舍弃掉的(具体怎么做看后面编解码部分)，如果另一种编码方式将标志位也当做字符编码的一部分，这样得到的数据可定会有所不同。</p>
+<p>接下来说说容错的事情，这里就以 Unicode 的第一个版本来说明吧，此时 <strong>UTF-16 编码是定量读取两个字节</strong>，两个字节足够表示第一版所有的字符，所以此时，UTF-16 编码是没有标志位可言的。</p>
+<p>比如一个字符串为：<strong>(0x2FE7)(0xA3A7)(0xD8A9)(0xA78D)</strong>，这时候在传输的时候第二个字符的一个字节<strong>(0xA3)</strong>丢失了，这时候 <strong>UTF-16</strong> 解码就变成： <strong>(0x2FE7)</strong><font style="color: red;"><strong>(0xA7D8)(0xA9A7)(0x8D)</strong></font> 红色的部分开始，之后的字符串将会全部乱掉。</p>
+<p>再来说说 <strong>UTF-8</strong>，我们知道 <strong>UTF-8 读取字符串的时候是通过标志位来判断的</strong>，也就是说<strong>就算你在传输的过程中丢了一个字节，唯一会影响的就是涉及到那个字节的字符而已，对于于后的字符，同样还是会根据标志位来判断读取，后面的字符并不会受到影响</strong>。</p>
+<p>由上可以得出结论：<strong>UTF-8 相较于 UTF-16 的容错性更好</strong>，你可以简单的理解为拥有标志位检测的编码容错性都不错。</p>
+<h2 id="UTF-8的编解码"><a href="#UTF-8的编解码" class="headerlink" title="UTF-8的编解码"></a>UTF-8的编解码</h2><p>前面我们说过，UTF-8 就是把 Unicode 中的字符对应的数字进行存储，这个存储的过程就称为编码，同理把 UTF-8 存储的数字取出来就称为解码咯。</p>
+<p>下面举一个栗子说一下编解码的过程，还是举栗前面的栗子 “瞬”，它的 Unicode 码为：<strong>30636</strong>，16进制表示为 <strong>0x77AC</strong>。这里我们只说说 Unicode 第一版的情况，一个字符最多占据两个字节，所以由于 <strong>0x77AC &gt; U-07FF</strong>，将其使用 UTF-8 编码将会占据 3个字节，也就是变成 <strong>1110xxxx 10xxxxxx 10xxxxxx</strong> 的形式，那么怎么把 <strong>0x77AC</strong> 这个值保存进这个格式中呢？</p>
+<p>其实很简单，就是从高位开始，逐个往里塞…..</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-1.png" alt=""></p>
+<p>所以最终的结果就是 <strong>0xE79EAC</strong></p>
+<p>以上是 UTF-8 的编码过程，接下来看看将 UTF-8 解码变成 Unicode 的情况：</p>
+<p>解码的过程也很简单，就是之前编码的逆向过程。</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-2.png" alt=""></p>
+<h1 id="小彩蛋"><a href="#小彩蛋" class="headerlink" title="小彩蛋"></a>小彩蛋</h1><h2 id="USC、USC-2、USC-4"><a href="#USC、USC-2、USC-4" class="headerlink" title="USC、USC-2、USC-4"></a>USC、USC-2、USC-4</h2><p>USC 全程是 <strong>Universal Multiple-Octet Coded Character Set</strong>，你可以理解也是一套字符集，它是由 ISO 组织开展的一个项目的产物。它和 Unicode 一样也是一个字符集，到 Unicode2.0 时候，USC 和 Unicode 编码基本一致。</p>
+<p>USC-2 和 USC-4 是 USC 的编码方式，前者使用 2个字节编码，后者使用 4个字节。</p>
+<p>具体请参考 <a href="https://blog.csdn.net/ultrani/article/details/8432767" target="_blank" rel="noopener">unicode和ucs的区别</a></p>
+<h2 id="字节序"><a href="#字节序" class="headerlink" title="字节序"></a>字节序</h2><p><strong>字节序是指在编解码的时候通过不同的顺序来进行</strong>，什么意思呢，还是来看看 “瞬” 字，我们通过不同的编码形式来保存。</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-3.png" alt=""></p>
+<p>由于历史原因，windows 默认把 UTF-16 little Endian 叫做了 Unicode 有兴趣的可以去了解一下 <a href="https://www.zhihu.com/question/52346583" target="_blank" rel="noopener">知乎</a>。</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-LE.png" alt=""></p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-char1-BE.png" alt=""></p>
+<p>我们来看看其十六进制数据，发现<strong>它们的顺序改变了，并且要注意文件头，两种编码方式的文件头是有区别的</strong>。在进行网络传输的时候，<strong>通过字节序来决定把第一个接受到的字节放到高位还是低位</strong>。</p>
+<p>比如一个字符编码是 <strong>0xAC9D</strong>，它传输过程中第一个接收的字节是 <strong>0xAC</strong>，那么把这个字节放到高位得到结果就是 <strong>0xAC9D</strong>，但如果把第一个字节放到低位此时得到结果就是 <strong>0x9DAC</strong>。</p>
+<h3 id="列举常见的编码字节序对应的文件头"><a href="#列举常见的编码字节序对应的文件头" class="headerlink" title="列举常见的编码字节序对应的文件头"></a>列举常见的编码字节序对应的文件头</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">UTF编码</th>
+<th style="text-align:center">文件头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">UTF-8</td>
+<td style="text-align:center">EF BB BF</td>
+</tr>
+<tr>
+<td style="text-align:center">UTF-16LE</td>
+<td style="text-align:center">FF FE</td>
+</tr>
+<tr>
+<td style="text-align:center">UTF-16BE</td>
+<td style="text-align:center">FE FF</td>
+</tr>
+<tr>
+<td style="text-align:center">UTF-32LE</td>
+<td style="text-align:center">FF FE 00 00</td>
+</tr>
+<tr>
+<td style="text-align:center">UTF-32BE</td>
+<td style="text-align:center">00 00 FE FF</td>
+</tr>
+</tbody>
+</table>
+<p><strong>LE 是 Little Endina 的缩写表示低位开始，BE 是 Big Endina 的缩写，表示高位开始</strong></p>
+<h3 id="UTF-8-没有字节序"><a href="#UTF-8-没有字节序" class="headerlink" title="UTF-8 没有字节序"></a>UTF-8 没有字节序</h3><p>我猜是因为 <strong>UTF-8 存在标志位啊，字节序是表示你先接受到这个字符是作为高位存放还是地位存放，这只是在所有位都表示字符的时候才会起作用</strong>，如果有些是标志位，这时候我们改变一下字符的顺序，再次解析的时候就会出问题啦！</p>
+<h2 id="Unicode-高低位"><a href="#Unicode-高低位" class="headerlink" title="Unicode 高低位"></a>Unicode 高低位</h2><p>这里我就不说了，可以参考 <a href="http://www.fmddlmyy.cn/text17.html" target="_blank" rel="noopener">浅谈文字编码和Unicode（下）</a></p>
+<h1 id="留下了两个问题"><a href="#留下了两个问题" class="headerlink" title="留下了两个问题"></a>留下了两个问题</h1><p><strong>1. 一个 Unicode 字符集中的字符，它的对应关系表存储在哪里呢？我们二进制的数据是如何转换成字符输出展示的呢？这个对应关系存储在操作系统的吗？</strong></p>
+<p><strong>2. 我们常见的字体，这也算是一种字符集吗？不同样式的文字，可以算是不同的字符集吗？可以这样理解吗？？</strong></p>
+<p>这俩问题有时间再去了解一下吧~</p>
+<h1 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h1><p><a href="http://www.fmddlmyy.cn/text17.html" target="_blank" rel="noopener">浅谈文字编码和Unicode（下）</a><br><a href="https://www.zhihu.com/question/52346583" target="_blank" rel="noopener">计算机中为何不直接使用 UTF-8 编码进行存储而要使用 Unicode 再转换成 UTF-8 ？</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>上周两天时间肝完了死亡笔记，我的天是真的好看，墙裂安利，吹爆！！！</p>
+<p>百度云资源请戳<a href="https://pan.baidu.com/s/1l4b2bQEIE2prdx0jRN_X0w" target="_blank" rel="noopener">这里</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/字符集/" rel="tag"># 字符集</a>
+          
+            <a href="/tags/字符编码/" rel="tag"># 字符编码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/从入门到迷路系列——心理学学习笔记(五)/" rel="next" title="从入门到迷路系列 —— 心理学学习笔记(我们如何交流)">
+                <i class="fa fa-chevron-left"></i> 从入门到迷路系列 —— 心理学学习笔记(我们如何交流)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单概念"><span class="nav-number">2.</span> <span class="nav-text">简单概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符"><span class="nav-number">2.1.</span> <span class="nav-text">字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符集"><span class="nav-number">2.2.</span> <span class="nav-text">字符集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码点"><span class="nav-number">2.3.</span> <span class="nav-text">代码点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码单元"><span class="nav-number">2.4.</span> <span class="nav-text">代码单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符集和编码"><span class="nav-number">2.5.</span> <span class="nav-text">字符集和编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机中的存储"><span class="nav-number">2.6.</span> <span class="nav-text">计算机中的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">2.6.1.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的字符集和编码"><span class="nav-number">2.7.</span> <span class="nav-text">常见的字符集和编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unicode"><span class="nav-number">3.</span> <span class="nav-text">Unicode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode-编码"><span class="nav-number">3.1.</span> <span class="nav-text">Unicode 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-32"><span class="nav-number">3.1.1.</span> <span class="nav-text">UTF-32</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-16"><span class="nav-number">3.1.2.</span> <span class="nav-text">UTF-16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8"><span class="nav-number">3.1.3.</span> <span class="nav-text">UTF-8</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unicode-第一版"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">Unicode 第一版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unicode第二版"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">Unicode第二版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UTF-8-的标志位"><span class="nav-number">3.1.3.3.</span> <span class="nav-text">UTF-8 的标志位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乱码的形成和容错"><span class="nav-number">3.1.3.4.</span> <span class="nav-text">乱码的形成和容错</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8的编解码"><span class="nav-number">3.2.</span> <span class="nav-text">UTF-8的编解码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小彩蛋"><span class="nav-number">4.</span> <span class="nav-text">小彩蛋</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#USC、USC-2、USC-4"><span class="nav-number">4.1.</span> <span class="nav-text">USC、USC-2、USC-4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字节序"><span class="nav-number">4.2.</span> <span class="nav-text">字节序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#列举常见的编码字节序对应的文件头"><span class="nav-number">4.2.1.</span> <span class="nav-text">列举常见的编码字节序对应的文件头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8-没有字节序"><span class="nav-number">4.2.2.</span> <span class="nav-text">UTF-8 没有字节序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode-高低位"><span class="nav-number">4.3.</span> <span class="nav-text">Unicode 高低位</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#留下了两个问题"><span class="nav-number">5.</span> <span class="nav-text">留下了两个问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REF"><span class="nav-number">6.</span> <span class="nav-text">REF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">7.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 合缘奇缘，一期一念.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
