@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,十万个为什么,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这里开启新一期的 Java 姿势解锁啦，这次我决定用一种新的方式来试试，对，就是你没有玩过的全新版本。十万个为什么系列第一期，我为什么不问问神奇的海螺呢？">
+<meta name="keywords" content="Java,后端,十万个为什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— 十万个为什么第一期">
+<meta property="og:url" content="http://yoursite.com/2019/07/16/Java姿势解锁——十万个为什么第一期/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言这里开启新一期的 Java 姿势解锁啦，这次我决定用一种新的方式来试试，对，就是你没有玩过的全新版本。十万个为什么系列第一期，我为什么不问问神奇的海螺呢？">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/16/lanc4r-somanywhy1-bg.png">
+<meta property="og:updated_time" content="2019-07-16T07:08:55.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— 十万个为什么第一期">
+<meta name="twitter:description" content="前言这里开启新一期的 Java 姿势解锁啦，这次我决定用一种新的方式来试试，对，就是你没有玩过的全新版本。十万个为什么系列第一期，我为什么不问问神奇的海螺呢？">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/07/16/lanc4r-somanywhy1-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/16/Java姿势解锁——十万个为什么第一期/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— 十万个为什么第一期 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">07月</div>
+			<div class="post-day">16</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/16/Java姿势解锁——十万个为什么第一期/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— 十万个为什么第一期</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-16T15:00:00+08:00">
+                2019-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/07/16/lanc4r-somanywhy1-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这里开启新一期的 Java 姿势解锁啦，这次我决定用一种新的方式来试试，对，就是你没有玩过的全新版本。十万个为什么系列第一期，我为什么不问问神奇的海螺呢？</p>
+<a id="more"></a>
+<h1 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h1><p>第一期解决以下三个问题：</p>
+<ol>
+<li>为什么 <strong>public</strong> 修饰的类名一定要与文件名一致？</li>
+<li>为什么 <strong>static</strong> 修饰的方法 不能访问 <strong>非static</strong> 修饰的变量呢？</li>
+<li>经常看到好多方法的参数 或是 方法本身被 <strong>final</strong> 修饰，这是为什么呢，这样做的好处有什么？</li>
+</ol>
+<h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><h2 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h2><p><strong>为什么 public 修饰的类名一定要与文件名一致？</strong></p>
+<p>我们先看一下如果不一样会出现什么情况</p>
+<p>比如在 <strong>TestClass.java</strong> 文件文件中有一个类声明为 <code>public class TestClass1</code> 的类，这时候会提示什么呢？</p>
+<p><strong>命令行提示</strong><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  code javac TestClass.java</span><br><span class="line">TestClass.java:1: 错误: 类TestClass1是公共的, 应在名为 TestClass1.java 的文件中声明</span><br><span class="line">public class TestClass1&#123;</span><br><span class="line">       ^</span><br><span class="line">1 个错误</span><br></pre></td></tr></table></figure></p>
+<p><strong>IDE(Eclipse)提示</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The public type TestClass1 must be defined in its own file</span><br></pre></td></tr></table></figure></p>
+<p>很好，编译就直接报错了，<strong>提示 public 修饰的类 TestClass1 必须存在于它自己的文件中</strong>。下面我们开始探究问题的缘由啦，这里引出我们第一个问题：</p>
+<h3 id="public-修饰的类有什么效果"><a href="#public-修饰的类有什么效果" class="headerlink" title="public 修饰的类有什么效果"></a>public 修饰的类有什么效果</h3><p>来看一个栗子，我们建立以下结构的包和文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">└─package1</span><br><span class="line">    TestClass1.java</span><br><span class="line">    TestClass3.java</span><br><span class="line">└─package2</span><br><span class="line">    TestClass2.java</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> TestClassName.package1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> TestClassName.package2.TestClass2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 调用其他包下的 public 类，成功，并且头部会 import 相应的类 import TestClassName.package2.TestClass2;</span></span><br><span class="line">        TestClass2 tc2 = <span class="keyword">new</span> TestClass2();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用其他包下的非 public 类，会抛异常 - TestNotPublicClass2 cannot be resolved to a type</span></span><br><span class="line">        TestNotPublicClass2 tnpc2 = <span class="keyword">new</span> TestNotPublicClass2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestNotPublicClass1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> TestClassName.package2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestNotPublicClass2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> TestClassName.package1;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass3</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 使用统一包下不同类下的非 public 修饰的类，成功，因为是引用同一个包内的文件所以不用 import 相应的类</span></span><br><span class="line">        TestNotPublicClass1 tnpc1 = <span class="keyword">new</span> TestNotPublicClass1();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="得出结论"><a href="#得出结论" class="headerlink" title="得出结论"></a>得出结论</h4><p><strong>由 public 修饰的类可以被包之外的类引用，引用时需要通过 import 关键字来导入。而非 public 修饰的类只能被当前包内的类使用，并且使用的时候也不需要使用 import 关键字导入</strong>，毕竟本来就是在一个包内的嘛。</p>
+<h3 id="为什么-public-修饰的类名一定要与文件名一致？"><a href="#为什么-public-修饰的类名一定要与文件名一致？" class="headerlink" title="为什么 public 修饰的类名一定要与文件名一致？"></a>为什么 public 修饰的类名一定要与文件名一致？</h3><p>看完了 <strong>public</strong> 修饰类的效果之后我们回过头来看这个问题，为什么呢？这里我上网上找到了一个答案：</p>
+<blockquote>
+<p>声明为public的类可以被包外的类引用，只需要import 包名，就可以使用该类。这里我要指出：编译器在执行这条语句时会根据路径反向查找，而此时的文件名能帮助编译器快速定位所编译类的位置。</p>
+</blockquote>
+<h4 id="以下开始-HL-的瞎BB"><a href="#以下开始-HL-的瞎BB" class="headerlink" title="以下开始 HL 的瞎BB"></a>以下开始 HL 的瞎BB</h4><p>我们回想一下之前所讲的类加载过程： <a href="https://chllan.cc/2019/06/15/Java%E5%A7%BF%E5%8A%BF%E8%A7%A3%E9%94%81%20%E2%80%94%E2%80%94%20%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/" target="_blank" rel="noopener">Java姿势解锁 —— 类加载过程</a>，它是动态进行加载的。<strong>那么编译呢？是不是也存在着动态编译？</strong></p>
+<p><strong>再次说一下，以下都是HL的瞎BB。</strong></p>
+<p>当我们在一个类的开头部分定义 <code>import 包名</code> 这样的声明，在使用到对应的类的时，如果其 <strong>java</strong> 文件还未进行编译的话，这时候需要先对其源代码文件进行编译，而 <strong>javac</strong> 命令是需要知道 <code>.java</code> 文件的路径的，那么如何找到当前我们需要类的源文件呢？</p>
+<p>比如我们一个程序需要用到 <code>com.lalala.biubiubiu</code> 包下的 <code>WakakaClass</code> 类，如果此时 类名和文件名一致，这时候就可以直接得出源文件的路径为 <code>com/lalala/biubiubiu/WakakaClass.java</code>，如果不一致，可能需要把当前包下所有的文件都编译一下，然后找到编译后 的 <strong>Class</strong> 文件为 <code>WakakaClass.class</code>。</p>
+<p><strong>因为存在被第三方用到的可能，我们需要将类使用 public 修饰。为了使编译期更加快速定位到源文件的位置，我们需要保持其类名和文件名一致。</strong></p>
+<h3 id="附加问题"><a href="#附加问题" class="headerlink" title="附加问题"></a>附加问题</h3><h4 id="一个-java-文件中能否有多个-public-修饰的类？"><a href="#一个-java-文件中能否有多个-public-修饰的类？" class="headerlink" title="一个 java 文件中能否有多个 public 修饰的类？"></a>一个 java 文件中能否有多个 public 修饰的类？</h4><p>这个问题首先可以用上一个问题的结论来解决：<strong>一个源文件中，使用 public 修饰的类名称必须与文件名相同，那么文件名只有一个，同一包下的类名也不允许重复，那么自然一个 java 文件中也只能拥有一个 public 修饰的类咯，这个类名还必须与文件名相同。</strong></p>
+<p>结论是这样，不过，为什么呢？以下结论网上大佬们的回答：</p>
+<blockquote>
+<p>每个编译单元(文件)只能有一个public类。这么做的意思是，每个编译单元只能有一个公开的接口，而这个接口就由其public类来表示。而非public修饰的类都是为了给public修饰的类所做支撑的，从软件架构设计和安全性设计上得出的结论。或者说是java的设计者们从这方面的考虑。或许这真的是一个规范。</p>
+</blockquote>
+<p>em，想知道更多的自己去了解吧…..</p>
+<h4 id="不只是-public-修饰的类才会拥有-main-方法，非-public-修饰的类也可以拥有-main-方法吗？"><a href="#不只是-public-修饰的类才会拥有-main-方法，非-public-修饰的类也可以拥有-main-方法吗？" class="headerlink" title="不只是 public 修饰的类才会拥有 main 方法，非 public 修饰的类也可以拥有 main 方法吗？"></a>不只是 public 修饰的类才会拥有 main 方法，非 public 修饰的类也可以拥有 main 方法吗？</h4><p>是的。这一点我就不去演示啦，尝试一下就好了。我们知道 mian 是程序运行的入口，你再 IDE 中运行的时候，会让你选择运行哪个类的 main 方法。</p>
+<h2 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h2><p><strong>为什么 static 修饰的方法 不能访问 非static 修改的实例变量呢？</strong></p>
+<p>举个栗子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 编译报错：Cannot make a static reference to the non-static field name</span></span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String name = TestClass.getName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>TestClass 类的静态方法 getName 想访问非静态变量 name，这时候编译会报错</strong>。这个问题其实配合着我们之前聊到的类的存储相关知识就能理解啦。<br>首先静态资源(包括方法和静态变量)是随着类一起存在的，也就是在类加载的时候就会存在于方法区中，并且也会创建对应的 Class 对象存放于堆中，其中保存着方法的一些信息。但是<strong>实例对象是跟对象一起存储于堆中的，也就是说如果没有实例化类的话，成员变量就是不存在的，注意这里是没有分配内存，简单说就是没有办法被访问的。</strong><br>再回到上面那个例子，<strong>调用 TestClass 类的静态方法 getName() 时候，这个时候 TestClass 类根本没有实例化呀，所以这个静态方法访问这一块根本没有存在的内存地址是一定会报错的嘛，Java 编译器知道这一点于是就报错咯。</strong></p>
+<h2 id="问题三"><a href="#问题三" class="headerlink" title="问题三"></a>问题三</h2><p><strong>经常看到好多方法的参数 或是 方法本身被 final 修饰，这是为什么呢，这样做的好处有什么？ </strong></p>
+<p>以下的部分内容来源于其它博主的博客，全部都可以在 Ref 中找到。</p>
+<h3 id="final-修饰类"><a href="#final-修饰类" class="headerlink" title="final 修饰类"></a>final 修饰类</h3><p>被 final 修饰的类无法被修改，无法被继承，使用 final 修饰类主要出于以下目的：</p>
+<ol>
+<li>这个类已经是一个十分完善的类，我们不会对其进行任何的改变，不希望这个类被任何人继承改变它。 </li>
+<li>出于安全考虑，我们不希望进行子类化处理。 </li>
+<li>我们希望jvm在处理的时候，<strong>不再关心类是否被继承，jvm不需要更多额外的处理，提高执行效率</strong>。 </li>
+<li>将类定义成 final后，结果只是禁止进行继承——没有更多的限制。<strong>然而，由于它禁止了继承，所以一个 final类中的所有方法都默认为 final。final方法在编译阶段绑定，称为静态绑定(static binding),编译时常量，永远不可改变。jvm在运行的时候，会直接将final方法直接嵌进来，效率会大大提升</strong>。</li>
+</ol>
+<p>关于这里的第四点我们将在后面 final 修饰方法部分聊一聊。</p>
+<h3 id="final类的对象"><a href="#final类的对象" class="headerlink" title="final类的对象"></a>final类的对象</h3><ul>
+<li>不可变类指它的对象一旦被创建了就不能被更改了</li>
+<li>final类的对象是只读的</li>
+<li>可以在多线程环境下安全的共享</li>
+<li>不用额外的同步开销 </li>
+</ul>
+<h3 id="final-修饰方法"><a href="#final-修饰方法" class="headerlink" title="final 修饰方法"></a>final 修饰方法</h3><p>同样是 <strong>final</strong> 关键字的策略，<strong>被 final 修饰的方法是不允许被修改的，当然在继承关系中被 final 修饰的方法是不允许被重写的</strong>。使用 <strong>final</strong> 修饰方法主要出于以下目的：</p>
+<ol>
+<li>一个方法的功能已经足够完整了，子类中不需要改变的话，就声明此方法为final。 它会为方法<strong>“上锁”</strong>，防止任何继承类改变它的本来含义。设计程序时，若希望一个方法的行为在继承期间保持不变，而且不可被覆盖或改写，就可以采取这种做法。 </li>
+<li><strong>final方法比非final方法要快，因为在编译的时候已经静态绑定了，不需要在运行时再动态绑定</strong>。将一个方法设成 <strong>final</strong> 后，编译器就可以把对那个方法的所有调用都置入“嵌入”调用里。只要编译器发现一个<strong>final</strong> 方法调用，就会（根据它自己的判断）忽略为执行方法调用机制而采取的常规代码插入方法（将自变量压入堆栈；跳至方法代码并执行它；跳回来；清除堆栈自变量；最后对返回值进行处理）。相反，它会用方法主体内实际代码的一个副本来替换方法调用。这样做可避免方法调用时的系统开销。</li>
+</ol>
+<p>这里我们主要说一下第二点，首先关于什么是静态绑定和动态绑定这里我就不解释了，可以参考一下这边博客：<a href="https://blog.csdn.net/zhangjk1993/article/details/24066085" target="_blank" rel="noopener">Java静态绑定与动态绑定</a></p>
+<p>那么静态绑定的方法执行性能真的比动态绑定的方法好吗？简单说就是 final 修饰的方法执行性能要比非 final 修饰的的方法好？带着疑问我看到了这篇文章：<a href="https://blog.csdn.net/dome_/article/details/86073174" target="_blank" rel="noopener">Java中final方法比非final性能更好?</a></p>
+<p>有兴趣的童鞋可以去看看，这里我就说一下博主的结论吧：<strong>使用 final 的确是有提升的，但是几乎可以忽略不计，特别是放到现在高性能的 JVM 中，它们生成的字节码除了 flags 标志位是否有 final 修饰不同之外，其他所有的JVM指令，都是一样的（对于方法本身，以及调用者本身的字节码都一样）。对于JVM来说，它执行的就是字节码，如果字节码都一样的话，那对于JVM来说，它就是同一样东西的了。</strong></p>
+<h3 id="fianl-修饰变量"><a href="#fianl-修饰变量" class="headerlink" title="fianl 修饰变量"></a>fianl 修饰变量</h3><p>被 final 修饰的变量是不可变的，这一点不多说啦，使用 final 修饰变量最只要的目的是：</p>
+<p><strong>多线程情况下的数据共享安全！</strong></p>
+<p>大家可以看看知乎一位大佬的回答：<a href="https://www.zhihu.com/question/21762917" target="_blank" rel="noopener">JVM对于声明为final的局部变量（local var）做了哪些性能优化？</a>，简单总结一下：</p>
+<p><strong>final 修饰变量主要用途是保证多线程情况下的数据共享安全</strong>，比如：在同一个方法里连续两次访问静态变量A.x可能会得到不一样的值，因为可能会有并发读写；但如果先有final int x = A.x然后连续两次访问局部变量x的话，那读到的值肯定会是一样的，但是对于性能是没有什么提升的。(大佬们都是研究编译后的字节码的吗…..)</p>
+<h1 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h1><p><a href="https://blog.csdn.net/weixin_36910300/article/details/78665095" target="_blank" rel="noopener">为什么文件名必须和public修饰的类名称必须一致</a><br><a href="https://www.jianshu.com/p/b08e56228d5f" target="_blank" rel="noopener">java文件名为什么要与public声明的类名同名？</a><br><a href="https://blog.csdn.net/yabay2208/article/details/71213613" target="_blank" rel="noopener">深入java final关键字 基本用法、注意点和优点</a><br><a href="https://blog.csdn.net/dome_/article/details/86073174" target="_blank" rel="noopener">Java中final方法比非final性能更好?</a><br><a href="https://www.zhihu.com/question/21762917" target="_blank" rel="noopener">JVM对于声明为final的局部变量（local var）做了哪些性能优化？</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>freedom is awesome~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/十万个为什么/" rel="tag"># 十万个为什么</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/13/陷阵之志有死无生/" rel="next" title="陷阵之志，有死无生">
+                <i class="fa fa-chevron-left"></i> 陷阵之志，有死无生
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发现问题"><span class="nav-number">2.</span> <span class="nav-text">发现问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决问题"><span class="nav-number">3.</span> <span class="nav-text">解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一"><span class="nav-number">3.1.</span> <span class="nav-text">问题一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#public-修饰的类有什么效果"><span class="nav-number">3.1.1.</span> <span class="nav-text">public 修饰的类有什么效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#得出结论"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">得出结论</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么-public-修饰的类名一定要与文件名一致？"><span class="nav-number">3.1.2.</span> <span class="nav-text">为什么 public 修饰的类名一定要与文件名一致？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#以下开始-HL-的瞎BB"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">以下开始 HL 的瞎BB</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加问题"><span class="nav-number">3.1.3.</span> <span class="nav-text">附加问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个-java-文件中能否有多个-public-修饰的类？"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">一个 java 文件中能否有多个 public 修饰的类？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不只是-public-修饰的类才会拥有-main-方法，非-public-修饰的类也可以拥有-main-方法吗？"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">不只是 public 修饰的类才会拥有 main 方法，非 public 修饰的类也可以拥有 main 方法吗？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二"><span class="nav-number">3.2.</span> <span class="nav-text">问题二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题三"><span class="nav-number">3.3.</span> <span class="nav-text">问题三</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#final-修饰类"><span class="nav-number">3.3.1.</span> <span class="nav-text">final 修饰类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final类的对象"><span class="nav-number">3.3.2.</span> <span class="nav-text">final类的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final-修饰方法"><span class="nav-number">3.3.3.</span> <span class="nav-text">final 修饰方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fianl-修饰变量"><span class="nav-number">3.3.4.</span> <span class="nav-text">fianl 修饰变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REF"><span class="nav-number">4.</span> <span class="nav-text">REF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">5.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2019</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
