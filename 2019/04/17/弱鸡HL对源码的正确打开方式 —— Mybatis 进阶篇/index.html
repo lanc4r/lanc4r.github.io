@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,源码,Mybatis,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言前面我们BB了 Mybatis 基础篇的东西，讲了 Mybatis 在初始化的时候如何读取并解析 配置文件 和 SQL映射文件，如何进行 SQL语句的解析。这次我们讲讲后续的部分：">
+<meta name="keywords" content="Java,后端,源码,Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="弱鸡HL对源码的正确打开方式 —— Mybatis进阶篇">
+<meta property="og:url" content="http://yoursite.com/2019/04/17/弱鸡HL对源码的正确打开方式 —— Mybatis 进阶篇/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言前面我们BB了 Mybatis 基础篇的东西，讲了 Mybatis 在初始化的时候如何读取并解析 配置文件 和 SQL映射文件，如何进行 SQL语句的解析。这次我们讲讲后续的部分：">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/04/17/5cb73fe65614c.png">
+<meta property="og:updated_time" content="2019-05-24T15:36:32.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="弱鸡HL对源码的正确打开方式 —— Mybatis进阶篇">
+<meta name="twitter:description" content="前言前面我们BB了 Mybatis 基础篇的东西，讲了 Mybatis 在初始化的时候如何读取并解析 配置文件 和 SQL映射文件，如何进行 SQL语句的解析。这次我们讲讲后续的部分：">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/17/5cb73fe65614c.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/17/弱鸡HL对源码的正确打开方式 —— Mybatis 进阶篇/">
+
+
+
+
+
+  <title>弱鸡HL对源码的正确打开方式 —— Mybatis进阶篇 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">17</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Mybatis/" itemprop="url" rel="index">
+          <span itemprop="name">Mybatis</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/17/弱鸡HL对源码的正确打开方式 —— Mybatis 进阶篇/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">弱鸡HL对源码的正确打开方式 —— Mybatis进阶篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-17T23:00:05+08:00">
+                2019-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Mybatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2019/04/17/5cb73fe65614c.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前面我们BB了 Mybatis 基础篇的东西，讲了 Mybatis 在初始化的时候如何读取并解析 配置文件 和 SQL映射文件，如何进行 SQL语句的解析。这次我们讲讲后续的部分：</p>
+<a id="more"></a>
+<ul>
+<li>Mybatis 在哪执行的 SQL语句</li>
+<li>如何将结果转换为我们设置好的结果类型</li>
+</ul>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>先看看我们的运行环境</p>
+<p><strong>NewsMapper.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper</span></span><br><span class="line"><span class="meta">  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"><span class="meta">  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"NewsMapper"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectNews"</span> <span class="attr">resultType</span>=<span class="string">"DebugMybatis.News"</span> &gt;</span></span><br><span class="line">    select * from news where id = #&#123;id&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Java 代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DebugMybatisTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">        SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            News news = session.selectOne(<span class="string">"NewsMapper.selectNews"</span>, <span class="number">2</span>);</span><br><span class="line">            <span class="keyword">if</span> (news != <span class="keyword">null</span>) &#123;</span><br><span class="line">                System.out.println(news.getTitle());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            session.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Come-On"><a href="#Come-On" class="headerlink" title="Come On"></a>Come On</h1><h2 id="Mybatis-在哪执行的-SQL语句"><a href="#Mybatis-在哪执行的-SQL语句" class="headerlink" title="Mybatis 在哪执行的 SQL语句"></a>Mybatis 在哪执行的 SQL语句</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">News news = session.selectOne(<span class="string">"NewsMapper.selectNews"</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>上面执行后会进入到：<br><strong>org.apache.ibatis.session.defaults.DefaultSqlSession 的 selectOne(String statement, Object parameter)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">selectOne</span><span class="params">(String statement, Object parameter)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Popular vote was to return null on 0 results and throw exception on too many.</span></span><br><span class="line">    <span class="comment">// 具体的查询数据，需要的东西肯定在这里</span></span><br><span class="line">    List&lt;T&gt; list = <span class="keyword">this</span>.&lt;T&gt;selectList(statement, parameter);</span><br><span class="line">    <span class="keyword">if</span> (list.size() == <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> list.get(<span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (list.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> TooManyResultsException(<span class="string">"Expected one result (or null) to be returned by selectOne(), but found: "</span> + list.size());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继续跟进：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RowBounds</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NO_ROW_OFFSET = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NO_ROW_LIMIT = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> RowBounds DEFAULT = <span class="keyword">new</span> RowBounds();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> offset;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> limit;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RowBounds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.offset = NO_ROW_OFFSET;</span><br><span class="line">        <span class="keyword">this</span>.limit = NO_ROW_LIMIT;</span><br><span class="line">    &#125;</span><br><span class="line">    .......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">wrapCollection</span><span class="params">(<span class="keyword">final</span> Object object)</span> </span>&#123;</span><br><span class="line"><span class="keyword">if</span> (object <span class="keyword">instanceof</span> Collection) &#123;</span><br><span class="line">    StrictMap&lt;Object&gt; map = <span class="keyword">new</span> StrictMap&lt;Object&gt;();</span><br><span class="line">    map.put(<span class="string">"collection"</span>, object);</span><br><span class="line">    <span class="keyword">if</span> (object <span class="keyword">instanceof</span> List) &#123;</span><br><span class="line">        map.put(<span class="string">"list"</span>, object);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (object != <span class="keyword">null</span> &amp;&amp; object.getClass().isArray()) &#123;</span><br><span class="line">    StrictMap&lt;Object&gt; map = <span class="keyword">new</span> StrictMap&lt;Object&gt;();</span><br><span class="line">    map.put(<span class="string">"array"</span>, object);</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> object;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">selectList</span><span class="params">(String statement, Object parameter)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 这个 RowBounds.DEFAULT 实际上就是一个默认的偏移量，看上面就明白了，标识默认查询 Integer.MAX_VALUE 个数据出来</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.selectList(statement, parameter, RowBounds.DEFAULT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">selectList</span><span class="params">(String statement, Object parameter, RowBounds rowBounds)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 从 configuration 拿去 MappedStatement 的数据 (应该在之前解析的 配置文件的时候，就向 configuration 对象中以相应的 key 保存了相应的信息)  </span></span><br><span class="line">      MappedStatement ms = configuration.getMappedStatement(statement);</span><br><span class="line">      <span class="comment">// 执行查询</span></span><br><span class="line">      <span class="comment">// 这里这个 wrapCollection(parameter) 其实主要是看参数是否是集合，是否是数组 (具体看上面)</span></span><br><span class="line">      <span class="comment">// rowBounds 刚说过了，标识默认查询个数 (limit offset, rows)</span></span><br><span class="line">      <span class="comment">// Executor.NO_RESULT_HANDLER 值为 null，表示是 没有结果处理器的</span></span><br><span class="line">      <span class="keyword">return</span> executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> ExceptionFactory.wrapException(<span class="string">"Error querying database.  Cause: "</span> + e, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      ErrorContext.instance().reset();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们先看看 <code>MappedStatement</code> 中有些什么东西(大概标注了一些我知道的，也是一些基本的东西)：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MappedStatement</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 资源名</span></span><br><span class="line">    <span class="keyword">private</span> String resource;</span><br><span class="line">    <span class="comment">// 配置信息</span></span><br><span class="line">    <span class="keyword">private</span> Configuration configuration;</span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    <span class="keyword">private</span> Integer fetchSize;</span><br><span class="line">    <span class="keyword">private</span> Integer timeout;</span><br><span class="line">    <span class="keyword">private</span> StatementType statementType;</span><br><span class="line">    <span class="keyword">private</span> ResultSetType resultSetType;</span><br><span class="line">    <span class="comment">// SQL语句</span></span><br><span class="line">    <span class="keyword">private</span> SqlSource sqlSource;</span><br><span class="line">    <span class="keyword">private</span> Cache cache;</span><br><span class="line">    <span class="comment">// 差数映射</span></span><br><span class="line">    <span class="keyword">private</span> ParameterMap parameterMap;</span><br><span class="line">    <span class="comment">// 结果映射集合</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;ResultMap&gt; resultMaps;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> flushCacheRequired;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> useCache;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> resultOrdered;</span><br><span class="line">    <span class="comment">// SQL命令类型 (UNKNOWN, INSERT, UPDATE, DELETE, SELECT, FLUSH;)</span></span><br><span class="line">    <span class="keyword">private</span> SqlCommandType sqlCommandType;</span><br><span class="line">    <span class="keyword">private</span> KeyGenerator keyGenerator;</span><br><span class="line">    <span class="keyword">private</span> String[] keyProperties;</span><br><span class="line">    <span class="keyword">private</span> String[] keyColumns;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> hasNestedResultMaps;</span><br><span class="line">    <span class="keyword">private</span> String databaseId;</span><br><span class="line">    <span class="keyword">private</span> Log statementLog;</span><br><span class="line">    <span class="keyword">private</span> LanguageDriver lang;</span><br><span class="line">    <span class="keyword">private</span> String[] resultSets;</span><br><span class="line">    </span><br><span class="line">    .....  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着会执行到 <strong>org.apache.ibatis.executor.CachingExecutor 的 query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler)</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BoundSql</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String sql;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;ParameterMapping&gt; parameterMappings;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object parameterObject;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; additionalParameters;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MetaObject metaParameters;</span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 通过传入的参数 parameterObject 构造 SQL 语句</span></span><br><span class="line">    BoundSql boundSql = ms.getBoundSql(parameterObject);</span><br><span class="line">    <span class="comment">// 2. 构造缓存的 Key，这里我猜是 Mybatis 做了一次缓存</span></span><br><span class="line">    CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);</span><br><span class="line">    <span class="comment">// 3. 执行查询操作</span></span><br><span class="line">    <span class="keyword">return</span> query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这里我们就开始兵分三路了：</p>
+<ol>
+<li>如何构造 SQL</li>
+<li>如何构造缓存key 的(这个就不看了)</li>
+<li>执行查询操作，并且返回特定类型结果的数据</li>
+</ol>
+<h3 id="如何构造-SQL"><a href="#如何构造-SQL" class="headerlink" title="如何构造 SQL"></a>如何构造 SQL</h3><p>继续跟进发现进入到 <strong>org.apache.ibatis.mapping.MappedStatement 的 getBoundSql(Object parameterObject)</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> BoundSql <span class="title">getBoundSql</span><span class="params">(Object parameterObject)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 根据参数获取 SQL 语句，这个 sqlSource 我们之前说过</span></span><br><span class="line">    BoundSql boundSql = sqlSource.getBoundSql(parameterObject);</span><br><span class="line">    <span class="comment">// 拿取 参数映射集合，这里不为空</span></span><br><span class="line">    List&lt;ParameterMapping&gt; parameterMappings = boundSql.getParameterMappings();</span><br><span class="line">    <span class="keyword">if</span> (parameterMappings == <span class="keyword">null</span> || parameterMappings.isEmpty()) &#123;</span><br><span class="line">        <span class="comment">// 如果为空则，以老的 SQL语句 制作新的 BoundSql</span></span><br><span class="line">        boundSql = <span class="keyword">new</span> BoundSql(configuration, boundSql.getSql(), parameterMap.getParameterMappings(), parameterObject);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check for nested result maps in parameter mappings (issue #30)</span></span><br><span class="line">    <span class="comment">// 这里说了一下需要检测嵌套的结果 Map集 在 参数映射中 (为了解决 issue)</span></span><br><span class="line">    <span class="comment">// 我也没看懂不管了</span></span><br><span class="line">    <span class="keyword">for</span> (ParameterMapping pm : boundSql.getParameterMappings()) &#123;</span><br><span class="line">      String rmId = pm.getResultMapId();</span><br><span class="line">      <span class="keyword">if</span> (rmId != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ResultMap rm = configuration.getResultMap(rmId);</span><br><span class="line">        <span class="keyword">if</span> (rm != <span class="keyword">null</span>) &#123;</span><br><span class="line">          hasNestedResultMaps |= rm.hasNestedResultMaps();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 总之到这里，如果没设置 ParameterMapping 就直接重新创建一次，否则直接返回</span></span><br><span class="line">    <span class="keyword">return</span> boundSql;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这里因为 <code>List&lt;ParameterMapping&gt; parameterMappings</code> 不为空，所以直接就返回了…</p>
+<h3 id="执行查询操作，并且返回特定类型结果的数据"><a href="#执行查询操作，并且返回特定类型结果的数据" class="headerlink" title="执行查询操作，并且返回特定类型结果的数据"></a>执行查询操作，并且返回特定类型结果的数据</h3><p>继续执行进入到：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">  <span class="comment">// 获取缓存中的数据 (还是猜是 Mybatis 做的缓存，这个后面有机会单独说一下吧)      </span></span><br><span class="line">  Cache cache = ms.getCache();</span><br><span class="line">  <span class="keyword">if</span> (cache != <span class="keyword">null</span>) &#123;</span><br><span class="line">    flushCacheIfRequired(ms);</span><br><span class="line">    <span class="keyword">if</span> (ms.isUseCache() &amp;&amp; resultHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">      ensureNoOutParams(ms, boundSql);</span><br><span class="line">      <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">      List&lt;E&gt; list = (List&lt;E&gt;) tcm.getObject(cache, key);</span><br><span class="line">      <span class="keyword">if</span> (list == <span class="keyword">null</span>) &#123;</span><br><span class="line">        list = delegate.&lt;E&gt; query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">        tcm.putObject(cache, key, list); <span class="comment">// issue #578 and #116</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 继续查询走到这里</span></span><br><span class="line">  <span class="keyword">return</span> delegate.&lt;E&gt; query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行查询会走到 <strong>org.apache.ibatis.executor.BaseExecutor 的 query()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    ErrorContext.instance().resource(ms.getResource()).activity(<span class="string">"executing a query"</span>).object(ms.getId());</span><br><span class="line">    <span class="keyword">if</span> (closed) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ExecutorException(<span class="string">"Executor was closed."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (queryStack == <span class="number">0</span> &amp;&amp; ms.isFlushCacheRequired()) &#123;</span><br><span class="line">      clearLocalCache();</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;E&gt; list;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      queryStack++;</span><br><span class="line">      <span class="comment">// 获取缓存数据，因为我们这里没有设置，并且第一次查询，所以这里为空</span></span><br><span class="line">      list = resultHandler == <span class="keyword">null</span> ? (List&lt;E&gt;) localCache.getObject(key) : <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">if</span> (list != <span class="keyword">null</span>) &#123;</span><br><span class="line">        handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 最终查询会走到这里，见名知意：从数据库中查询数据  </span></span><br><span class="line">        list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      queryStack--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (queryStack == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (DeferredLoad deferredLoad : deferredLoads) &#123;</span><br><span class="line">        deferredLoad.load();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// issue #601</span></span><br><span class="line">      deferredLoads.clear();</span><br><span class="line">      <span class="keyword">if</span> (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) &#123;</span><br><span class="line">        <span class="comment">// issue #482</span></span><br><span class="line">        clearLocalCache();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">queryFromDatabase</span><span class="params">(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    List&lt;E&gt; list;</span><br><span class="line">    <span class="comment">// 这个我猜应该是一种占位的意思，表示当前的 key 已经在使用着了，后续的使用应该注意一下</span></span><br><span class="line">    localCache.putObject(key, EXECUTION_PLACEHOLDER);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        localCache.removeObject(key);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将结果放入到 缓存中</span></span><br><span class="line">    localCache.putObject(key, list);</span><br><span class="line">    <span class="keyword">if</span> (ms.getStatementType() == StatementType.CALLABLE) &#123;</span><br><span class="line">        localOutputParameterCache.putObject(key, parameter);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着看看 <code>doQuery()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">doQuery</span><span class="params">(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 来了老弟！ 我们的 Statement，终于是看见了</span></span><br><span class="line">    <span class="comment">// 之前也说过了，只要是用 Java 连接 数据库，都离不开需要使用这个东西</span></span><br><span class="line">    Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 获取配置信息</span></span><br><span class="line">        Configuration configuration = ms.getConfiguration();</span><br><span class="line">        <span class="comment">// 不知道是不是一种设计模式，这里有点没看懂(后面截个图这里面有些什么东西)</span></span><br><span class="line">        StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);</span><br><span class="line">        <span class="comment">// 拿到我们的 Statement</span></span><br><span class="line">        stmt = prepareStatement(handler, ms.getStatementLog());</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        <span class="keyword">return</span> handler.&lt;E&gt;query(stmt, resultHandler);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        closeStatement(stmt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这里兵分两路：</strong></p>
+<ul>
+<li>构造 Statement 部分</li>
+<li>执行查询部分</li>
+</ul>
+<h4 id="构造-Statement-部分："><a href="#构造-Statement-部分：" class="headerlink" title="构造 Statement 部分："></a>构造 Statement 部分：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Statement <span class="title">prepareStatement</span><span class="params">(StatementHandler handler, Log statementLog)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    Statement stmt;</span><br><span class="line">    <span class="comment">// 获取 Connection，是不是很熟悉</span></span><br><span class="line">    Connection connection = getConnection(statementLog);</span><br><span class="line">    <span class="comment">// 赋值 Statement</span></span><br><span class="line">    stmt = handler.prepare(connection, transaction.getTimeout());</span><br><span class="line">    <span class="comment">// 参数化我们的 Statement</span></span><br><span class="line">    handler.parameterize(stmt);</span><br><span class="line">    <span class="keyword">return</span> stmt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Connection <span class="title">getConnection</span><span class="params">(Log statementLog)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 通过事务获取连接</span></span><br><span class="line">    Connection connection = transaction.getConnection();</span><br><span class="line">    <span class="keyword">if</span> (statementLog.isDebugEnabled()) &#123;</span><br><span class="line">        <span class="keyword">return</span> ConnectionLogger.newInstance(connection, statementLog, queryStack);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>这里再次分为两个部分：</strong></p>
+<ul>
+<li>赋值 Statement</li>
+<li>参数化 Statement</li>
+</ul>
+<h5 id="先看看-赋值-Statement-部分"><a href="#先看看-赋值-Statement-部分" class="headerlink" title="先看看 赋值 Statement 部分"></a>先看看 赋值 Statement 部分</h5><p>跟踪我们的赋值 <code>Statement</code> 部分，会调用到<br><strong>org.apache.ibatis.executor.statement.RoutingStatementHandler 的 prepare()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Statement <span class="title">prepare</span><span class="params">(Connection connection, Integer transactionTimeout)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 这里的 delegate 就是 StatementHandler //private final StatementHandler delegate;</span></span><br><span class="line">    <span class="keyword">return</span> delegate.prepare(connection, transactionTimeout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继续跟踪进入 <strong>org.apache.ibatis.executor.statement.BaseStatementHandler 的 prepare()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Statement <span class="title">prepare</span><span class="params">(Connection connection, Integer transactionTimeout)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    ErrorContext.instance().sql(boundSql.getSql());</span><br><span class="line">    Statement statement = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 初始化 Statement，这里就是我们想要知道的啦  </span></span><br><span class="line">      statement = instantiateStatement(connection);</span><br><span class="line">      <span class="comment">// 设置 超时时间</span></span><br><span class="line">      setStatementTimeout(statement, transactionTimeout);</span><br><span class="line">      setFetchSize(statement);</span><br><span class="line">      <span class="keyword">return</span> statement;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">      closeStatement(statement);</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      closeStatement(statement);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ExecutorException(<span class="string">"Error preparing statement.  Cause: "</span> + e, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>继续跟踪进入<br><strong>org.apache.ibatis.executor.statement.PreparedStatementHandler 的 instantiateStatement()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> Statement <span class="title">instantiateStatement</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 拿到原声 SQL 语句  </span></span><br><span class="line">    String sql = boundSql.getSql();</span><br><span class="line">    <span class="keyword">if</span> (mappedStatement.getKeyGenerator() <span class="keyword">instanceof</span> Jdbc3KeyGenerator) &#123;</span><br><span class="line">      String[] keyColumnNames = mappedStatement.getKeyColumns();</span><br><span class="line">      <span class="keyword">if</span> (keyColumnNames == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// connection.prepareStatement() 是不是非常熟悉啦</span></span><br><span class="line">        <span class="keyword">return</span> connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> connection.prepareStatement(sql, keyColumnNames);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mappedStatement.getResultSetType() != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> connection.prepareStatement(sql, mappedStatement.getResultSetType().getValue(), ResultSet.CONCUR_READ_ONLY);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> connection.prepareStatement(sql);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>我们发现基于我这次的查询情况，最终创造 SQL 语句就发生在这里：<code>connection.prepareStatement()</code>。nice~  Statement 已经赋值完成，</p>
+<h5 id="接下里看看-参数化-Statement"><a href="#接下里看看-参数化-Statement" class="headerlink" title="接下里看看 参数化 Statement"></a>接下里看看 参数化 Statement</h5><p>我们知道 Statement 是带参数的，这里的参数就是接下来的部分设置哒~</p>
+<p>跟进后发现调用到：<strong>org.apache.ibatis.executor.statement.RoutingStatementHandler 的 parameterize()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parameterize</span><span class="params">(Statement statement)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">  <span class="comment">// private final StatementHandler delegate;  </span></span><br><span class="line">  delegate.parameterize(statement);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.executor.statement.PreparedStatementHandler</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parameterize</span><span class="params">(Statement statement)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// protected final ParameterHandler parameterHandler;  </span></span><br><span class="line">    parameterHandler.setParameters((PreparedStatement) statement);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>调用链调用到 <strong>org.apache.ibatis.scripting.defaults.DefaultParameterHandler 的 setParameters()</strong> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParameters</span><span class="params">(PreparedStatement ps)</span> </span>&#123;</span><br><span class="line">    ErrorContext.instance().activity(<span class="string">"setting parameters"</span>).object(mappedStatement.getParameterMap().getId());</span><br><span class="line">    <span class="comment">// 获取参数映射列表 (之前在基础篇读取配置文件的时候就设置好啦)</span></span><br><span class="line">    List&lt;ParameterMapping&gt; parameterMappings = boundSql.getParameterMappings();</span><br><span class="line">    <span class="keyword">if</span> (parameterMappings != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameterMappings.size(); i++) &#123;</span><br><span class="line">        <span class="comment">// 逐个取出映射规则  </span></span><br><span class="line">        ParameterMapping parameterMapping = parameterMappings.get(i);</span><br><span class="line">        <span class="keyword">if</span> (parameterMapping.getMode() != ParameterMode.OUT) &#123;</span><br><span class="line">          Object value;</span><br><span class="line">          <span class="comment">// 拿到映射对应的名字，这里是 id 啦</span></span><br><span class="line">          String propertyName = parameterMapping.getProperty();</span><br><span class="line">          <span class="keyword">if</span> (boundSql.hasAdditionalParameter(propertyName)) &#123; <span class="comment">// issue #448 ask first for additional params</span></span><br><span class="line">            value = boundSql.getAdditionalParameter(propertyName);</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (parameterObject == <span class="keyword">null</span>) &#123;</span><br><span class="line">            value = <span class="keyword">null</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span> (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) &#123;</span><br><span class="line">            <span class="comment">// 最后会进到这儿(类型处理注册，应该是已经注册了当前参数类型有关的类型处理器了)  </span></span><br><span class="line">            <span class="comment">// 将参数的值赋值给 value </span></span><br><span class="line">            value = parameterObject;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            MetaObject metaObject = configuration.newMetaObject(parameterObject);</span><br><span class="line">            value = metaObject.getValue(propertyName);</span><br><span class="line">          &#125;</span><br><span class="line">          TypeHandler typeHandler = parameterMapping.getTypeHandler();</span><br><span class="line">          JdbcType jdbcType = parameterMapping.getJdbcType();</span><br><span class="line">          <span class="keyword">if</span> (value == <span class="keyword">null</span> &amp;&amp; jdbcType == <span class="keyword">null</span>) &#123;</span><br><span class="line">            jdbcType = configuration.getJdbcTypeForNull();</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 设置参数  </span></span><br><span class="line">            typeHandler.setParameter(ps, i + <span class="number">1</span>, value, jdbcType);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (TypeException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Could not set parameters for mapping: "</span> + parameterMapping + <span class="string">". Cause: "</span> + e, e);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Could not set parameters for mapping: "</span> + parameterMapping + <span class="string">". Cause: "</span> + e, e);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>走到 <code>org.apache.ibatis.type.BaseTypeHandler&lt;T&gt;</code> 的 <code>setParameter()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, T parameter, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (parameter == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (jdbcType == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"JDBC requires that the JdbcType must be specified for all nullable parameters."</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        ps.setNull(i, jdbcType.TYPE_CODE);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Error setting null for parameter #"</span> + i + <span class="string">" with JdbcType "</span> + jdbcType + <span class="string">" . "</span> +</span><br><span class="line">                <span class="string">"Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. "</span> +</span><br><span class="line">                <span class="string">"Cause: "</span> + e, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 因为上面条件不满足，传入的参数肯定不是 null 啦，所以走到这里  </span></span><br><span class="line">        setNonNullParameter(ps, i, parameter, jdbcType);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Error setting non null for parameter #"</span> + i + <span class="string">" with JdbcType "</span> + jdbcType + <span class="string">" . "</span> +</span><br><span class="line">                <span class="string">"Try setting a different JdbcType for this parameter or a different configuration property. "</span> +</span><br><span class="line">                <span class="string">"Cause: "</span> + e, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>UnknownTypeHandler 的 setNonNullParameter()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNonNullParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, Object parameter, JdbcType jdbcType)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 获取类型处理器(这里会根据不同的参数类型来获取不同的类型处理器)      </span></span><br><span class="line">    TypeHandler handler = resolveTypeHandler(parameter, jdbcType);</span><br><span class="line">    <span class="comment">// 设置参数</span></span><br><span class="line">    handler.setParameter(ps, i, parameter, jdbcType);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h6 id="咱们先讲获取类型处理器"><a href="#咱们先讲获取类型处理器" class="headerlink" title="咱们先讲获取类型处理器"></a>咱们先讲获取类型处理器</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> TypeHandler&lt;? extends Object&gt; resolveTypeHandler(Object parameter, JdbcType jdbcType) &#123;</span><br><span class="line">    TypeHandler&lt;? extends Object&gt; handler;</span><br><span class="line">    <span class="keyword">if</span> (parameter == <span class="keyword">null</span>) &#123;</span><br><span class="line">      handler = OBJECT_TYPE_HANDLER;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 通过类型获取  </span></span><br><span class="line">      handler = typeHandlerRegistry.getTypeHandler(parameter.getClass(), jdbcType);</span><br><span class="line">      <span class="comment">// check if handler is null (issue #270)</span></span><br><span class="line">      <span class="keyword">if</span> (handler == <span class="keyword">null</span> || handler <span class="keyword">instanceof</span> UnknownTypeHandler) &#123;</span><br><span class="line">        handler = OBJECT_TYPE_HANDLER;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> handler;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.type.TypeHandlerRegistry</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">TypeHandler&lt;T&gt; <span class="title">getTypeHandler</span><span class="params">(Class&lt;T&gt; type, JdbcType jdbcType)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getTypeHandler((Type) type, jdbcType);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">  <span class="keyword">private</span> &lt;T&gt; <span class="function">TypeHandler&lt;T&gt; <span class="title">getTypeHandler</span><span class="params">(Type type, JdbcType jdbcType)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ParamMap.class.equals(type)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 每个 JDBCtpye 对应一个 TypeHandler</span></span><br><span class="line">    Map&lt;JdbcType, TypeHandler&lt;?&gt;&gt; jdbcHandlerMap = getJdbcHandlerMap(type);</span><br><span class="line">    TypeHandler&lt;?&gt; handler = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (jdbcHandlerMap != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// 这里通过 jdbcTpye(这里 key 是 null) 获取 类型处理器  </span></span><br><span class="line">      handler = jdbcHandlerMap.get(jdbcType);</span><br><span class="line">      <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        handler = jdbcHandlerMap.get(<span class="keyword">null</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// #591</span></span><br><span class="line">        handler = pickSoleHandler(jdbcHandlerMap);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// type drives generics here —— 类型驱动的泛型在这里？？？ 看不懂</span></span><br><span class="line">    <span class="keyword">return</span> (TypeHandler&lt;T&gt;) handler;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">private</span> Map&lt;JdbcType, TypeHandler&lt;?&gt;&gt; getJdbcHandlerMap(Type type) &#123;</span><br><span class="line">    Map&lt;JdbcType, TypeHandler&lt;?&gt;&gt; jdbcHandlerMap = TYPE_HANDLER_MAP.get(type);</span><br><span class="line">    <span class="keyword">if</span> (NULL_TYPE_HANDLER_MAP.equals(jdbcHandlerMap)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (jdbcHandlerMap == <span class="keyword">null</span> &amp;&amp; type <span class="keyword">instanceof</span> Class) &#123;</span><br><span class="line">      Class&lt;?&gt; clazz = (Class&lt;?&gt;) type;</span><br><span class="line">      <span class="keyword">if</span> (clazz.isEnum()) &#123;</span><br><span class="line">        jdbcHandlerMap = getJdbcHandlerMapForEnumInterfaces(clazz, clazz);</span><br><span class="line">        <span class="keyword">if</span> (jdbcHandlerMap == <span class="keyword">null</span>) &#123;</span><br><span class="line">          register(clazz, getInstance(clazz, defaultEnumTypeHandler));</span><br><span class="line">          <span class="keyword">return</span> TYPE_HANDLER_MAP.get(clazz);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        jdbcHandlerMap = getJdbcHandlerMapForSuperclass(clazz);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// TYPE_HANDLER_MAP 什么时候赋值的，我不知道啊....</span></span><br><span class="line">    TYPE_HANDLER_MAP.put(type, jdbcHandlerMap == <span class="keyword">null</span> ? NULL_TYPE_HANDLER_MAP : jdbcHandlerMap);</span><br><span class="line">    <span class="keyword">return</span> jdbcHandlerMap;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>到这里我们的 handler 算是获取完了，<strong>唯一的疑点就是 TypeHandlerRegistry 中的 TYPE_HANDLER_MAP 其值是何时赋值的</strong>。</p>
+<h6 id="再说说设置参数"><a href="#再说说设置参数" class="headerlink" title="再说说设置参数"></a>再说说设置参数</h6><p>调用发现 <code>org.apache.ibatis.type.BaseTypeHandler&lt;T&gt;</code> 的 <code>setParameter()</code> 函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, T parameter, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (parameter == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (jdbcType == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"JDBC requires that the JdbcType must be specified for all nullable parameters."</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        ps.setNull(i, jdbcType.TYPE_CODE);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Error setting null for parameter #"</span> + i + <span class="string">" with JdbcType "</span> + jdbcType + <span class="string">" . "</span> +</span><br><span class="line">                <span class="string">"Try setting a different JdbcType for this parameter or a different jdbcTypeForNull configuration property. "</span> +</span><br><span class="line">                <span class="string">"Cause: "</span> + e, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 不为 null，调用到这里  </span></span><br><span class="line">        setNonNullParameter(ps, i, parameter, jdbcType);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> TypeException(<span class="string">"Error setting non null for parameter #"</span> + i + <span class="string">" with JdbcType "</span> + jdbcType + <span class="string">" . "</span> +</span><br><span class="line">                <span class="string">"Try setting a different JdbcType for this parameter or a different configuration property. "</span> +</span><br><span class="line">                <span class="string">"Cause: "</span> + e, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerTypeHandler</span> <span class="keyword">extends</span> <span class="title">BaseTypeHandler</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNonNullParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i, Integer parameter, JdbcType jdbcType)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 到这里是不是就很熟悉了，就是我们 PreparedStatement 设置参数的地方嘛</span></span><br><span class="line">    ps.setInt(i, parameter);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>ok，到这里设置参数也说完啦，那么参数化 Statement 我们就讲完啦。</p>
+<p>所以 构造 Statement 我们都讲完啦，接下来看看 </p>
+<h4 id="执行查询部分"><a href="#执行查询部分" class="headerlink" title="执行查询部分"></a>执行查询部分</h4><p>调用到 <strong>org.apache.ibatis.executor.statement.RoutingStatementHandler 的 query()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(Statement statement, ResultHandler resultHandler)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// private final StatementHandler delegate;</span></span><br><span class="line">    <span class="keyword">return</span> delegate.&lt;E&gt;query(statement, resultHandler);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着到 <strong>org.apache.ibatis.executor.statement.PreparedStatementHandler 的 query()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(Statement statement, ResultHandler resultHandler)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    PreparedStatement ps = (PreparedStatement) statement;</span><br><span class="line">    <span class="comment">// 执行SQL语句 很熟悉的地方</span></span><br><span class="line">    ps.execute();</span><br><span class="line">    <span class="comment">// 将结果映射的地方</span></span><br><span class="line">    <span class="keyword">return</span> resultSetHandler.&lt;E&gt; handleResultSets(ps);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="如何将结果转换为我们设置好的结果类型"><a href="#如何将结果转换为我们设置好的结果类型" class="headerlink" title="如何将结果转换为我们设置好的结果类型"></a>如何将结果转换为我们设置好的结果类型</h2><p>接下来是结果映射部分</p>
+<p>调用发现到 <strong>org.apache.ibatis.executor.resultset.DefaultResultSetHandler 的 handleResultSets()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 验证数量</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">validateResultMapsCount</span><span class="params">(ResultSetWrapper rsw, <span class="keyword">int</span> resultMapCount)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (rsw != <span class="keyword">null</span> &amp;&amp; resultMapCount &lt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ExecutorException(<span class="string">"A query was run and no Result Maps were found for the Mapped Statement '"</span> + mappedStatement.getId()</span><br><span class="line">          + <span class="string">"'.  It's likely that neither a Result Type nor a Result Map was specified."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="comment">// HANDLE RESULT SETS</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> List&lt;Object&gt; <span class="title">handleResultSets</span><span class="params">(Statement stmt)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    ErrorContext.instance().activity(<span class="string">"handling results"</span>).object(mappedStatement.getId());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Object&gt; multipleResults = <span class="keyword">new</span> ArrayList&lt;Object&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> resultSetCount = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 应该获取第一条结果，然后包了一次</span></span><br><span class="line">    ResultSetWrapper rsw = getFirstResultSet(stmt);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 结果集集合 (Map 形式)</span></span><br><span class="line">    List&lt;ResultMap&gt; resultMaps = mappedStatement.getResultMaps();</span><br><span class="line">    <span class="keyword">int</span> resultMapCount = resultMaps.size();</span><br><span class="line">    <span class="comment">// 具体代码看上方</span></span><br><span class="line">    validateResultMapsCount(rsw, resultMapCount);</span><br><span class="line">    <span class="keyword">while</span> (rsw != <span class="keyword">null</span> &amp;&amp; resultMapCount &gt; resultSetCount) &#123;</span><br><span class="line">      ResultMap resultMap = resultMaps.get(resultSetCount);</span><br><span class="line">      <span class="comment">// 这里应该是处理结果集的</span></span><br><span class="line">      handleResultSet(rsw, resultMap, multipleResults, <span class="keyword">null</span>);</span><br><span class="line">      rsw = getNextResultSet(stmt);</span><br><span class="line">      cleanUpAfterHandlingResultSet();</span><br><span class="line">      resultSetCount++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下面又获取了一次 ResultSets，我猜想两种情况应该是一样的吧，只是返回的格式不同</span></span><br><span class="line">    String[] resultSets = mappedStatement.getResultSets();</span><br><span class="line">    <span class="keyword">if</span> (resultSets != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">while</span> (rsw != <span class="keyword">null</span> &amp;&amp; resultSetCount &lt; resultSets.length) &#123;</span><br><span class="line">        ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);</span><br><span class="line">        <span class="keyword">if</span> (parentMapping != <span class="keyword">null</span>) &#123;</span><br><span class="line">          String nestedResultMapId = parentMapping.getNestedResultMapId();</span><br><span class="line">          ResultMap resultMap = configuration.getResultMap(nestedResultMapId);</span><br><span class="line">          handleResultSet(rsw, resultMap, <span class="keyword">null</span>, parentMapping);</span><br><span class="line">        &#125;</span><br><span class="line">        rsw = getNextResultSet(stmt);</span><br><span class="line">        cleanUpAfterHandlingResultSet();</span><br><span class="line">        resultSetCount++;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> collapseSingleResultList(multipleResults);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>先看看获取第一条结果的地方</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ResultSetWrapper <span class="title">getFirstResultSet</span><span class="params">(Statement stmt)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    ResultSet rs = stmt.getResultSet();</span><br><span class="line">    <span class="keyword">while</span> (rs == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// move forward to get the first resultset in case the driver</span></span><br><span class="line">      <span class="comment">// doesn't return the resultset as the first result (HSQLDB 2.1)</span></span><br><span class="line">      <span class="comment">// 向前移动获取第一条结果集，防止这个驱动不返回第一条结果的结果集</span></span><br><span class="line">      <span class="keyword">if</span> (stmt.getMoreResults()) &#123;</span><br><span class="line">        rs = stmt.getResultSet();</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (stmt.getUpdateCount() == -<span class="number">1</span>) &#123;</span><br><span class="line">          <span class="comment">// no more results. Must be no resultset</span></span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这里其实没啥，就是多包了一层</span></span><br><span class="line">    <span class="keyword">return</span> rs != <span class="keyword">null</span> ? <span class="keyword">new</span> ResultSetWrapper(rs, configuration) : <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>应该是驱动的问题，可能需要首先处理第一条结果，否则是返回不了的。返回的时候又包了一层</strong></p>
+<p><strong>接下来看看如何处理结果集的</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 处理结果集</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleResultSet</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, List&lt;Object&gt; multipleResults, ResultMapping parentMapping)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (parentMapping != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 处理行数据  </span></span><br><span class="line">        handleRowValues(rsw, resultMap, <span class="keyword">null</span>, RowBounds.DEFAULT, parentMapping);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (resultHandler == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="comment">//因为没有 结果处理器，所以这类新建了一个默认的结果处理器</span></span><br><span class="line">          DefaultResultHandler defaultResultHandler = <span class="keyword">new</span> DefaultResultHandler(objectFactory);</span><br><span class="line">          <span class="comment">// 处理行数据</span></span><br><span class="line">          handleRowValues(rsw, resultMap, defaultResultHandler, rowBounds, <span class="keyword">null</span>);</span><br><span class="line">          <span class="comment">// 这里就是把处理后的数据加入到 multipleResults 中</span></span><br><span class="line">          multipleResults.add(defaultResultHandler.getResultList());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          handleRowValues(rsw, resultMap, resultHandler, rowBounds, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      <span class="comment">// issue #228 (close resultsets)</span></span><br><span class="line">      closeResultSet(rsw.getResultSet());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>所以我们主要看看是如何处理行数据，其中必然存在着把原生数据转成我们制定的类型的方法。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// HANDLE ROWS FOR SIMPLE RESULTMAP</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRowValues</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, ResultHandler&lt;?&gt; resultHandler, RowBounds rowBounds, ResultMapping parentMapping)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (resultMap.hasNestedResultMaps()) &#123;</span><br><span class="line">        ensureNoRowBounds();</span><br><span class="line">        checkResultHandler();</span><br><span class="line">        handleRowValuesForNestedResultMap(rsw, resultMap, resultHandler, rowBounds, parentMapping);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 最后会执行到这里</span></span><br><span class="line">        handleRowValuesForSimpleResultMap(rsw, resultMap, resultHandler, rowBounds, parentMapping);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">skipRows</span><span class="params">(ResultSet rs, RowBounds rowBounds)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (rs.getType() != ResultSet.TYPE_FORWARD_ONLY) &#123;</span><br><span class="line">        <span class="keyword">if</span> (rowBounds.getOffset() != RowBounds.NO_ROW_OFFSET) &#123;</span><br><span class="line">            rs.absolute(rowBounds.getOffset());</span><br><span class="line">        &#125;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rowBounds.getOffset(); i++) &#123;</span><br><span class="line">            rs.next();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleRowValuesForSimpleResultMap</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, ResultHandler&lt;?&gt; resultHandler, RowBounds rowBounds, ResultMapping parentMapping)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    DefaultResultContext&lt;Object&gt; resultContext = <span class="keyword">new</span> DefaultResultContext&lt;Object&gt;();</span><br><span class="line">    <span class="comment">// 这里好像就是移动当前数据标的，指向哪个行 (猜测应该是每次进来需要看看是否跳转)</span></span><br><span class="line">    <span class="comment">// rowBounds 有两个属性：offset=0,limit=2147483647</span></span><br><span class="line">    skipRows(rsw.getResultSet(), rowBounds);</span><br><span class="line">    <span class="comment">// 这里判断了一下能否处理 limit 限制的数据，已经结果集后是否还存在着数据</span></span><br><span class="line">    <span class="keyword">while</span> (shouldProcessMoreRows(resultContext, rowBounds) &amp;&amp; rsw.getResultSet().next()) &#123;</span><br><span class="line">        <span class="comment">// 获取这个什么 ResultMap</span></span><br><span class="line">        ResultMap discriminatedResultMap = resolveDiscriminatedResultMap(rsw.getResultSet(), resultMap, <span class="keyword">null</span>);</span><br><span class="line">        <span class="comment">// 获取行数据</span></span><br><span class="line">        Object rowValue = getRowValue(rsw, discriminatedResultMap);</span><br><span class="line">        <span class="comment">// 存储数据</span></span><br><span class="line">        storeObject(resultHandler, resultContext, rowValue, parentMapping, rsw.getResultSet());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="先看看-获取-ResultMap-的代码吧："><a href="#先看看-获取-ResultMap-的代码吧：" class="headerlink" title="先看看 获取 ResultMap 的代码吧："></a>先看看 获取 ResultMap 的代码吧：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line">  <span class="comment">// DISCRIMINATOR</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> ResultMap <span class="title">resolveDiscriminatedResultMap</span><span class="params">(ResultSet rs, ResultMap resultMap, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    Set&lt;String&gt; pastDiscriminators = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">    Discriminator discriminator = resultMap.getDiscriminator();</span><br><span class="line">    <span class="keyword">while</span> (discriminator != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">final</span> Object value = getDiscriminatorValue(rs, discriminator, columnPrefix);</span><br><span class="line">      <span class="keyword">final</span> String discriminatedMapId = discriminator.getMapIdFor(String.valueOf(value));</span><br><span class="line">      <span class="keyword">if</span> (configuration.hasResultMap(discriminatedMapId)) &#123;</span><br><span class="line">        resultMap = configuration.getResultMap(discriminatedMapId);</span><br><span class="line">        Discriminator lastDiscriminator = discriminator;</span><br><span class="line">        discriminator = resultMap.getDiscriminator();</span><br><span class="line">        <span class="keyword">if</span> (discriminator == lastDiscriminator || !pastDiscriminators.add(discriminatedMapId)) &#123;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 因为没有鉴别器所以直接跳转到了这里</span></span><br><span class="line">    <span class="keyword">return</span> resultMap;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="再看看如何获取的行数据："><a href="#再看看如何获取的行数据：" class="headerlink" title="再看看如何获取的行数据："></a>再看看如何获取的行数据：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line">  <span class="comment">// GET VALUE FROM ROW FOR SIMPLE RESULT MAP</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> Object <span class="title">getRowValue</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ResultLoaderMap lazyLoader = <span class="keyword">new</span> ResultLoaderMap();</span><br><span class="line">    <span class="comment">// 1. 创建结果对象(就是把行数据取出来嘛，就是我们写的 DebugMybatis.News 对象哦)</span></span><br><span class="line">    <span class="comment">// 这里只是创建相应的对象(此时数据还是空)</span></span><br><span class="line">    Object rowValue = createResultObject(rsw, resultMap, lazyLoader, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">if</span> (rowValue != <span class="keyword">null</span> &amp;&amp; !hasTypeHandlerForResultObject(rsw, resultMap.getType())) &#123;</span><br><span class="line">      <span class="comment">// 2. 这个地方很重要，将 rowValue 绑定在了 MetaObject 的 originalObject 变量上 </span></span><br><span class="line">      <span class="keyword">final</span> MetaObject metaObject = configuration.newMetaObject(rowValue);</span><br><span class="line">      <span class="keyword">boolean</span> foundValues = <span class="keyword">this</span>.useConstructorMappings;</span><br><span class="line">      <span class="keyword">if</span> (shouldApplyAutomaticMappings(resultMap, <span class="keyword">false</span>)) &#123;</span><br><span class="line">        <span class="comment">// 3. 这里修改 metaObject 的值，其实就是给 rowValue 中的数据赋值(其中最终给各个字段赋值就是在这里)</span></span><br><span class="line">        foundValues = applyAutomaticMappings(rsw, resultMap, metaObject, <span class="keyword">null</span>) || foundValues;</span><br><span class="line">      &#125;</span><br><span class="line">      foundValues = applyPropertyMappings(rsw, resultMap, metaObject, lazyLoader, <span class="keyword">null</span>) || foundValues;</span><br><span class="line">      foundValues = lazyLoader.size() &gt; <span class="number">0</span> || foundValues;</span><br><span class="line">      rowValue = foundValues || configuration.isReturnInstanceForEmptyRow() ? rowValue : <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> rowValue;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>总结一下我们分为三步</strong></p>
+<ul>
+<li>创建结果对象</li>
+<li>将 rowValue 绑定在了 MetaObject 的 originalObject 变量上 </li>
+<li>这里修改 metaObject 的值(其实就是赋值 rowValue)</li>
+</ul>
+<h4 id="创建结果对象"><a href="#创建结果对象" class="headerlink" title="创建结果对象"></a>创建结果对象</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line">  <span class="comment">// INSTANTIATION &amp; CONSTRUCTOR MAPPING</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> Object <span class="title">createResultObject</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, ResultLoaderMap lazyLoader, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.useConstructorMappings = <span class="keyword">false</span>; <span class="comment">// reset previous mapping result</span></span><br><span class="line">    <span class="keyword">final</span> List&lt;Class&lt;?&gt;&gt; constructorArgTypes = <span class="keyword">new</span> ArrayList&lt;Class&lt;?&gt;&gt;();</span><br><span class="line">    <span class="keyword">final</span> List&lt;Object&gt; constructorArgs = <span class="keyword">new</span> ArrayList&lt;Object&gt;();</span><br><span class="line">    <span class="comment">// 获取整个结果对象</span></span><br><span class="line">    Object resultObject = createResultObject(rsw, resultMap, constructorArgTypes, constructorArgs, columnPrefix);</span><br><span class="line">    <span class="keyword">if</span> (resultObject != <span class="keyword">null</span> &amp;&amp; !hasTypeHandlerForResultObject(rsw, resultMap.getType())) &#123;</span><br><span class="line">      <span class="keyword">final</span> List&lt;ResultMapping&gt; propertyMappings = resultMap.getPropertyResultMappings();</span><br><span class="line">      <span class="keyword">for</span> (ResultMapping propertyMapping : propertyMappings) &#123;</span><br><span class="line">        <span class="comment">// issue gcode #109 &amp;&amp; issue #149</span></span><br><span class="line">        <span class="keyword">if</span> (propertyMapping.getNestedQueryId() != <span class="keyword">null</span> &amp;&amp; propertyMapping.isLazy()) &#123;</span><br><span class="line">          resultObject = configuration.getProxyFactory().createProxy(resultObject, lazyLoader, configuration, objectFactory, constructorArgTypes, constructorArgs);</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 这里最后返回 false，因为我们没有使用构造器的映射</span></span><br><span class="line">    <span class="keyword">this</span>.useConstructorMappings = resultObject != <span class="keyword">null</span> &amp;&amp; !constructorArgTypes.isEmpty(); <span class="comment">// set current mapping result</span></span><br><span class="line">    <span class="keyword">return</span> resultObject;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">createResultObject</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, List&lt;Class&lt;?&gt;&gt; constructorArgTypes, List&lt;Object&gt; constructorArgs, String columnPrefix)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt; resultType = resultMap.getType();</span><br><span class="line">    <span class="keyword">final</span> MetaClass metaType = MetaClass.forClass(resultType, reflectorFactory);</span><br><span class="line">    <span class="keyword">final</span> List&lt;ResultMapping&gt; constructorMappings = resultMap.getConstructorResultMappings();</span><br><span class="line">    <span class="comment">// 判断有没有类型处理器对于我们的这个结果对象 我们这个没有所以跳过了</span></span><br><span class="line">    <span class="keyword">if</span> (hasTypeHandlerForResultObject(rsw, resultType)) &#123;</span><br><span class="line">      <span class="keyword">return</span> createPrimitiveResultObject(rsw, resultMap, columnPrefix);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!constructorMappings.isEmpty()) &#123;</span><br><span class="line">      <span class="comment">// 判断构造器的映射列表是否不为空，我们这里为空，所以也不会进来</span></span><br><span class="line">      <span class="keyword">return</span> createParameterizedResultObject(rsw, resultType, constructorMappings, constructorArgTypes, constructorArgs, columnPrefix);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (resultType.isInterface() || metaType.hasDefaultConstructor()) &#123;</span><br><span class="line">      <span class="comment">// 最后回到这(因为 News 类有默认构造器)，有对象工厂创建我们的类，其中 resultType 就是我们之前设置的 class DebugMybatis.News</span></span><br><span class="line">      <span class="keyword">return</span> objectFactory.create(resultType);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (shouldApplyAutomaticMappings(resultMap, <span class="keyword">false</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> createByConstructorSignature(rsw, resultType, constructorArgTypes, constructorArgs, columnPrefix);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ExecutorException(<span class="string">"Do not know how to create an instance of "</span> + resultType);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>org.apache.ibatis.reflection.factory.DefaultObjectFactory 的 instantiateClass()</strong> 方法</p>
+<p>如下代码，剩下的就是通过反射来创建实例啦</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>  &lt;T&gt; <span class="function">T <span class="title">instantiateClass</span><span class="params">(Class&lt;T&gt; type, List&lt;Class&lt;?&gt;&gt; constructorArgTypes, List&lt;Object&gt; constructorArgs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Constructor&lt;T&gt; constructor;</span><br><span class="line">      <span class="keyword">if</span> (constructorArgTypes == <span class="keyword">null</span> || constructorArgs == <span class="keyword">null</span>) &#123;</span><br><span class="line">        constructor = type.getDeclaredConstructor();</span><br><span class="line">        <span class="keyword">if</span> (!constructor.isAccessible()) &#123;</span><br><span class="line">          constructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> constructor.newInstance();</span><br><span class="line">      &#125;</span><br><span class="line">      constructor = type.getDeclaredConstructor(constructorArgTypes.toArray(<span class="keyword">new</span> Class[constructorArgTypes.size()]));</span><br><span class="line">      <span class="keyword">if</span> (!constructor.isAccessible()) &#123;</span><br><span class="line">        constructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> constructor.newInstance(constructorArgs.toArray(<span class="keyword">new</span> Object[constructorArgs.size()]));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      StringBuilder argTypes = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">      <span class="keyword">if</span> (constructorArgTypes != <span class="keyword">null</span> &amp;&amp; !constructorArgTypes.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; argType : constructorArgTypes) &#123;</span><br><span class="line">          argTypes.append(argType.getSimpleName());</span><br><span class="line">          argTypes.append(<span class="string">","</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        argTypes.deleteCharAt(argTypes.length() - <span class="number">1</span>); <span class="comment">// remove trailing ,</span></span><br><span class="line">      &#125;</span><br><span class="line">      StringBuilder argValues = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">      <span class="keyword">if</span> (constructorArgs != <span class="keyword">null</span> &amp;&amp; !constructorArgs.isEmpty()) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Object argValue : constructorArgs) &#123;</span><br><span class="line">          argValues.append(String.valueOf(argValue));</span><br><span class="line">          argValues.append(<span class="string">","</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        argValues.deleteCharAt(argValues.length() - <span class="number">1</span>); <span class="comment">// remove trailing ,</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ReflectionException(<span class="string">"Error instantiating "</span> + type + <span class="string">" with invalid types ("</span> + argTypes + <span class="string">") or values ("</span> + argValues + <span class="string">"). Cause: "</span> + e, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="将-rowValue-绑定在了-MetaObject-的-originalObject-变量上"><a href="#将-rowValue-绑定在了-MetaObject-的-originalObject-变量上" class="headerlink" title="将 rowValue 绑定在了 MetaObject 的 originalObject 变量上"></a>将 rowValue 绑定在了 MetaObject 的 originalObject 变量上</h4><p>这里不用跟啦就是一个简单的赋值而已：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">MetaObject</span><span class="params">(Object object, ObjectFactory objectFactory, ObjectWrapperFactory objectWrapperFactory, ReflectorFactory reflectorFactory)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.originalObject = object;</span><br><span class="line">    <span class="keyword">this</span>.objectFactory = objectFactory;</span><br><span class="line">    <span class="keyword">this</span>.objectWrapperFactory = objectWrapperFactory;</span><br><span class="line">    <span class="keyword">this</span>.reflectorFactory = reflectorFactory;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (object <span class="keyword">instanceof</span> ObjectWrapper) &#123;</span><br><span class="line">      <span class="keyword">this</span>.objectWrapper = (ObjectWrapper) object;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (objectWrapperFactory.hasWrapperFor(object)) &#123;</span><br><span class="line">      <span class="keyword">this</span>.objectWrapper = objectWrapperFactory.getWrapperFor(<span class="keyword">this</span>, object);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (object <span class="keyword">instanceof</span> Map) &#123;</span><br><span class="line">      <span class="keyword">this</span>.objectWrapper = <span class="keyword">new</span> MapWrapper(<span class="keyword">this</span>, (Map) object);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (object <span class="keyword">instanceof</span> Collection) &#123;</span><br><span class="line">      <span class="keyword">this</span>.objectWrapper = <span class="keyword">new</span> CollectionWrapper(<span class="keyword">this</span>, (Collection) object);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.objectWrapper = <span class="keyword">new</span> BeanWrapper(<span class="keyword">this</span>, object);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="这里修改-metaObject-的值-其实就是赋值-rowValue-，敲黑板"><a href="#这里修改-metaObject-的值-其实就是赋值-rowValue-，敲黑板" class="headerlink" title="这里修改 metaObject 的值(其实就是赋值 rowValue)，敲黑板"></a>这里修改 metaObject 的值(其实就是赋值 rowValue)，敲黑板</h4><p>这里就是我们期待已久的赋值的地方了！！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UnMappedColumnAutoMapping</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String column;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String property;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TypeHandler&lt;?&gt; typeHandler;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> primitive;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">applyAutomaticMappings</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, MetaObject metaObject, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 这里你可以理解为把所有的所有类的属性拿出来了，然后每个属性都对应一个 UnMappedColumnAutoMapping 对象</span></span><br><span class="line">    List&lt;UnMappedColumnAutoMapping&gt; autoMapping = createAutomaticMappings(rsw, resultMap, metaObject, columnPrefix);</span><br><span class="line">    <span class="keyword">boolean</span> foundValues = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!autoMapping.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">for</span> (UnMappedColumnAutoMapping mapping : autoMapping) &#123;</span><br><span class="line">        <span class="comment">// 2. 通过每个 UnMappedColumnAutoMapping 对象的 类型处理器 typeHandler 来获取值</span></span><br><span class="line">        <span class="keyword">final</span> Object value = mapping.typeHandler.getResult(rsw.getResultSet(), mapping.column);</span><br><span class="line">        <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">          foundValues = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (value != <span class="keyword">null</span> || (configuration.isCallSettersOnNulls() &amp;&amp; !mapping.primitive)) &#123;</span><br><span class="line">          <span class="comment">// gcode issue #377, call setter on nulls (value is not 'found')</span></span><br><span class="line">          <span class="comment">// 3. 给 metaObject 对应属性赋值</span></span><br><span class="line">          metaObject.setValue(mapping.property, value);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> foundValues;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>主要分为一下三步：</strong></p>
+<ul>
+<li>把所有的所有类的属性拿出来了，为每个属性创建一个 UnMappedColumnAutoMapping 对象，并且添加一个类型处理器</li>
+<li>通过每个 UnMappedColumnAutoMapping 对象的 类型处理器 typeHandler 来获取值</li>
+<li>给 metaObject 对应属性赋值</li>
+</ul>
+<h5 id="1-获取所有属性"><a href="#1-获取所有属性" class="headerlink" title="1. 获取所有属性"></a>1. 获取所有属性</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> List&lt;UnMappedColumnAutoMapping&gt; <span class="title">createAutomaticMappings</span><span class="params">(ResultSetWrapper rsw, ResultMap resultMap, MetaObject metaObject, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> String mapKey = resultMap.getId() + <span class="string">":"</span> + columnPrefix;</span><br><span class="line">    <span class="comment">// 第一次进来因为是没有缓存的，所以这里的值会是 null</span></span><br><span class="line">    List&lt;UnMappedColumnAutoMapping&gt; autoMapping = autoMappingsCache.get(mapKey);</span><br><span class="line">    <span class="keyword">if</span> (autoMapping == <span class="keyword">null</span>) &#123;</span><br><span class="line">      autoMapping = <span class="keyword">new</span> ArrayList&lt;UnMappedColumnAutoMapping&gt;();</span><br><span class="line">      <span class="comment">// 1. 拿取列名称列表</span></span><br><span class="line">      <span class="keyword">final</span> List&lt;String&gt; unmappedColumnNames = rsw.getUnmappedColumnNames(resultMap, columnPrefix);</span><br><span class="line">      <span class="keyword">for</span> (String columnName : unmappedColumnNames) &#123;</span><br><span class="line">         <span class="comment">//  propertyName 和 列名称一样</span></span><br><span class="line">        String propertyName = columnName;</span><br><span class="line">        <span class="keyword">if</span> (columnPrefix != <span class="keyword">null</span> &amp;&amp; !columnPrefix.isEmpty()) &#123;</span><br><span class="line">          <span class="comment">// When columnPrefix is specified,</span></span><br><span class="line">          <span class="comment">// ignore columns without the prefix.</span></span><br><span class="line">          <span class="keyword">if</span> (columnName.toUpperCase(Locale.ENGLISH).startsWith(columnPrefix)) &#123;</span><br><span class="line">            propertyName = columnName.substring(columnPrefix.length());</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2. 通过属性名称来获取属性的名称</span></span><br><span class="line">        <span class="keyword">final</span> String property = metaObject.findProperty(propertyName, configuration.isMapUnderscoreToCamelCase());</span><br><span class="line">        <span class="keyword">if</span> (property != <span class="keyword">null</span> &amp;&amp; metaObject.hasSetter(property)) &#123;</span><br><span class="line">          <span class="keyword">if</span> (resultMap.getMappedProperties().contains(property)) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="comment">// 3. 通过属性名称获取属性类型</span></span><br><span class="line">          <span class="keyword">final</span> Class&lt;?&gt; propertyType = metaObject.getSetterType(property);</span><br><span class="line">          <span class="keyword">if</span> (typeHandlerRegistry.hasTypeHandler(propertyType, rsw.getJdbcType(columnName))) &#123;</span><br><span class="line">            <span class="comment">// 4. 拿取类型处理器</span></span><br><span class="line">            <span class="keyword">final</span> TypeHandler&lt;?&gt; typeHandler = rsw.getTypeHandler(propertyType, columnName);</span><br><span class="line">            <span class="comment">// 5. 封装需要的 UnMappedColumnAutoMapping</span></span><br><span class="line">            autoMapping.add(<span class="keyword">new</span> UnMappedColumnAutoMapping(columnName, property, typeHandler, propertyType.isPrimitive()));</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            configuration.getAutoMappingUnknownColumnBehavior()</span><br><span class="line">                .doAction(mappedStatement, columnName, property, propertyType);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          configuration.getAutoMappingUnknownColumnBehavior()</span><br><span class="line">              .doAction(mappedStatement, columnName, (property != <span class="keyword">null</span>) ? property : propertyName, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      autoMappingsCache.put(mapKey, autoMapping);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> autoMapping;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>简单看看 拿取列名称列表</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getUnmappedColumnNames</span><span class="params">(ResultMap resultMap, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    List&lt;String&gt; unMappedColumnNames = unMappedColumnNamesMap.get(getMapKey(resultMap, columnPrefix));</span><br><span class="line">    <span class="keyword">if</span> (unMappedColumnNames == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// 初次进来会加载所有的 映射 和 没有映射的列名称  </span></span><br><span class="line">      loadMappedAndUnmappedColumnNames(resultMap, columnPrefix);</span><br><span class="line">      <span class="comment">// 上面的方法就会初始化 unMappedColumnNamesMap，所以这里取得的就是所有的列名</span></span><br><span class="line">      unMappedColumnNames = unMappedColumnNamesMap.get(getMapKey(resultMap, columnPrefix));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> unMappedColumnNames;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadMappedAndUnmappedColumnNames</span><span class="params">(ResultMap resultMap, String columnPrefix)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    List&lt;String&gt; mappedColumnNames = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">    List&lt;String&gt; unmappedColumnNames = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">    <span class="keyword">final</span> String upperColumnPrefix = columnPrefix == <span class="keyword">null</span> ? <span class="keyword">null</span> : columnPrefix.toUpperCase(Locale.ENGLISH);</span><br><span class="line">    <span class="comment">// 这里是获取所有映射的列集合(就是你使用 resultMap 自己配置的)</span></span><br><span class="line">    <span class="keyword">final</span> Set&lt;String&gt; mappedColumns = prependPrefixes(resultMap.getMappedColumns(), upperColumnPrefix);</span><br><span class="line">    <span class="comment">// 重点说一下这个 private final List&lt;String&gt; columnNames = new ArrayList&lt;String&gt;();</span></span><br><span class="line">    <span class="comment">// 它应该是在初始化的时候就把所有的列名放入其中了</span></span><br><span class="line">    <span class="keyword">for</span> (String columnName : columnNames) &#123;</span><br><span class="line">      <span class="keyword">final</span> String upperColumnName = columnName.toUpperCase(Locale.ENGLISH);</span><br><span class="line">      <span class="keyword">if</span> (mappedColumns.contains(upperColumnName)) &#123;</span><br><span class="line">        mappedColumnNames.add(upperColumnName);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 因为我们没有配置特定映射字段，所以所有取得的字段都会放入这里  </span></span><br><span class="line">        unmappedColumnNames.add(columnName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    mappedColumnNamesMap.put(getMapKey(resultMap, columnPrefix), mappedColumnNames);</span><br><span class="line">    <span class="comment">// 最后再存放到 unMappedColumnNamesMap 中 (这个后面就会用到了)</span></span><br><span class="line">    <span class="comment">// private final Map&lt;String, List&lt;String&gt;&gt; unMappedColumnNamesMap = new HashMap&lt;String, List&lt;String&gt;&gt;();</span></span><br><span class="line">    unMappedColumnNamesMap.put(getMapKey(resultMap, columnPrefix), unmappedColumnNames);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>通过属性名称来获取属性的名称</strong></p>
+<p>最终跟踪会到 <strong>org.apache.ibatis.reflection.MetaClass 的  buildProperty()</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> StringBuilder <span class="title">buildProperty</span><span class="params">(String name, StringBuilder builder)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 把当前属性名放入其中封装一层，具体代码看下方</span></span><br><span class="line">    PropertyTokenizer prop = <span class="keyword">new</span> PropertyTokenizer(name);</span><br><span class="line">    <span class="keyword">if</span> (prop.hasNext()) &#123;</span><br><span class="line">      String propertyName = reflector.findPropertyName(prop.getName());</span><br><span class="line">      <span class="keyword">if</span> (propertyName != <span class="keyword">null</span>) &#123;</span><br><span class="line">        builder.append(propertyName);</span><br><span class="line">        builder.append(<span class="string">"."</span>);</span><br><span class="line">        MetaClass metaProp = metaClassForProperty(propertyName);</span><br><span class="line">        metaProp.buildProperty(prop.getChildren(), builder);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 通过 reflector 拿取属性名称，具体代码看下方  findPropertyName() 方法 </span></span><br><span class="line">      String propertyName = reflector.findPropertyName(name);</span><br><span class="line">      <span class="keyword">if</span> (propertyName != <span class="keyword">null</span>) &#123;</span><br><span class="line">        builder.append(propertyName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> builder;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">PropertyTokenizer</span><span class="params">(String fullname)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 找有没有 "."</span></span><br><span class="line">    <span class="keyword">int</span> delim = fullname.indexOf(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">if</span> (delim &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">      name = fullname.substring(<span class="number">0</span>, delim);</span><br><span class="line">      children = fullname.substring(delim + <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      name = fullname;</span><br><span class="line">      children = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    indexedName = name;</span><br><span class="line">    <span class="comment">// 找有没有 "["</span></span><br><span class="line">    delim = name.indexOf(<span class="string">'['</span>);</span><br><span class="line">    <span class="keyword">if</span> (delim &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">      index = name.substring(delim + <span class="number">1</span>, name.length() - <span class="number">1</span>);</span><br><span class="line">      name = name.substring(<span class="number">0</span>, delim);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// org.apache.ibatis.reflection.Reflector  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">findPropertyName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 和之前一样所有的属性应该是在初始化的时候就放进去了</span></span><br><span class="line">    <span class="comment">// &#123;TITLE=title, AUTHOR=author, ID=id, DESC=desc&#125; </span></span><br><span class="line">    <span class="comment">// 以后遇到类似的取东西我们就不说了</span></span><br><span class="line">    <span class="keyword">return</span> caseInsensitivePropertyMap.get(name.toUpperCase(Locale.ENGLISH));</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>讲道理这个操作我现在还是看不懂，不知道这样设计的目的在哪里…..</p>
+<p><strong>通过属性名称获取属性类型</strong></p>
+<p>感觉跟之前取属性名称一样的套路…..</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Class&lt;?&gt; getSetterType(String name) &#123;</span><br><span class="line">    PropertyTokenizer prop = <span class="keyword">new</span> PropertyTokenizer(name);</span><br><span class="line">    <span class="keyword">if</span> (prop.hasNext()) &#123;</span><br><span class="line">      MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());</span><br><span class="line">      <span class="keyword">if</span> (metaValue == SystemMetaObject.NULL_META_OBJECT) &#123;</span><br><span class="line">        <span class="keyword">return</span> metaClass.getSetterType(name);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> metaValue.getSetterType(prop.getChildren());</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 最终调用走到这  </span></span><br><span class="line">      <span class="keyword">return</span> metaClass.getSetterType(name);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.reflection.MetaClass</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Class&lt;?&gt; getSetterType(String name) &#123;</span><br><span class="line">    PropertyTokenizer prop = <span class="keyword">new</span> PropertyTokenizer(name);</span><br><span class="line">    <span class="keyword">if</span> (prop.hasNext()) &#123;</span><br><span class="line">      MetaClass metaProp = metaClassForProperty(prop.getName());</span><br><span class="line">      <span class="keyword">return</span> metaProp.getSetterType(prop.getChildren());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> reflector.getSetterType(prop.getName());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  org.apache.ibatis.reflection.Reflector</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">   * Gets the type for a property setter</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * @param propertyName - the name of the property</span></span><br><span class="line"><span class="comment">   * @return The Class of the propery setter</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">public</span> Class&lt;?&gt; getSetterType(String propertyName) &#123;</span><br><span class="line">    <span class="comment">// private final Map&lt;String, Class&lt;?&gt;&gt; setTypes = new HashMap&lt;String, Class&lt;?&gt;&gt;();  </span></span><br><span class="line">    <span class="comment">// 又是一个 setTypes ，这谁顶得住啊。话说这个 Reflector 保存了不少东西</span></span><br><span class="line">    Class&lt;?&gt; clazz = setTypes.get(propertyName);</span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ReflectionException(<span class="string">"There is no setter for property named '"</span> + propertyName + <span class="string">"' in '"</span> + type + <span class="string">"'"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> clazz;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>拿取类型处理器</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Gets the type handler to use when reading the result set.</span></span><br><span class="line"><span class="comment">   * Tries to get from the TypeHandlerRegistry by searching for the property type.</span></span><br><span class="line"><span class="comment">   * If not found it gets the column JDBC type and tries to get a handler for it.</span></span><br><span class="line"><span class="comment">   * </span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> propertyType</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> columnName</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   </span><br><span class="line">  <span class="comment">// 官方翻译说得很明白了：当读取结果集的时候用来获取类型处理器。首先从 TypeHandlerRegistry 中</span></span><br><span class="line">  <span class="comment">// 来搜寻，如果没有的话获取 JDBC 的字段属性，然后尝试获取处理器</span></span><br><span class="line">   </span><br><span class="line">  <span class="keyword">public</span> TypeHandler&lt;?&gt; getTypeHandler(Class&lt;?&gt; propertyType, String columnName) &#123;</span><br><span class="line">    TypeHandler&lt;?&gt; handler = <span class="keyword">null</span>;</span><br><span class="line">    Map&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt; columnHandlers = typeHandlerMap.get(columnName);</span><br><span class="line">    <span class="keyword">if</span> (columnHandlers == <span class="keyword">null</span>) &#123;</span><br><span class="line">      columnHandlers = <span class="keyword">new</span> HashMap&lt;Class&lt;?&gt;, TypeHandler&lt;?&gt;&gt;();</span><br><span class="line">      typeHandlerMap.put(columnName, columnHandlers);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      handler = columnHandlers.get(propertyType);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// 数据保存在某个 Map 中....  </span></span><br><span class="line">      JdbcType jdbcType = getJdbcType(columnName);</span><br><span class="line">      <span class="comment">// 同样是在 Map 中取数据，我已经不想跟了...</span></span><br><span class="line">      handler = typeHandlerRegistry.getTypeHandler(propertyType, jdbcType);</span><br><span class="line">      <span class="comment">// Replicate logic of UnknownTypeHandler#resolveTypeHandler</span></span><br><span class="line">      <span class="comment">// See issue #59 comment 10</span></span><br><span class="line">      <span class="keyword">if</span> (handler == <span class="keyword">null</span> || handler <span class="keyword">instanceof</span> UnknownTypeHandler) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> index = columnNames.indexOf(columnName);</span><br><span class="line">        <span class="keyword">final</span> Class&lt;?&gt; javaType = resolveClass(classNames.get(index));</span><br><span class="line">        <span class="keyword">if</span> (javaType != <span class="keyword">null</span> &amp;&amp; jdbcType != <span class="keyword">null</span>) &#123;</span><br><span class="line">          handler = typeHandlerRegistry.getTypeHandler(javaType, jdbcType);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (javaType != <span class="keyword">null</span>) &#123;</span><br><span class="line">          handler = typeHandlerRegistry.getTypeHandler(javaType);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (jdbcType != <span class="keyword">null</span>) &#123;</span><br><span class="line">          handler = typeHandlerRegistry.getTypeHandler(jdbcType);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (handler == <span class="keyword">null</span> || handler <span class="keyword">instanceof</span> UnknownTypeHandler) &#123;</span><br><span class="line">        handler = <span class="keyword">new</span> ObjectTypeHandler();</span><br><span class="line">      &#125;</span><br><span class="line">      columnHandlers.put(propertyType, handler);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> handler;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-通过每个-UnMappedColumnAutoMapping-对象的-类型处理器-typeHandler-来获取值"><a href="#2-通过每个-UnMappedColumnAutoMapping-对象的-类型处理器-typeHandler-来获取值" class="headerlink" title="2. 通过每个 UnMappedColumnAutoMapping 对象的 类型处理器 typeHandler 来获取值"></a>2. 通过每个 UnMappedColumnAutoMapping 对象的 类型处理器 typeHandler 来获取值</h5><p>最终会跟到 <code>org.apache.ibatis.type.BaseTypeHandler&lt;T&gt;</code> 的 <code>getResult()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">getResult</span><span class="params">(ResultSet rs, String columnName)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    T result;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 获取数据，看下方代码  </span></span><br><span class="line">      result = getNullableResult(rs, columnName);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ResultMapException(<span class="string">"Error attempting to get column '"</span> + columnName + <span class="string">"' from result set.  Cause: "</span> + e, e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (rs.wasNull()) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Long <span class="title">getNullableResult</span><span class="params">(ResultSet rs, String columnName)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="comment">// JDBC 的东西啦，我们熟悉的获取不同了类型的结果      </span></span><br><span class="line">    <span class="keyword">return</span> rs.getLong(columnName);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-给-metaObject-对应属性赋值"><a href="#3-给-metaObject-对应属性赋值" class="headerlink" title="3. 给 metaObject 对应属性赋值"></a>3. 给 metaObject 对应属性赋值</h5><p>简单说就是反射，调用<code>MetaObject metaValue</code> 的<code>set</code>方法，下面我只截取关键代码….</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(String name, Object value)</span> </span>&#123;</span><br><span class="line">    PropertyTokenizer prop = <span class="keyword">new</span> PropertyTokenizer(name);</span><br><span class="line">    <span class="keyword">if</span> (prop.hasNext()) &#123;</span><br><span class="line">      MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());</span><br><span class="line">      <span class="keyword">if</span> (metaValue == SystemMetaObject.NULL_META_OBJECT) &#123;</span><br><span class="line">        <span class="keyword">if</span> (value == <span class="keyword">null</span> &amp;&amp; prop.getChildren() != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="comment">// don't instantiate child path if value is null</span></span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          metaValue = objectWrapper.instantiatePropertyValue(name, prop, objectFactory);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      metaValue.setValue(prop.getChildren(), value);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      objectWrapper.set(prop, value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">org.apache.ibatis.reflection.wrapper.BeanWrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setBeanProperty</span><span class="params">(PropertyTokenizer prop, Object object, Object value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 通过属性名称拿取 set 方法  </span></span><br><span class="line">      Invoker method = metaClass.getSetInvoker(prop.getName());</span><br><span class="line">      Object[] params = &#123;value&#125;;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         <span class="comment">// 赋值 </span></span><br><span class="line">        method.invoke(object, params);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        <span class="keyword">throw</span> ExceptionUtil.unwrapThrowable(t);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ReflectionException(<span class="string">"Could not set property '"</span> + prop.getName() + <span class="string">"' of '"</span> + object.getClass() + <span class="string">"' with value '"</span> + value + <span class="string">"' Cause: "</span> + t.toString(), t);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><strong>执行前</strong></p>
+<ol>
+<li>通过参数获取 BoundSql boundSql</li>
+<li>获取 PrepareStatement connection.prepareStatement()</li>
+<li>设置参数 ps.setInt(i, parameter); </li>
+</ol>
+<p><strong>执行后</strong></p>
+<ol>
+<li>创建结果对象(配置文件中设置的)，先创建一个空对象</li>
+<li>然后给空对象赋值</li>
+</ol>
+<h1 id="安利时间"><a href="#安利时间" class="headerlink" title="安利时间"></a>安利时间</h1><p>推荐一款睡觉的 APP《小睡眠》，公司小伙伴安利的，感觉还不错，失眠的同学可以试一下</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/源码/" rel="tag"># 源码</a>
+          
+            <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/15/Java姿势解锁 —— 泛型/" rel="next" title="Java姿势解锁 —— 泛型">
+                <i class="fa fa-chevron-left"></i> Java姿势解锁 —— 泛型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/22/从入门到迷路系列——心理学学习笔记(一)/" rel="prev" title="从入门到迷路系列 —— 心理学学习笔记(一)">
+                从入门到迷路系列 —— 心理学学习笔记(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Come-On"><span class="nav-number">3.</span> <span class="nav-text">Come On</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mybatis-在哪执行的-SQL语句"><span class="nav-number">3.1.</span> <span class="nav-text">Mybatis 在哪执行的 SQL语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何构造-SQL"><span class="nav-number">3.1.1.</span> <span class="nav-text">如何构造 SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行查询操作，并且返回特定类型结果的数据"><span class="nav-number">3.1.2.</span> <span class="nav-text">执行查询操作，并且返回特定类型结果的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造-Statement-部分："><span class="nav-number">3.1.2.1.</span> <span class="nav-text">构造 Statement 部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#先看看-赋值-Statement-部分"><span class="nav-number">3.1.2.1.1.</span> <span class="nav-text">先看看 赋值 Statement 部分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#接下里看看-参数化-Statement"><span class="nav-number">3.1.2.1.2.</span> <span class="nav-text">接下里看看 参数化 Statement</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#咱们先讲获取类型处理器"><span class="nav-number">3.1.2.1.2.1.</span> <span class="nav-text">咱们先讲获取类型处理器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#再说说设置参数"><span class="nav-number">3.1.2.1.2.2.</span> <span class="nav-text">再说说设置参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行查询部分"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">执行查询部分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何将结果转换为我们设置好的结果类型"><span class="nav-number">3.2.</span> <span class="nav-text">如何将结果转换为我们设置好的结果类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先看看-获取-ResultMap-的代码吧："><span class="nav-number">3.2.1.</span> <span class="nav-text">先看看 获取 ResultMap 的代码吧：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再看看如何获取的行数据："><span class="nav-number">3.2.2.</span> <span class="nav-text">再看看如何获取的行数据：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建结果对象"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">创建结果对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将-rowValue-绑定在了-MetaObject-的-originalObject-变量上"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">将 rowValue 绑定在了 MetaObject 的 originalObject 变量上</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#这里修改-metaObject-的值-其实就是赋值-rowValue-，敲黑板"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">这里修改 metaObject 的值(其实就是赋值 rowValue)，敲黑板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-获取所有属性"><span class="nav-number">3.2.2.3.1.</span> <span class="nav-text">1. 获取所有属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-通过每个-UnMappedColumnAutoMapping-对象的-类型处理器-typeHandler-来获取值"><span class="nav-number">3.2.2.3.2.</span> <span class="nav-text">2. 通过每个 UnMappedColumnAutoMapping 对象的 类型处理器 typeHandler 来获取值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-给-metaObject-对应属性赋值"><span class="nav-number">3.2.2.3.3.</span> <span class="nav-text">3. 给 metaObject 对应属性赋值</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安利时间"><span class="nav-number">5.</span> <span class="nav-text">安利时间</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

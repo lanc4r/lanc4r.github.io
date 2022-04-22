@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="安利,抓包,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言很久之前就想试试手机抓包 记得前年的过年期间，QQ 有个下拉刷红包活动，当时配的文案是，打出的 Combo 越高，获得奖励的几率越大。 后面无意间看到过一篇文章，博主一分钟刷了 上千的 Combo，手指都划断了，但奖励什么的依旧寥寥无几，一气之下抓个包，发现刷了很多次，就发了大概几十次的请求，这就解释了为什么中奖率很低了，TX 还是会玩的…">
+<meta name="keywords" content="安利,抓包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安利一款手机抓包软件">
+<meta property="og:url" content="http://yoursite.com/2018/11/21/安利一款手机抓包软件/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言很久之前就想试试手机抓包 记得前年的过年期间，QQ 有个下拉刷红包活动，当时配的文案是，打出的 Combo 越高，获得奖励的几率越大。 后面无意间看到过一篇文章，博主一分钟刷了 上千的 Combo，手指都划断了，但奖励什么的依旧寥寥无几，一气之下抓个包，发现刷了很多次，就发了大概几十次的请求，这就解释了为什么中奖率很低了，TX 还是会玩的…">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf4103654e33.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035c5447.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035cb643.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035cd418.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035ceca3.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035c3f93.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf4103636ad2.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035c49c5.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/20/5bf41035ddf3d.png">
+<meta property="og:updated_time" content="2019-05-24T15:23:04.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安利一款手机抓包软件">
+<meta name="twitter:description" content="前言很久之前就想试试手机抓包 记得前年的过年期间，QQ 有个下拉刷红包活动，当时配的文案是，打出的 Combo 越高，获得奖励的几率越大。 后面无意间看到过一篇文章，博主一分钟刷了 上千的 Combo，手指都划断了，但奖励什么的依旧寥寥无几，一气之下抓个包，发现刷了很多次，就发了大概几十次的请求，这就解释了为什么中奖率很低了，TX 还是会玩的…">
+<meta name="twitter:image" content="https://i.loli.net/2018/11/20/5bf4103654e33.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/21/安利一款手机抓包软件/">
+
+
+
+
+
+  <title>安利一款手机抓包软件 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">11月</div>
+			<div class="post-day">21</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/疯狂安利/" itemprop="url" rel="index">
+          <span itemprop="name">疯狂安利</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/疯狂安利/工具篇/" itemprop="url" rel="index">
+          <span itemprop="name">工具篇</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/21/安利一款手机抓包软件/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安利一款手机抓包软件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-21T08:30:59+08:00">
+                2018-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/疯狂安利/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">疯狂安利</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/疯狂安利/工具篇/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">工具篇</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/11/20/5bf4103654e33.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>很久之前就想试试手机抓包</p>
+<p>记得前年的过年期间，QQ 有个下拉刷红包活动，当时配的文案是，打出的 Combo 越高，获得奖励的几率越大。</p>
+<p>后面无意间看到过一篇文章，博主一分钟刷了 上千的 Combo，手指都划断了，但奖励什么的依旧寥寥无几，一气之下抓个包，发现刷了很多次，就发了大概几十次的请求，这就解释了为什么中奖率很低了，TX 还是会玩的…</p>
+<a id="more"></a>
+<p>从那时候起就想了解一下手机抓包，但这一拖就是两年后了(。_。)</p>
+<p>这里要感谢测试的小伙伴新姐，在新姐帮助下，很快就完成了第一次手机抓包，不得不说面对面的教学，学习效率真的高。</p>
+<h1 id="Charles"><a href="#Charles" class="headerlink" title="Charles"></a>Charles</h1><p>今天安利的这款手机抓包软件叫做 Charles，又名青花瓷。但并不是翻译过来叫做青花瓷，而是 软件的 Icon 像个青花瓷的样子，所以因此得名。</p>
+<p>好了废话不多讲，Here We GO~</p>
+<p>至于怎么下载、安装、激活 啥啥啥的我就不多BB了，稍微搜一下就能找到的，我们直接进入正题，开始操作</p>
+<p>简单总结了一下，我们的准备步骤：</p>
+<ol>
+<li>确保 手机 和 Charles 运行机器的地址在同一网段下(最简单的方法就是连上同一个wifi…)</li>
+<li>配置 Charles 监听端口</li>
+<li>配置 HTTPS 代理</li>
+<li>配置 证书 代理</li>
+<li>移动设备安装信任证书</li>
+</ol>
+<p>第一个就不多说了，我们从第二开始~</p>
+<h2 id="配置-Charles-监听端口"><a href="#配置-Charles-监听端口" class="headerlink" title="配置 Charles 监听端口"></a>配置 Charles 监听端口</h2><p>先简单解释一下这个操作，我们要给手机抓包，其实就是在手机和访问目的地之间设置了一个第三者，我们所有<strong>发往目的地的请求</strong> 以及 <strong>从目的地回来的数据</strong>，都会经过第三者然后再给我们。它会帮我们记录下请求与响应信息，同时也能拦截、修改我们发送出去的数据，这也就是我们抓包的目的所在了。</p>
+<p>大概就像这个样子</p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035c5447.png" alt=""></p>
+<p>举个简单的栗子：</p>
+<p>假设我们想用青花瓷抓取 微信数据包，那么这里手机只需要装好 微信，并打开微信应用点点点就好了；代理就是指青花瓷；目的地就是指 微信服务器啦。</p>
+<p>所有发送给 微信服务器的请求 以及 从那过来的响应 都会先经过代理，然后再从代理转发出去，这样代理就能记录 请求 和 响应的信息了，我们只需要在代理中操作就好了。</p>
+<p>ok，简单了解之后就可以来配置青花瓷啦。</p>
+<p>打开菜单栏中的 <code>Proxy -&gt; Proxy Settings</code></p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035cb643.png" alt=""></p>
+<p>这样配置就表示所有经过 8888 端口的 http 请求都会被监听到</p>
+<h2 id="配置-HTTPS-代理"><a href="#配置-HTTPS-代理" class="headerlink" title="配置 HTTPS 代理"></a>配置 HTTPS 代理</h2><p>由于目前 Https 的普及，几乎所有应用都走 https，所以你如果要抓包的话，这个也是必不可少的。</p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035cd418.png" alt=""></p>
+<p>上面它也说了，只有下面被列出来的地址才会进行代理。简单说就是 <strong>你可以选择部分主机的流量进行监听</strong></p>
+<p>我们看这里有两个参数：<strong>Host</strong> 和 <strong>Port</strong></p>
+<p>先说 Host 吧，举个栗子，你有两个手机都需要抓包，他们都在一个网段下拥有不同的 IP地址(1.1.1.1 和 1.1.1.2)</p>
+<p>如果这里你设置成:</p>
+<p><code>Host: 1.1.1.1</code><br><code>Prot: *</code></p>
+<p>那么 1.1.1.2 这个手机的流量就不会被代理了。</p>
+<p>再聊聊 Port，我猜这里应该是这样(没错，就是我猜的 （ ￣ー￣）)，依然举个栗子</p>
+<p>比如你的手机两个应用，微信 和 网易云，它们对应两个固定的端口(2233 和 3322)，如果这里你配置为：</p>
+<p><code>Host: 1.1.1.1</code><br><code>Port: 2233</code></p>
+<p>这样就只会抓取微信(2233)的数据信息啦。</p>
+<p>我记得应用 监听端口 和 系统发送请求出去的端口好像没什么关系，所以才会觉得这样举例有点不合适….</p>
+<h2 id="配置-证书-代理"><a href="#配置-证书-代理" class="headerlink" title="配置 证书 代理"></a>配置 证书 代理</h2><p>证书代理 和 Https 的设置方式相似，选择 <code>Client Certificates</code> Tab页，照着上面的逻辑操作一下就好了。</p>
+<h2 id="移动设备安装信任证书"><a href="#移动设备安装信任证书" class="headerlink" title="移动设备安装信任证书"></a>移动设备安装信任证书</h2><p>打开菜单栏中的 <code>Help -&gt; SSL Proxy</code></p>
+<p>选择 <code>Install Charles Root Certificate On a Mobile Device Or Remote Browser...</code></p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035ceca3.png" alt=""></p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035c3f93.png" alt=""></p>
+<p>它告诉你需要在手机上设置代理，并且访问 xxx 地址去下载安装证书，照做就好了。</p>
+<p>我们首先设置手机代理：</p>
+<p><img src="https://i.loli.net/2018/11/20/5bf4103636ad2.jpg" alt=""></p>
+<p>设置好了之后，青花瓷就会有提示了</p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035c49c5.png" alt=""></p>
+<p>当然是允许嘛</p>
+<p>然后我们访问地址去下载证书，安装。这里就不演示了，点点点就完事了。</p>
+<h2 id="抓包测试"><a href="#抓包测试" class="headerlink" title="抓包测试"></a>抓包测试</h2><p>最后我们来试一下~</p>
+<p>这里以 B站来测试：</p>
+<p>当我开启监听，然后打开 B站 APP 时候，出现了这个情况，咦，怎么肥四？？</p>
+<p><img src="https://i.loli.net/2018/11/20/5bf41035ddf3d.png" alt=""></p>
+<p>不信任？？？是不是跟这个应用有关，于是我试了一下其他的应用：</p>
+<p>发现同样是 Https，有些能抓到，有些不能抓到。比如 微信、QQ 这种基本抓不到，而一些不知名的小应用却可以。</p>
+<p>我猜应该可能是这些应用拒绝了青花瓷的访问信息，所以导致无法抓到数据包。于是在网上找找资料发现有人提到过这个问题。</p>
+<p><a href="https://android-developers.googleblog.com/2016/07/changes-to-trusted-certificate.html" target="_blank" rel="noopener">Android Developers Blog</a></p>
+<p>这是 2016年 Google 发表的 Android 开发文档关于信任证书的问题。这里面提到这样一句话：</p>
+<blockquote>
+<p>Apps that target API Level 24 and above no longer trust user or admin-added CAs for secure connections, by default.</p>
+</blockquote>
+<p>针对于 API Level 在 24 及其以上的 APP 来说，在进行安全连接(https)时，不再信任 用户 和 管理员自己添加的证书。</p>
+<p>但是我测了一下自家的 APP的抓包就没有什么问题。有时间请教下 Android 的小伙伴们。</p>
+<p>恩，就这样~</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>之前追完了 《越狱》，终于把大学欠下的第四季和第五季追完了，还是比较喜欢第四季的结局。另外又买了套《天龙八部》，憧憬了很久，刚读完第一本不久，老先生笔下的武侠世界，啧啧啧，我要看书去了~</p>
+<p>待后面看完了和棍基一起去玩游戏，这次我要看遍整个剧情，和所有的 NPC 对话，找找彩蛋~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/安利/" rel="tag"># 安利</a>
+          
+            <a href="/tags/抓包/" rel="tag"># 抓包</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/06/安利——细思极恐小游戏/" rel="next" title="安利一款恐怖小游戏 —— 《读懂了就很恐怖的故事》">
+                <i class="fa fa-chevron-left"></i> 安利一款恐怖小游戏 —— 《读懂了就很恐怖的故事》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/04/Have a happy new year eve/" rel="prev" title="Have A Happy New Year Eve">
+                Have A Happy New Year Eve <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Charles"><span class="nav-number">2.</span> <span class="nav-text">Charles</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Charles-监听端口"><span class="nav-number">2.1.</span> <span class="nav-text">配置 Charles 监听端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-HTTPS-代理"><span class="nav-number">2.2.</span> <span class="nav-text">配置 HTTPS 代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-证书-代理"><span class="nav-number">2.3.</span> <span class="nav-text">配置 证书 代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移动设备安装信任证书"><span class="nav-number">2.4.</span> <span class="nav-text">移动设备安装信任证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抓包测试"><span class="nav-number">2.5.</span> <span class="nav-text">抓包测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">3.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

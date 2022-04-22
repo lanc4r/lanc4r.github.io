@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据库基础知识,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言嗯，第二期，如期而至哈哈哈哈(菜鸡HL被虐日常)">
+<meta name="keywords" content="数据库基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库姿势解锁 —— 实例、视图">
+<meta property="og:url" content="http://yoursite.com/2019/06/07/数据库姿势解锁 —— 实例、视图/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言嗯，第二期，如期而至哈哈哈哈(菜鸡HL被虐日常)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-1.jpg">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-2.png">
+<meta property="og:updated_time" content="2019-06-07T09:40:15.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库姿势解锁 —— 实例、视图">
+<meta name="twitter:description" content="前言嗯，第二期，如期而至哈哈哈哈(菜鸡HL被虐日常)">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/07/数据库姿势解锁 —— 实例、视图/">
+
+
+
+
+
+  <title>数据库姿势解锁 —— 实例、视图 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">07</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/数据库姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">数据库姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/07/数据库姿势解锁 —— 实例、视图/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库姿势解锁 —— 实例、视图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-07T18:00:05+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/数据库姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">数据库姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>嗯，第二期，如期而至哈哈哈哈(菜鸡HL被虐日常)</p>
+<a id="more"></a>
+<p>同样是被同事问到：“HL，把你的数据库实例发我一下吧”，然后我很自然地就把数据库的连接信息发给了他。接着同事一脸懵逼的看着我….</p>
+<p>“嗯！？难道不是吗”，同事叹了口气，笑道：“哎，小伙子啊”…</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-1.jpg" alt=""></p>
+<p>菜鸡HL的基本操作….</p>
+<h1 id="数据库实例"><a href="#数据库实例" class="headerlink" title="数据库实例"></a>数据库实例</h1><p>经过我的一番搜索，发现最难弄清的点就是：<strong>数据库和数据库实例的区别</strong>。</p>
+<h2 id="数据库和数据库实例的区别"><a href="#数据库和数据库实例的区别" class="headerlink" title="数据库和数据库实例的区别"></a>数据库和数据库实例的区别</h2><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p>这里的数据库指的是一种<strong>存储数据的媒介，将数据已某种特定的形式存储其中</strong>。这里以 <strong>mysql</strong> 为例，比如 <strong>MyISAM</strong> 引擎，它就会在磁盘上生成 <strong>FRM</strong>、<strong>MYI</strong>、<strong>MYD</strong> 为后缀的文件，而这些文件就是我们这里指的数据库。</p>
+<h3 id="数据库实例-1"><a href="#数据库实例-1" class="headerlink" title="数据库实例"></a>数据库实例</h3><p>这个概念呢，我查了好多的资料，有些说得很抽象….. 所以，我决定去了解一下官方的文档。</p>
+<h4 id="Oracle"><a href="#Oracle" class="headerlink" title="Oracle"></a>Oracle</h4><blockquote>
+<p>A database instance is a set of memory structures that manage database files. A database is a set of physical files on disk created by the CREATE DATABASE statement. The instance manages its associated data and serves the users of the database.</p>
+<p>Every running Oracle database is associated with at least one Oracle database instance. Because an instance exists in memory and a database exists on disk, an instance can exist without a database and a database can exist without an instance.</p>
+</blockquote>
+<p>Oracle 官方解释数据库实例是<strong>一组管理数据库文件的内存结构，它管理与其相关的数据同时也服务数据库的用户。每一个 Oracle 数据库都至少与一个 Oracle数据库实例相关联，并且他们都可以不依附于对方而独立存在</strong>。</p>
+<h4 id="SQLServer"><a href="#SQLServer" class="headerlink" title="SQLServer"></a>SQLServer</h4><blockquote>
+<p>An instance of the Database Engine is a copy of the sqlservr.exe executable that runs as an operating system service. Each instance manages several system databases and one or more user databases. Each computer can run multiple instances of the Database Engine. Applications connect to the instance in order to perform work in a database managed by the instance.</p>
+</blockquote>
+<p>SQLServer 官方解释道：<strong>数据库引擎实例是一个运行在操作系统服务上的 sqlservr.exe 可执行文件的拷贝，每个实例管理一些系统数据库以及一个到多个用户数据库。每台电脑可以运行多个数据库引擎的实例，应用程序通过连接实例来操作数据库</strong>。</p>
+<h4 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h4><blockquote>
+<p>n some cases, you might want to run multiple instances of MySQL on a single machine. You might want to test a new MySQL release while leaving an existing production setup undisturbed. Or you might want to give different users access to different mysqld servers that they manage themselves. (For example, you might be an Internet Service Provider that wants to provide independent MySQL installations for different customers.)<br>It is possible to use a different MySQL server binary per instance, or use the same binary for multiple instances, or any combination of the two approaches. For example, you might run a server from MySQL 5.6 and one from MySQL 5.7, to see how different versions handle a given workload. Or you might run multiple instances of the current production version, each managing a different set of databases.</p>
+</blockquote>
+<blockquote>
+<p>One way is to run multiple MySQL instances on Unix is to compile different servers with different default TCP/IP ports and Unix socket files so that each one listens on different network interfaces. Compiling in different base directories for each installation also results automatically in a separate, compiled-in data directory, log file, and PID file location for each server.<br>Assume that an existing 5.6 server is configured for the default TCP/IP port number (3306) and Unix socket file (/tmp/mysql.sock). To configure a new 5.7.28 server to have different operating parameters, use a CMake command something like this:</p>
+<p>shell&gt; cmake . -DMYSQL_TCP_PORT=port_number \<br>            -DMYSQL_UNIX_ADDR=file_name \<br>            -DCMAKE_INSTALL_PREFIX=/usr/local/mysql-5.7.28</p>
+</blockquote>
+<p>我没有直接关于实例的解释，不过感觉解释得也差不多：<strong>可以理解为实例就是一个运行在操作系统上的一个服务进程。后面还说如果你想配置多个实例，你需要修改不同的操作参数就像：TCP/IP 的监听端口号、sock文件位置等等</strong>。</p>
+<h3 id="HL瞎BB"><a href="#HL瞎BB" class="headerlink" title="HL瞎BB"></a>HL瞎BB</h3><p>总之，我感觉<strong>数据实例其实就是操作数据库的一个程序啦，它运行在操作系统中，将数据库的数据(本地文件的数据，或是通过连接获取的其他地址的数据)读入到内存中供我们操作，并且能够将我们操作的结果保存到数据库中</strong>。</p>
+<p>在 Oracle 数据库中有专门的命令来使用数据库实例：</p>
+<ul>
+<li>startup nomount —— 启动实例</li>
+<li>alter database mount —— 将数据库装载到实例中</li>
+<li>alter database open —— 打开数据库</li>
+</ul>
+<h3 id="回到最初的问题"><a href="#回到最初的问题" class="headerlink" title="回到最初的问题"></a>回到最初的问题</h3><p>同事让我把数据库的实例发给他，也就是说它是让我把操作数据的进程发给他？再向上层推一下：他是让我把能够建立数据实例的程序发给他！</p>
+<p>那什么能程序能够创建数据库实例呢，当然是数据库的安装程序啊(我不知道第三方软件能否建立数据库实例)，比如我之前安装的 <code>mysql-server</code> 它就能创建数据库，也能在本地运行数据库的进程，从而也能使其他用户来使用。</p>
+<p>结合几天前同事告诉我它电脑上安装 Mysql 失败了，所以导致他不能创建本地数据库，所以我觉得他的本意是让我把 Mysql 的安装包发给他，让他能够在本地上跑上 Mysql 的程序，从而能够跑起来数据库的实例。</p>
+<h2 id="会话（Session）、连接（Connection）"><a href="#会话（Session）、连接（Connection）" class="headerlink" title="会话（Session）、连接（Connection）"></a>会话（Session）、连接（Connection）</h2><p>在我不断的了解中，我又看到了新的概念，简单解释一下概念，具体请参考：<a href="https://blog.csdn.net/jimsonhappy/article/details/54707694" target="_blank" rel="noopener">数据库Connection连接与Session会话的理解</a></p>
+<p><strong>连接就是会话的基础</strong>，连接可以理解为一个<strong>通道</strong>，它两头连接着 <strong>客户端</strong> 和 <strong>数据库实例</strong>。<br>会话是<strong>通信双方从开始通信到通信结束期间的一个上下文（Context）。这个上下文是一段位于服务器端的内存：记录了本次连接的客户端机器、通过哪个应用程序、哪个用户登录等信息</strong>。</p>
+<p>比如 Navicate 一个连接建立的操作，我们可以<strong>以不同的身份创建与数据库实例的会话，使用普通用户身份、或是使用数据库管理员身份等</strong>。</p>
+<p><img src="https://view.moezx.cc/images/2019/06/07/lanc4r-db2-2.png" alt=""></p>
+<p><strong>当我们在新建连接的时候，此时会通过把连接 和 当前用户的会话创建好。</strong></p>
+<h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>我们先来看看 wikipedia 上关于视图的解释：</p>
+<blockquote>
+<p>视图表 (View) 是在关系数据库中，将一组查询指令构成的结果集，组合成可查询的数据表的一种数据库对象。与数据表不同的是，数据表是一种实体结构(Physical Structure)，但视图表是一种虚拟结构(Virtual Structure)，在实体数据表中的改变都可以立刻反映在视图表中，不过部分数据库管理系统也支持具更新能力的视图表(Updatable View)。</p>
+</blockquote>
+<p>简单说其实就是一个<strong>虚拟表定义，它不会存储数据，只是把其他的数据东拼西凑起来，用于查看</strong>。就如同农夫山泉的广告那般：“我们不生产数据，我们只是数据的搬运工”~</p>
+<h2 id="简单入门操作-基础的操作"><a href="#简单入门操作-基础的操作" class="headerlink" title="简单入门操作(基础的操作)"></a>简单入门操作(基础的操作)</h2><h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名称 <span class="keyword">AS</span> 视图的数据来源;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show create table user\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">       Table: user</span><br><span class="line"><span class="keyword">Create</span> <span class="keyword">Table</span>: <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`user`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">  <span class="string">`grade`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  <span class="string">`has_cat`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">6</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=latin1</span><br><span class="line"><span class="number">1</span> <span class="keyword">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">// 创建视图 </span><br><span class="line">mysql&gt; <span class="keyword">create</span> <span class="keyword">view</span> <span class="string">`test_view`</span> <span class="keyword">as</span> <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br></pre></td></tr></table></figure>
+<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><p>我们先看一个最简单的查询操作，复杂一点的在后面说。<strong>查询操作将其看作为一个表就行了</strong>，和查询其他表的操作一毛一样。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from `test_view`;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  5 | Divid   |     1 |       2 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br></pre></td></tr></table></figure>
+<h3 id="修改视图"><a href="#修改视图" class="headerlink" title="修改视图"></a>修改视图</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">VIEW</span> 视图名称 <span class="keyword">AS</span> 视图的数据来源;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter view `test_view` as select * from news;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; desc `test_view`;</span><br><span class="line">+<span class="comment">--------+-----------------+------+-----+---------+-------+</span></span><br><span class="line">| Field  | Type            | Null | Key | Default | Extra |</span><br><span class="line">+<span class="comment">--------+-----------------+------+-----+---------+-------+</span></span><br><span class="line">| id     | int(5) unsigned | NO   |     | 0       |       |</span><br><span class="line">| title  | varchar(20)     | NO   |     |         |       |</span><br><span class="line">| author | varchar(20)     | NO   |     |         |       |</span><br><span class="line">| desc   | varchar(100)    | NO   |     |         |       |</span><br><span class="line">+<span class="comment">--------+-----------------+------+-----+---------+-------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<p>还有一个更加简单的做法就是：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> 视图名称 <span class="keyword">AS</span> 视图的数据来源;</span><br></pre></td></tr></table></figure></p>
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> 视图名称;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; drop view `test_view`;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from `test_view`;</span><br><span class="line">ERROR 1146 (42S02): Table 'havafun.test_view' doesn't exist</span><br></pre></td></tr></table></figure>
+<h2 id="视图的优缺点"><a href="#视图的优缺点" class="headerlink" title="视图的优缺点"></a>视图的优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li><p>简化了操作，把经常使用的数据定义为视图。<br>我们在使用查询时，在很多时候我们要使用聚合函数，同时还要 显示其它字段的信息，可能还会需要关联到其它表，这时写的语句可能会很长，如果这个动作频繁发生的话，我们可以创建视图，这以后，我们只需要 <strong>select * from view</strong> 就可以啦，这样很方便。 </p>
+</li>
+<li><p>安全性，用户只能查询和修改能看到的数据。<br>因为视图是虚拟的，物理上是不存在的，只是存储了数据的集合，我们可以将基表中重要的字段信息，可以不通过视图给用户，视图是动态的数据的集合，数据是随着基表的更新而更新。同时，用户对视图不可以随意的更改和删除，可以保证数据的安全性。 </p>
+</li>
+<li><p>逻辑上的独立性，屏蔽了真实表的结构带来的影响。<br>视图可以使应用程序和数据库表在一定程度上独立。如果没有视图，应用一定是建立在表上的。有了视图之后，程序可以建立在视图之上，从而程序与数据库表被视图分割开来。</p>
+</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li><p>性能差<br>数据库必须把视图查询转化成对基本表的查询，如果这个视图是由一个复杂的多表查询所定义，那么，即使是视图的一个简单查询，数据库也要把它变成一个复杂的结合体，需要花费一定的时间。 </p>
+</li>
+<li><p>修改限制<br>当用户试图修改视图的某些信息时，数据库必须把它转化为对基本表的某些信息的修改，对于简单的视图来说，这是很方便的，但是，对于比较复杂的试图，可能是不可修改的。</p>
+</li>
+</ol>
+<p><strong>在定义数据库对象时，不能不加选择地来定义视图，应该权衡视图的优点和缺点，合理地定义视图。</strong></p>
+<h2 id="高级姿势"><a href="#高级姿势" class="headerlink" title="高级姿势"></a>高级姿势</h2><p>最开始说了，视图就类似于一张“虚表”，它没有数据，只有数据的定义。那么我们可否可以把它看作为一张特殊的表呢？我们知道 SQL 中对表的操作可以分为两种：</p>
+<ul>
+<li><strong>对表的操作(创建、删除、修改表结构、表属性 等等)</strong></li>
+<li><strong>对表数据的操作（ CRUD ）</strong></li>
+</ul>
+<p>那么问题来了，视图能不能完成属于表的操作呢？下面简单来研究一下。</p>
+<h3 id="视图中关于表的操作"><a href="#视图中关于表的操作" class="headerlink" title="视图中关于表的操作"></a>视图中关于表的操作</h3><p>首先，<strong>对视图的所有操作是不会修改到 它所依赖的表结构的</strong>，因为它只是浮在表上层的一个“可视窗口”而已，我们通过这个窗口来观察表的数据。</p>
+<p>我们表可以<strong>增加字段、删除字段、还有添加索引</strong>啥啥啥的，那么视图有吗？</p>
+<p>没有！</p>
+<p>后面我们会讲到索引(如果我能弄明白的话2333)，<strong>索引是真实存储的，它是实实在在存在的东西</strong>，而视图本身都是虚幻的，怎么会保留实体存在的东西呢。再说说改变视图的结构，前面已经说过了 使用 <strong>ALTER VIEW</strong> 语法就好了，修改其显示的字段方法就是重新赋予视图定义嘛。如果你能想象出我之前说的那个“可视窗口”的话，这种修改其实就是把窗口拉伸或收缩而已。</p>
+<h3 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h3><h4 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h4><p>试了一下常见的如连接查询、联合查询等等发现基本和表的用法差不多…..</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>删除中最想知道的就是：<strong>删除视图中的数据，表的数据也会被删除吗？</strong></p>
+<p><strong>先创建一个 user 表的视图</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from user;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  5 | Divid   |     1 |       2 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br><span class="line">mysql&gt; <span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> <span class="string">`test_view`</span> <span class="keyword">as</span> <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  5 | Divid   |     1 |       2 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p><strong>然后删除视图里的数据</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; delete from test_view where id=5;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p><strong>同步删除成功！</strong></p>
+<p><strong>以上只是单表视图的情况，我们可以试试多表视图能否成功删除数据</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from news;</span><br><span class="line">+<span class="comment">----+-----------+--------+-----------------------+</span></span><br><span class="line">| id | title     | author | desc                  |</span><br><span class="line">+<span class="comment">----+-----------+--------+-----------------------+</span></span><br><span class="line">|  1 | 蓝莲花    | 许巍   | 真好听~               |</span><br><span class="line">|  2 | WOW       | Nice   | World Of The Warcraft |</span><br><span class="line">+<span class="comment">----+-----------+--------+-----------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> <span class="string">`test_view`</span> <span class="keyword">as</span> <span class="keyword">select</span> user.id <span class="keyword">as</span> user_id,<span class="keyword">name</span>,grade,has_cat,news.id <span class="keyword">as</span> new_id,title,author,<span class="string">`desc`</span> </span><br><span class="line">     &gt; <span class="keyword">from</span> <span class="keyword">user</span>,news <span class="keyword">where</span> user.id=news.id;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">---------+------+-------+---------+--------+-----------+--------+-----------------------+</span></span><br><span class="line">| user_id | name | grade | has_cat | new_id | title     | author | desc                  |</span><br><span class="line">+<span class="comment">---------+------+-------+---------+--------+-----------+--------+-----------------------+</span></span><br><span class="line">|       1 | Alex |     1 |       1 |      1 | 蓝莲花    | 许巍   | 真好听~               |</span><br><span class="line">|       2 | Ada  |     3 |       0 |      2 | WOW       | Nice   | World Of The Warcraft |</span><br><span class="line">+<span class="comment">---------+------+-------+---------+--------+-----------+--------+-----------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br><span class="line">mysql&gt; <span class="keyword">delete</span> <span class="keyword">from</span> test_view <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</span><br><span class="line">ERROR 1395 (HY000): Can not <span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">join</span> <span class="keyword">view</span> <span class="string">'havafun.test_view'</span></span><br></pre></td></tr></table></figure>
+<p>这时候再执行删除操作就会提示无法删除啦。</p>
+<p><strong>结论</strong><br><strong>多表视图不允许删除数据，单表视图删除数据的操作完全看表数据能否删除，比如有外键约束的表就不能删除数据，当然视图也不行啦。</strong></p>
+<h4 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h4><p>更新操作和删除差不多就不多说啦</p>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p>基本情况跟之前一样，也是单表视图看表是否允许，多表视图直接不允许。</p>
+<h3 id="WITH-CHECK-OPTION-属性"><a href="#WITH-CHECK-OPTION-属性" class="headerlink" title="WITH CHECK OPTION 属性"></a>WITH CHECK OPTION 属性</h3><p>我们在创建视图的时候可以指定一个参数叫做 <strong>WITH CHECK OPTION</strong>；</p>
+<p><strong>WITH CHECK OPTION</strong> 表示对视图进行<strong>UPDATE</strong>、<strong>INSERT</strong>、<strong>DELETE</strong> 操作时<strong>要保证更新、删除、或插入的行满足视图定义中的谓词条件</strong>。</p>
+<p>这里以插入数据为例，先看看不加 <strong>with check option</strong> 这个参数的情况</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create or replace view `test_view` as select * from user where has_cat=0;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">| id | name | grade | has_cat |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">|  2 | Ada  |     3 |       0 |</span><br><span class="line">|  3 | Leon |     2 |       0 |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> test_view (<span class="keyword">name</span>, grade, has_cat) <span class="keyword">values</span> (<span class="string">'Aana'</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">| id | name | grade | has_cat |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">|  2 | Ada  |     3 |       0 |</span><br><span class="line">|  3 | Leon |     2 |       0 |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  6 | Aana    |     1 |       1 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>发现没什么问题，能够插入成功。</p>
+<p>接着我们看看加上 <strong>with check option</strong> 的情况</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create or replace view `test_view` as select * from user where has_cat=0 with check option;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from user;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  6 | Aana    |     1 |       1 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> test_view;</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">| id | name | grade | has_cat |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">|  2 | Ada  |     3 |       0 |</span><br><span class="line">|  3 | Leon |     2 |       0 |</span><br><span class="line">+<span class="comment">----+------+-------+---------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br><span class="line">mysql&gt;</span><br><span class="line">mysql&gt; <span class="keyword">insert</span> <span class="keyword">into</span> test_view (<span class="keyword">name</span>, grade, has_cat) <span class="keyword">values</span> (<span class="string">'Divid'</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">ERROR 1369 (HY000): <span class="keyword">CHECK</span> <span class="keyword">OPTION</span> <span class="keyword">failed</span> <span class="string">'havafun.test_view'</span></span><br></pre></td></tr></table></figure>
+<p>可以发现插入失败了，我们将 has_cat 的值修改为 0，再次插入</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into test_view (name, grade, has_cat) values ('Divid', 1, 0);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_view;</span><br><span class="line">+<span class="comment">----+-------+-------+---------+</span></span><br><span class="line">| id | name  | grade | has_cat |</span><br><span class="line">+<span class="comment">----+-------+-------+---------+</span></span><br><span class="line">|  2 | Ada   |     3 |       0 |</span><br><span class="line">|  3 | Leon  |     2 |       0 |</span><br><span class="line">|  7 | Divid |     1 |       0 |</span><br><span class="line">+<span class="comment">----+-------+-------+---------+</span></span><br><span class="line">3 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span>;</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">| id | name    | grade | has_cat |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">|  1 | Alex    |     1 |       1 |</span><br><span class="line">|  2 | Ada     |     3 |       0 |</span><br><span class="line">|  3 | Leon    |     2 |       0 |</span><br><span class="line">|  4 | Lorrain |     0 |       1 |</span><br><span class="line">|  6 | Aana    |     1 |       1 |</span><br><span class="line">|  7 | Divid   |     1 |       0 |</span><br><span class="line">+<span class="comment">----+---------+-------+---------+</span></span><br><span class="line">6 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>哟西，插入成功~</p>
+<p>对于更新、删除满足同样的条件我就不一一尝试了。</p>
+<p>总之需要记住就是：<strong>WITH CHECK OPTION 对视图进行UPDATE、INSERT、delete操作时要保证更新、删除、或插入的行满足视图定义中的谓词条件(就是 where 后面带的条件啦)</strong>。</p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>之前查询资料的时候发现还有什么<strong>动态视图</strong> 和 <strong>静态视图</strong>，这个之后遇到了再去了解吧。</p>
+<p>动态视图：可以包含一个或两个表中的数据，并自动包含指定表中的所有列。<strong>当创建或更改相关对象或扩展对象时，动态视图将自动更新</strong>。<br>静态视图：可以包含多个表中的数据，这些表中的必需列必须在静态视图的 SELECT 和 WHERE 子句中指定。<strong>当创建或更改相关对象或扩展对象时，必须手动更新静态视图</strong>。</p>
+<p>具体可参考 <a href="https://www.ibm.com/support/knowledgecenter/zh/SSLKT6_7.6.0/com.ibm.mt.doc/configur/c_views.html" target="_blank" rel="noopener">数据库视图</a></p>
+<h1 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h1><p><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40540/startup.htm#CNCPT005" target="_blank" rel="noopener">Oracle Database Instance</a><br><a href="https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/database-engine-instances-sql-server?view=sql-server-2017" target="_blank" rel="noopener">Database Engine Instances (SQL Server)</a><br><a href="https://dev.mysql.com/doc/refman/5.7/en/multiple-servers.html" target="_blank" rel="noopener">Running Multiple MySQL Instances on One Machine</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>花了一个多小时整理了一下网站的歌单，目前算是第一波吧，只分享我觉得不错的 50首歌。</p>
+<p>之前看过一个说法：你在不同的时间对同一首歌的喜爱程度是有变化的，我觉得很有道理，不知道现在有没有大数据来分析通过歌单的变化映射出人心境的变化23333。</p>
+<p>想到蔡旻佑那首《我可以》中的歌词呀：</p>
+<blockquote>
+<p>你~ 放着谁的歌曲，是怎样的心情~</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库基础知识/" rel="tag"># 数据库基础知识</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/编码姿势解锁 —— 字符集简介/" rel="next" title="编码姿势解锁 —— 字符集简介">
+                <i class="fa fa-chevron-left"></i> 编码姿势解锁 —— 字符集简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/11/编码姿势解锁 —— Base64、Base32/" rel="prev" title="编码姿势解锁 —— Base64、Base32 编码">
+                编码姿势解锁 —— Base64、Base32 编码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库实例"><span class="nav-number">2.</span> <span class="nav-text">数据库实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库和数据库实例的区别"><span class="nav-number">2.1.</span> <span class="nav-text">数据库和数据库实例的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">2.1.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库实例-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">数据库实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Oracle"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">Oracle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQLServer"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">SQLServer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mysql"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">Mysql</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HL瞎BB"><span class="nav-number">2.1.3.</span> <span class="nav-text">HL瞎BB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回到最初的问题"><span class="nav-number">2.1.4.</span> <span class="nav-text">回到最初的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#会话（Session）、连接（Connection）"><span class="nav-number">2.2.</span> <span class="nav-text">会话（Session）、连接（Connection）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">3.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单入门操作-基础的操作"><span class="nav-number">3.2.</span> <span class="nav-text">简单入门操作(基础的操作)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建视图"><span class="nav-number">3.2.1.</span> <span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用视图"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改视图"><span class="nav-number">3.2.3.</span> <span class="nav-text">修改视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">3.2.4.</span> <span class="nav-text">删除视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图的优缺点"><span class="nav-number">3.3.</span> <span class="nav-text">视图的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">3.3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">3.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级姿势"><span class="nav-number">3.4.</span> <span class="nav-text">高级姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视图中关于表的操作"><span class="nav-number">3.4.1.</span> <span class="nav-text">视图中关于表的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRUD"><span class="nav-number">3.4.2.</span> <span class="nav-text">CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新"><span class="nav-number">3.4.2.3.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入"><span class="nav-number">3.4.2.4.</span> <span class="nav-text">插入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WITH-CHECK-OPTION-属性"><span class="nav-number">3.4.3.</span> <span class="nav-text">WITH CHECK OPTION 属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">3.5.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REF"><span class="nav-number">4.</span> <span class="nav-text">REF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">5.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

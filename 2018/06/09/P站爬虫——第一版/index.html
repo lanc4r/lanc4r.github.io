@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,爬虫,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="P站爬虫 (～￣▽￣)～好久好久好久之前就打算写的，远到我都记不清具体是多久之前了。终于在毕业答辩前夕，写出了这个半成品，不过还是很开心啦~ 这里先在博客里记录一下，主要是怕答辩完浪几天后啥都忘了…. 好了，废话不多说，Here We Go~">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="P站爬虫">
+<meta property="og:url" content="http://yoursite.com/2018/06/09/P站爬虫——第一版/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="P站爬虫 (～￣▽￣)～好久好久好久之前就打算写的，远到我都记不清具体是多久之前了。终于在毕业答辩前夕，写出了这个半成品，不过还是很开心啦~ 这里先在博客里记录一下，主要是怕答辩完浪几天后啥都忘了…. 好了，废话不多说，Here We Go~">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1be539b30df.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bb52f3bb54.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bcf6a27957.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bcf6a33fc8.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bcf6a1a7a9.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bcf6a0cc06.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bcf6a1a181.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/09/5b1bdb886556e.png">
+<meta property="og:updated_time" content="2019-05-24T15:27:17.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="P站爬虫">
+<meta name="twitter:description" content="P站爬虫 (～￣▽￣)～好久好久好久之前就打算写的，远到我都记不清具体是多久之前了。终于在毕业答辩前夕，写出了这个半成品，不过还是很开心啦~ 这里先在博客里记录一下，主要是怕答辩完浪几天后啥都忘了…. 好了，废话不多说，Here We Go~">
+<meta name="twitter:image" content="https://i.loli.net/2018/06/09/5b1be539b30df.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/09/P站爬虫——第一版/">
+
+
+
+
+
+  <title>P站爬虫 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">09</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/爬虫/" itemprop="url" rel="index">
+          <span itemprop="name">爬虫</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/09/P站爬虫——第一版/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">P站爬虫</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-09T22:10:00+08:00">
+                2018-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/06/09/5b1be539b30df.png" alt=""></p>
+<h1 id="P站爬虫-～￣▽￣-～"><a href="#P站爬虫-～￣▽￣-～" class="headerlink" title="P站爬虫 (～￣▽￣)～"></a>P站爬虫 (～￣▽￣)～</h1><p>好久好久好久之前就打算写的，远到我都记不清具体是多久之前了。终于在毕业答辩前夕，写出了这个半成品，不过还是很开心啦~</p>
+<p>这里先在博客里记录一下，主要是怕答辩完浪几天后啥都忘了….</p>
+<p>好了，废话不多说，Here We Go~</p>
+<a id="more"></a>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>这次我们的目标是 <a href="https://www.pixiv.net/" target="_blank" rel="noopener">P站</a> 的插画，主要包含的位置是：推荐、日榜、周榜、月榜。(真的太好看啦ヾ(≧▽≦*)o，总感觉自己对图有种莫名的执着…)</p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bb52f3bb54.png" alt=""></p>
+<h2 id="首先来看看-推荐"><a href="#首先来看看-推荐" class="headerlink" title="首先来看看 推荐"></a>首先来看看 推荐</h2><p>在推荐作品板块里我们点击<a href="https://www.pixiv.net/discovery" target="_blank" rel="noopener">浏览更多</a>，然后抓包我们可以发现这样一个神秘的地址：</p>
+<p><code>https://www.pixiv.net/rpc/recommender.php?type=illust&amp;sample_illusts=auto&amp;num_recommendations=1000&amp;page=discovery&amp;mode=all&amp;tt=d9e6e15ed29ffa52ccc8a0e4f22445d1</code></p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bcf6a27957.png" alt=""></p>
+<p>看上图，没错，这个接口能获取当前推荐页面的 ID值集合，其实这里就和之前 写的那个 <a href="https://www.jianshu.com/p/bea2f6f2a1da" target="_blank" rel="noopener">B站<del>爬虫</del>下载器</a> 有相同的用法了，我们可以不断的请求这个接口，来获取更多的图片，当然效率很慢就是了，不过可以省去很多麻烦，也算一种取巧的方式啦。</p>
+<h2 id="再分析-日榜、周榜、月榜"><a href="#再分析-日榜、周榜、月榜" class="headerlink" title="再分析 日榜、周榜、月榜"></a>再分析 日榜、周榜、月榜</h2><p><a href="https://www.pixiv.net/ranking.php?mode=daily&amp;content=illust" target="_blank" rel="noopener">日榜</a>、<a href="https://www.pixiv.net/ranking.php?mode=weekly&amp;content=illust" target="_blank" rel="noopener">周榜</a>、<a href="https://www.pixiv.net/ranking.php?mode=monthly&amp;content=illust" target="_blank" rel="noopener">月榜</a> 获取方式都一样的，这里就用 日榜举例了~</p>
+<p>Rank榜的图片需要分两段获取，直接访问其地址只能获取 排名前50的图片，后面需要访问新的接口来获取新的图片。</p>
+<h3 id="前-50-获取"><a href="#前-50-获取" class="headerlink" title="前 50 获取"></a>前 50 获取</h3><p>直接访问其地址，将内容保存下来，我们发现，前 50 的图片信息全部都包含在里面了~</p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bcf6a33fc8.png" alt=""></p>
+<h3 id="50-之外数据获取接口"><a href="#50-之外数据获取接口" class="headerlink" title="50 之外数据获取接口"></a>50 之外数据获取接口</h3><p>在日榜页面将右侧滚动条一直往下滑动，当一直浏览到五十开外的数据的时候，抓包就会发现这个接口</p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bcf6a1a7a9.png" alt=""></p>
+<p><code>https://www.pixiv.net/ranking.php?mode=daily&amp;content=illust&amp;p=2&amp;format=json&amp;tt=d9e6e15ed29ffa52ccc8a0e4f22445d1</code></p>
+<p>注意到其中传递的参数，p，目前值为2，所以我们可以推断出 <strong>通过改变p值来获取当前Rank榜更多的数据</strong></p>
+<h2 id="如何获取图片"><a href="#如何获取图片" class="headerlink" title="如何获取图片"></a>如何获取图片</h2><p>可以发现，前面我们所有的操作都是取得图片的 ID值，那么具体应该怎么构造 url 来获取图片呢，这里我就懒得截图分析过程了，自己去看一下页面结构很快就能明白的~</p>
+<p>获取图片有两种方式：单图页面 和 多图页面</p>
+<h3 id="单图页面"><a href="#单图页面" class="headerlink" title="单图页面"></a>单图页面</h3><p>访问 <code>https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=yourid</code>，在返回的内容中找到 <code>class = original-image</code> 的 img 标签，其 <code>data-src</code> 属性就是原图地址</p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bcf6a0cc06.png" alt=""></p>
+<h3 id="多图页面"><a href="#多图页面" class="headerlink" title="多图页面"></a>多图页面</h3><p>访问 <code>https://www.pixiv.net/member_illust.php?mode=manga&amp;illust_id=yourid</code>，在返回的内容中找到 <code>class = image ui-scroll-view</code> 的 img 标签(有多个)，其 <code>data-src</code> 属性就是原图地址</p>
+<p><img src="https://i.loli.net/2018/06/09/5b1bcf6a1a181.png" alt=""></p>
+<h1 id="开码"><a href="#开码" class="headerlink" title="开码"></a>开码</h1><p>分析到以上情况，接下来就是写代码时间了，这里我们用到 requests 和 BeautifulSoup 两个库来抓取和解析爬取的内容，然后使用 PIL 保存图片。</p>
+<h2 id="HTMLDownloader"><a href="#HTMLDownloader" class="headerlink" title="HTMLDownloader"></a>HTMLDownloader</h2><p>html 页面内容下载器，用于返回 页面内容，包括二进制数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"></span><br><span class="line">__author__ = <span class="string">'Lanc4r'</span></span><br><span class="line"></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">	返回 指定 URL 的页面数据</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlDownloader</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 先初始化需要的数据： cookie，因为整个过程所用的 cookie 都是一样的，所以这里就在初始化的时候存入成员变量啦</span></span><br><span class="line">	<span class="comment"># 还需要初始化 特定的下载 URL 地址，用于整合 ID 成为完整的 下载</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cookies)</span>:</span></span><br><span class="line">		self._cookies = cookies</span><br><span class="line">		<span class="comment"># 初始化 URL 地址</span></span><br><span class="line">		urlDict = self._initUrls()</span><br><span class="line">		self._commonUrl = urlDict[<span class="string">'commonUrl'</span>]</span><br><span class="line">		self._specialUrl = urlDict[<span class="string">'specialUrl'</span>]</span><br><span class="line">		self._dailyUrl = urlDict[<span class="string">'dailyUrl'</span>]</span><br><span class="line">		self._dailyJsonUrl = urlDict[<span class="string">'dailyJsonUrl'</span>]</span><br><span class="line">		self._weeklyUrl = urlDict[<span class="string">'weeklyUrl'</span>]</span><br><span class="line">		self._weeklyJsonUrl = urlDict[<span class="string">'weeklyJsonUrl'</span>]</span><br><span class="line">		self._monthlyUrl = urlDict[<span class="string">'monthlyUrl'</span>]</span><br><span class="line">		self._monthlyJsonUrl = urlDict[<span class="string">'monthlyJsonUrl'</span>]</span><br><span class="line">		self._jsonDataUrl = urlDict[<span class="string">'jsonDataUrl'</span>]</span><br><span class="line">		self._headers = &#123;<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'</span>, </span><br><span class="line">						<span class="string">'method'</span>: <span class="string">'GET'</span>, <span class="string">'referer'</span>: <span class="string">'https://www.pixiv.net/discovery'</span>, <span class="string">'cookie'</span>: self._cookies&#125;</span><br><span class="line">		self._headers4Rank = &#123;<span class="string">'User-Agent'</span> : <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'</span>, </span><br><span class="line">						<span class="string">'method'</span>: <span class="string">'GET'</span>, <span class="string">'referer'</span>: <span class="string">'https://www.pixiv.net/'</span>, <span class="string">'cookie'</span>: self._cookies&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 定义内部函数，读取 外部 urls.json 文件，获取接口地址</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_initUrls</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">with</span> open(<span class="string">'config/urls.json'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">			<span class="keyword">return</span> json.load(f)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">downloadInfo</span><span class="params">(self, url)</span>:</span></span><br><span class="line">		res = requests.get(url, headers=self._headers, timeout=<span class="number">7</span>)</span><br><span class="line">		<span class="keyword">print</span> (<span class="string">'Crawling &#123;&#125;, Statue: &#123;&#125;...'</span>.format(url, res.status_code))</span><br><span class="line">		<span class="keyword">return</span> res.text</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 返回 commonUrl 和 specialUrl </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getCommonUrl</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self._commonUrl</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getSpecialUrl</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self._specialUrl</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 写三个 函数 返回 日、周、月 榜也得数据，我真的觉得写三个好蠢....</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getDailyRankContent</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.downloadInfo(self._dailyUrl)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getWeeklyRankContent</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.downloadInfo(self._weeklyUrl)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getMonthlyRankContent</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.downloadInfo(self._monthlyUrl)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 获取初始化的 Json 数据</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getInitData</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.downloadInfo(self._jsonDataUrl)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 获取二进制图片的内容</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getBinaryData</span><span class="params">(self, url)</span>:</span></span><br><span class="line">		res = requests.get(url, headers=self._headers, timeout=<span class="number">7</span>)</span><br><span class="line">		length = int(res.headers[<span class="string">'content-length'</span>])</span><br><span class="line">		<span class="keyword">print</span> (<span class="string">'Downloading &#123;&#125;, Statue: &#123;&#125;...'</span>.format(url, res.status_code))</span><br><span class="line">		<span class="keyword">return</span> res.content</span><br></pre></td></tr></table></figure>
+<h2 id="urls-json"><a href="#urls-json" class="headerlink" title="urls.json"></a>urls.json</h2><p>主要是保存 url 地址啦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;commonUrl&quot;: &quot;https://www.pixiv.net/member_illust.php?mode=medium&amp;illust_id=&quot;,</span><br><span class="line">	&quot;specialUrl&quot;: &quot;https://www.pixiv.net/member_illust.php?mode=manga&amp;illust_id=&quot;,</span><br><span class="line">	&quot;dailyUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=daily&amp;content=illust&quot;,</span><br><span class="line">	&quot;dailyJsonUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=daily&amp;content=illust&amp;ref=rn-h-day-3&amp;format=json&amp;tt=d9e6e15ed29ffa52ccc8a0e4f22445d1&amp;p=&quot;,</span><br><span class="line">	&quot;weeklyUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=weekly&amp;content=illust&quot;,</span><br><span class="line">	&quot;weeklyJsonUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=weekly&amp;content=illust&amp;ref=rn-h-week-3&amp;format=json&amp;tt=d9e6e15ed29ffa52ccc8a0e4f22445d1&amp;p=&quot;,</span><br><span class="line">	&quot;monthlyUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=monthly&amp;content=illust&quot;,</span><br><span class="line">	&quot;monthlyJsonUrl&quot;: &quot;https://www.pixiv.net/ranking.php?mode=monthly&amp;content=illust&amp;ref=rn-h-month-3&amp;format=json&amp;tt=d9e6e15ed29ffa52ccc8a0e4f22445d1&amp;p=&quot;,</span><br><span class="line">	&quot;jsonDataUrl&quot;: &quot;https://www.pixiv.net/rpc/recommender.php?type=illust&amp;sample_illusts=auto&amp;num_recommendations=1000&amp;page=discovery&amp;mode=all&amp;tt=0469d888e955e142abef477f095637aa&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="HtmlParser"><a href="#HtmlParser" class="headerlink" title="HtmlParser"></a>HtmlParser</h2><p>解析 Downloader 返回的页面内容，获取关键信息(后面只贴出关键代码)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单图情况</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parseCommonUrlContent</span><span class="params">(self, content)</span>:</span></span><br><span class="line">	soup = BeautifulSoup(content, <span class="string">'lxml'</span>)</span><br><span class="line">	img = soup.find(<span class="string">'img'</span>, &#123;<span class="string">"class"</span> : <span class="string">"original-image"</span>&#125;)</span><br><span class="line">	<span class="keyword">return</span> img[<span class="string">'data-src'</span>] <span class="keyword">if</span> img <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">else</span> img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多图情况</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parseSpecialUrlContent</span><span class="params">(self, content)</span>:</span></span><br><span class="line">	soup = BeautifulSoup(content, <span class="string">'lxml'</span>)</span><br><span class="line">	imgs = soup.findAll(<span class="string">'img'</span>, &#123;<span class="string">'class'</span>: <span class="string">'image ui-scroll-view'</span>&#125;)</span><br><span class="line">	<span class="keyword">return</span> [img[<span class="string">'data-src'</span>] <span class="keyword">for</span> img <span class="keyword">in</span> imgs]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析 日榜、周榜、月榜 数据，获取前 50 排名的插画数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parseRanksUrlContent</span><span class="params">(self, content)</span>:</span></span><br><span class="line">	soup = BeautifulSoup(content, <span class="string">'lxml'</span>)</span><br><span class="line">	divs = soup.findAll(<span class="string">'div'</span>, &#123;<span class="string">"class"</span> : <span class="string">"_one-click-bookmark js-click-trackable "</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析 Json 数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parseJsonData</span><span class="params">(self, content)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> json.loads(content)[<span class="string">'recommendations'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="UrlManager"><a href="#UrlManager" class="headerlink" title="UrlManager"></a>UrlManager</h2><p>管理 ID，记录 待爬取的ID 和 以爬取的ID，其实叫 IDManager 更合适(懒得改了 -_-)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断是否还有待爬取得数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hasNewID</span><span class="params">(self)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> len(self._newIDs) &gt; <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getNewID</span><span class="params">(self)</span>:</span></span><br><span class="line">	newID = self._newIDs.pop(<span class="number">0</span>)</span><br><span class="line">	self._oldIDs.append(newID)			<span class="comment"># 别忘了将已爬取的 ID 加入到 _oldIDs 中</span></span><br><span class="line">	<span class="keyword">return</span> newID</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加新的 ID 到队列中</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addNewID</span><span class="params">(self, newID)</span>:</span></span><br><span class="line">	self._newIDs.append(newID)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加新的 ID 到队列中   (这里后面需要使用使用算法优化一下，先这样写着，后面再写算法研究！)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addNewIDs</span><span class="params">(self, ids)</span>:</span></span><br><span class="line">	list(map(self.addNewID, [newID <span class="keyword">for</span> newID <span class="keyword">in</span> ids <span class="keyword">if</span> newID <span class="keyword">not</span> <span class="keyword">in</span> self._oldIDs <span class="keyword">and</span> newID <span class="keyword">not</span> <span class="keyword">in</span> self._newIDs]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过 Url 获取文件后缀名 以及 需要保存的文件名字 (这个优化的时候再说) ....</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getFileName</span><span class="params">(self, url)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> url.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 记录 count 便于测试程序正确性</span></span><br><span class="line"><span class="meta">@property</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(self)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> len(self._newIDs)</span><br></pre></td></tr></table></figure>
+<h2 id="ImageDownloader"><a href="#ImageDownloader" class="headerlink" title="ImageDownloader"></a>ImageDownloader</h2><p>图片下载器，将 HtmlDownloader 返回的 二进制数据保存为图片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self, content, fileName)</span>:</span></span><br><span class="line"></span><br><span class="line">	fullName = self._folderName + <span class="string">"/"</span> + fileName</span><br><span class="line">	img = Image.open(BytesIO(content))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 保存 宽：高 近似于 16：9 的，加上 宽度判断条件为了保证图片能够看的清...</span></span><br><span class="line">	width, height = img.size</span><br><span class="line">	<span class="keyword">if</span> (width/height &lt; <span class="number">1.4</span> <span class="keyword">or</span> width &lt; <span class="number">1000</span>):</span><br><span class="line">		<span class="keyword">print</span> (<span class="string">'图片宽高比小于 1.4 或 宽度小于 1000'</span>)</span><br><span class="line">		<span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">	img.save(fullName)</span><br><span class="line">	<span class="keyword">print</span> (<span class="string">'Saved Image: &#123;&#125;'</span>.format(fullName))</span><br></pre></td></tr></table></figure>
+<h2 id="Mainer"><a href="#Mainer" class="headerlink" title="Mainer"></a>Mainer</h2><p>总调度器，调用上面所有的类完成任务</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"></span><br><span class="line">__author__ = <span class="string">'Lanc4r'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> HtmlDownloader <span class="keyword">import</span> HtmlDownloader</span><br><span class="line"><span class="keyword">from</span> UrlManager <span class="keyword">import</span> UrlManager</span><br><span class="line"><span class="keyword">from</span> HtmlParser <span class="keyword">import</span> HtmlParser</span><br><span class="line"><span class="keyword">from</span> ImageDownloader <span class="keyword">import</span> ImageDownloader</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mainer</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, cookies)</span>:</span></span><br><span class="line">		self._HtmlDownloader = HtmlDownloader(cookies)</span><br><span class="line">		self._UrlManager = UrlManager()</span><br><span class="line">		self._HtmlParser = HtmlParser()</span><br><span class="line">		self._ImageDownloader = ImageDownloader()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 定义随机休眠的方法</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_randomSleep</span><span class="params">(self)</span>:</span></span><br><span class="line">		time.sleep(random.randint(<span class="number">2</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 推荐榜的初始化</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_initiate4Recommend</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="comment"># 初始化推荐部分数据</span></span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			initContent = self._HtmlDownloader.getInitData()</span><br><span class="line">			self._UrlManager.addNewIDs(self._HtmlParser.parseJsonData(initContent))</span><br><span class="line">		<span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">			sys.exit(<span class="string">"Init Faild~"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 日榜、周榜、月榜 的初始化 (为了更灵活得控制需要传入得信息，所以这里我把其中 日、周、月 给分开了)</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">_initiate4Rank</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			dailyContent = self._HtmlDownloader.getDailyRankContent()</span><br><span class="line">			self._UrlManager.addNewIDs(self._HtmlParser.parseRanksUrlContent(dailyContent))</span><br><span class="line">			self._randomSleep()</span><br><span class="line">			weeklyContent = self._HtmlDownloader.getWeeklyRankContent()</span><br><span class="line">			self._UrlManager.addNewIDs(self._HtmlParser.parseRanksUrlContent(weeklyContent))</span><br><span class="line">			self._randomSleep()</span><br><span class="line">			monthlyContent = self._HtmlDownloader.getMonthlyRankContent()</span><br><span class="line">			self._UrlManager.addNewIDs(self._HtmlParser.parseRanksUrlContent(monthlyContent))</span><br><span class="line">		<span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">			<span class="keyword">print</span> (<span class="string">'Get Rank Data Faild~'</span>)</span><br><span class="line">		<span class="keyword">except</span> Exception <span class="keyword">as</span> es:</span><br><span class="line">			<span class="keyword">print</span> (<span class="string">'AnOther Error Occur :('</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 开始爬取</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">crawl</span><span class="params">(self)</span>:</span></span><br><span class="line">		self._initiate4Rank()</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line"></span><br><span class="line">			<span class="comment"># 判断队列中是否有新的爬取队列</span></span><br><span class="line">			<span class="keyword">if</span> self._UrlManager.hasNewID():</span><br><span class="line">				newID =  self._UrlManager.getNewID()</span><br><span class="line">				newUrl = self._HtmlDownloader.getCommonUrl() + str(newID)</span><br><span class="line"></span><br><span class="line">				<span class="comment"># 这里容易超时，所以我得在这里操作一下，如果超时了就直接跳过。</span></span><br><span class="line">				<span class="keyword">try</span>:</span><br><span class="line">					commonImgUrl = self._HtmlParser.parseCommonUrlContent(self._HtmlDownloader.downloadInfo(newUrl))</span><br><span class="line">					self._randomSleep()</span><br><span class="line">					<span class="comment"># 判断返回内容是否为 None，从而判断使单图 还是 多图的情况</span></span><br><span class="line">					<span class="keyword">if</span> commonImgUrl <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">						self._ImageDownloader.save(self._HtmlDownloader.getBinaryData(commonImgUrl), self._UrlManager.getFileName(commonImgUrl))</span><br><span class="line">						self._randomSleep()</span><br><span class="line">						<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">					<span class="comment"># 多图情况</span></span><br><span class="line">					newUrl = self._HtmlDownloader.getSpecialUrl() + str(newID) </span><br><span class="line">					specialImgUrls = self._HtmlParser.parseSpecialUrlContent(self._HtmlDownloader.downloadInfo(newUrl))</span><br><span class="line">					self._randomSleep()</span><br><span class="line"></span><br><span class="line">					<span class="keyword">for</span> imgUrl <span class="keyword">in</span> specialImgUrls:</span><br><span class="line">						self._ImageDownloader.save(self._HtmlDownloader.getBinaryData(imgUrl), self._UrlManager.getFileName(imgUrl))</span><br><span class="line">						self._randomSleep()</span><br><span class="line"></span><br><span class="line">				<span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e :</span><br><span class="line">					<span class="keyword">print</span> (<span class="string">'Time Out （╯‵□′）╯'</span>)</span><br><span class="line">					<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				<span class="comment"># 当没有新的ID地址的时候，需要再次访问 Json 接口，获取 ID 列表~</span></span><br><span class="line">				self._initiate4Recommend()</span><br><span class="line">				<span class="keyword">print</span> (<span class="string">'Done~'</span>)</span><br><span class="line">		</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 需要自己手动输入 cookie 是最蠢的....   一定要把登录写出来，哪怕撸 js 代码或是自己一个一个的试.....</span></span><br><span class="line"></span><br><span class="line">	cookie = <span class="string">'your cookie'</span></span><br><span class="line"></span><br><span class="line">	mainer = Mainer(cookie)</span><br><span class="line">	mainer.crawl()</span><br></pre></td></tr></table></figure>
+<h1 id="运行截图"><a href="#运行截图" class="headerlink" title="运行截图"></a>运行截图</h1><p><img src="https://i.loli.net/2018/06/09/5b1bdb886556e.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>如上，核心代码就是这样子，没有高端使用技巧，没有花里胡哨的东西，并且还很蠢！</p>
+<p>发现了吧，使用的时候需要自己先登录上 P站，然后把 cookie 拷下来放上去…</p>
+<p>所以目前也不能算作第一版吧，代码等我优化之后再上传到 Github 上，之后再分享出去</p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><ul>
+<li>登录部分得完成，之前也写了一点，但是发现在访问完主页之后获取的 cookie 不完整，还有一段 js 代码来构造剩余部分 cookie，当时觉得麻烦，也没有太细看，后面再撸这段 js 吧。</li>
+<li>找个算法优化一下 UrlManager，主要是优化判断 ID 是否在已爬取的 ID列表中</li>
+<li>目前超时率蛮高的，后续看能不能操作一下</li>
+<li>再做一个 Chrome Extension 配合一下爬虫的使用</li>
+</ul>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>自从 5 号专业聚餐通了个宵之后，一直到今天才恢复元气，真的感觉玩得有点 high过头 了，以后通宵说什么都不去了，狗命要紧，狗命要紧！</p>
+<p>明天就要答辩了，祝我顺利吧~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/返校/" rel="next" title="安利一款恐怖解密游戏《Detension》">
+                <i class="fa fa-chevron-left"></i> 安利一款恐怖解密游戏《Detension》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/18/P站爬虫——LevelUp/" rel="prev" title="P站爬虫 —— 第一次优化">
+                P站爬虫 —— 第一次优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#P站爬虫-～￣▽￣-～"><span class="nav-number">1.</span> <span class="nav-text">P站爬虫 (～￣▽￣)～</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先来看看-推荐"><span class="nav-number">2.1.</span> <span class="nav-text">首先来看看 推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再分析-日榜、周榜、月榜"><span class="nav-number">2.2.</span> <span class="nav-text">再分析 日榜、周榜、月榜</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前-50-获取"><span class="nav-number">2.2.1.</span> <span class="nav-text">前 50 获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#50-之外数据获取接口"><span class="nav-number">2.2.2.</span> <span class="nav-text">50 之外数据获取接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何获取图片"><span class="nav-number">2.3.</span> <span class="nav-text">如何获取图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单图页面"><span class="nav-number">2.3.1.</span> <span class="nav-text">单图页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多图页面"><span class="nav-number">2.3.2.</span> <span class="nav-text">多图页面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开码"><span class="nav-number">3.</span> <span class="nav-text">开码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTMLDownloader"><span class="nav-number">3.1.</span> <span class="nav-text">HTMLDownloader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#urls-json"><span class="nav-number">3.2.</span> <span class="nav-text">urls.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HtmlParser"><span class="nav-number">3.3.</span> <span class="nav-text">HtmlParser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UrlManager"><span class="nav-number">3.4.</span> <span class="nav-text">UrlManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageDownloader"><span class="nav-number">3.5.</span> <span class="nav-text">ImageDownloader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mainer"><span class="nav-number">3.6.</span> <span class="nav-text">Mainer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行截图"><span class="nav-number">4.</span> <span class="nav-text">运行截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化"><span class="nav-number">6.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">7.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这次学习了注解的相关知识，其实就是看别人的博客啦，这里当做一个学习笔记方便以后的复习。">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— 注解初识">
+<meta property="og:url" content="http://yoursite.com/2019/07/18/注解简介/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言这次学习了注解的相关知识，其实就是看别人的博客啦，这里当做一个学习笔记方便以后的复习。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/18/lanc4r-annotation-bg.png">
+<meta property="og:updated_time" content="2019-07-18T02:23:05.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— 注解初识">
+<meta name="twitter:description" content="前言这次学习了注解的相关知识，其实就是看别人的博客啦，这里当做一个学习笔记方便以后的复习。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/07/18/lanc4r-annotation-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/18/注解简介/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— 注解初识 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">07月</div>
+			<div class="post-day">18</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/注解简介/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— 注解初识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-18T10:20:00+08:00">
+                2019-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/07/18/lanc4r-annotation-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次学习了注解的相关知识，其实就是看别人的博客啦，这里当做一个学习笔记方便以后的复习。</p>
+<a id="more"></a>
+<h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><p>关于注解的理解参考博客 <a href="https://blog.csdn.net/briblue/article/details/73824058" target="_blank" rel="noopener">秒懂，Java 注解 （Annotation）你可以这样学</a>，博主写得特别棒，这里我的打算就是记录一下学习的笔记，然后聊聊之前同事做的日志记录栗子。</p>
+<h2 id="注解语法"><a href="#注解语法" class="headerlink" title="注解语法"></a>注解语法</h2><p>定义的方法就是加上 <code>@interface</code> 关键字，这样就创建了一个注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotationDemo1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h2><p>元注解其实就是给注解增加一些属性，比如它的生命周期、是否添加到 Javadoc 文档、运用地方等，我们一一来看一下。</p>
+<h3 id="Retention"><a href="#Retention" class="headerlink" title="@Retention"></a>@Retention</h3><p><strong>Retention</strong> 的英文意为保留期的意思。当 <code>@Retention</code> 应用到一个注解上的时候，它解释说明了这个注解的的存活时间。它的取值如下：</p>
+<ul>
+<li><strong>RetentionPolicy.SOURCE</strong> 注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。</li>
+<li><strong>RetentionPolicy.CLASS</strong> 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。</li>
+<li><strong>RetentionPolicy.RUNTIME</strong> 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotationDemo1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Documented"><a href="#Documented" class="headerlink" title="@Documented"></a>@Documented</h3><p>顾名思义，这个元注解肯定是和文档有关。它的作用是能够将注解中的元素包含到 <strong>Javadoc</strong> 中去。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotationDemo1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Target"><a href="#Target" class="headerlink" title="@Target"></a>@Target</h3><p><code>@Target</code> 指定了注解运用的地方，当一个注解被 <code>@Target</code> 注解时，这个注解就被限定了运用的场景。主要有以下取值：</p>
+<ul>
+<li><strong>ElementType.ANNOTATION_TYPE</strong> 可以给一个注解进行注解</li>
+<li><strong>ElementType.CONSTRUCTOR</strong> 可以给构造方法进行注解</li>
+<li><strong>ElementType.FIELD</strong> 可以给属性进行注解</li>
+<li><strong>ElementType.LOCAL_VARIABLE</strong> 可以给局部变量进行注解</li>
+<li><strong>ElementType.METHOD</strong> 可以给方法进行注解</li>
+<li><strong>ElementType.PACKAGE</strong> 可以给一个包进行注解</li>
+<li><strong>ElementType.PARAMETER</strong> 可以给一个方法内的参数进行注解</li>
+<li><strong>ElementType.TYPE</strong> 可以给一个类型进行注解，比如类、接口、枚举</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotationDemo1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Inherited"><a href="#Inherited" class="headerlink" title="@Inherited"></a>@Inherited</h3><p><strong>Inherited</strong> 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类被 <code>@Inherited</code> 注解过的注解进行注解的话，那么如果它的子类没有被任何注解应用的话，这个子类就继承了超类的注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TestAnnotationDemo1 &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分类拥有 @Inherited 注解修饰的注解，当其子类继承他时候就自动存在该注解</span></span><br><span class="line"><span class="meta">@TestAnnotationDemo</span>1</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestDemoParent</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDemo</span> <span class="keyword">extends</span> <span class="title">TestDemoParent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Annotation[] annotations = TestDemo.class.getAnnotations();</span><br><span class="line">        <span class="keyword">if</span> (annotations != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Annotation annotation : annotations) &#123;</span><br><span class="line">                Class&lt;? extends Annotation&gt; annotationType = annotation.annotationType();</span><br><span class="line">                System.out.println(annotationType.getSimpleName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出结果:</span><br><span class="line">TestAnnotationDemo1</span><br></pre></td></tr></table></figure>
+<h3 id="Repeatable"><a href="#Repeatable" class="headerlink" title="@Repeatable"></a>@Repeatable</h3><p><strong>Repeatable</strong> 自然是可重复的意思。<code>@Repeatable</code> 是 Java 1.8 才加进来的，所以算是一个新的特性。什么样的注解会多次应用呢？通常是注解的值可以同时取多个。</p>
+<p>关于 <code>@Repeatable</code> 我多说一下自己的理解，换一个栗子吧，举栗一个人爱好，一个人可能有很多爱好，我们先写代码再解释。这里涉及到注解属性的概念，不熟悉的话可以先看看后面关于注解属性的知识。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> Habits &#123;</span><br><span class="line">    Habit[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repeatable</span>(Habits.class)</span><br><span class="line"><span class="meta">@interface</span> Habit &#123;</span><br><span class="line">    <span class="function">String <span class="title">habit</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"PlayGames"</span>)</span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"Reading"</span>)</span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"PlayGuitar"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先我们的目的是一个人拥有多个爱好 <strong>Habit</strong>，这意味着需要重复的标签是 <strong>Habit</strong>，每一个 <strong>Habit</strong> 标签代表着一个爱好。所以<strong>谁要被重复，我们就把 @Repeatable 注解放到谁上</strong>。<br><code>@Repeatable</code> 需要传递一个参数，博主将其解释为<strong>容器注解</strong>，我们先看看 <code>@Repeatable</code> 定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The annotation type &#123;<span class="doctag">@code</span> java.lang.annotation.Repeatable&#125; is</span></span><br><span class="line"><span class="comment"> * used to indicate that the annotation type whose declaration it</span></span><br><span class="line"><span class="comment"> * (meta-)annotates is &lt;em&gt;repeatable&lt;/em&gt;. The value of</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@code</span> <span class="doctag">@Repeatable</span>&#125; indicates the &lt;em&gt;containing annotation</span></span><br><span class="line"><span class="comment"> * type&lt;/em&gt; for the repeatable annotation type.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.8</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@jls</span> 9.6 Annotation Types</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@jls</span> 9.7 Annotations</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.ANNOTATION_TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Repeatable &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Indicates the &lt;em&gt;containing annotation type&lt;/em&gt; for the</span></span><br><span class="line"><span class="comment">     * repeatable annotation type.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the containing annotation type</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// 指明了一个包含重复注解类型的容器类型 </span></span><br><span class="line">    Class&lt;? extends Annotation&gt; value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说一下我的理解，我们可以理解为 <code>@Habit</code> 是一个需要重复的注解，所以它需要使用 <code>@Repeatable</code> 修饰，但是<strong>重复的东西需要使用一个容器来存储，这个容器也是一个注解</strong>，我们需要将其作为参数传入 <code>@Repeatable</code> 注解参数中。</p>
+<p>然后关于 <code>@Habits</code> 这个容器注解，其中需要定义一个 <strong>容纳所重复的注解的参数，通常使用数组来表示</strong>。</p>
+<p>上面说了一下 <code>@Repeatable</code> 的定义，那么如何使用呢，我直接上栗子啦，注意要注解默认声明周期只到编译时期，所以为了我们能够使用需要指定其声明周期为运行时。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@interface</span> Habits &#123;</span><br><span class="line">    Habit[] value();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Repeatable</span>(Habits.class)</span><br><span class="line"><span class="meta">@interface</span> Habit &#123;</span><br><span class="line">    <span class="function">String <span class="title">habit</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"PlayGames"</span>)</span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"Reading"</span>)</span><br><span class="line"><span class="meta">@Habit</span>(habit = <span class="string">"PlayGuitar"</span>)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Habit[] habits = Person.class.getAnnotationsByType(Habit.class);</span><br><span class="line">        <span class="comment">// 当然我们也可以通过获取容器注解的方式来获取其中的所有注解</span></span><br><span class="line">        <span class="comment">// Habits annotation = Person.class.getAnnotation(Habits.class);</span></span><br><span class="line">        <span class="comment">// Habit[] habits = annotation.value();</span></span><br><span class="line">        <span class="keyword">for</span> (Habit habit : habits) &#123;</span><br><span class="line">            System.out.println(<span class="string">"habit: "</span> + habit.habit());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">habit: PlayGames</span><br><span class="line">habit: Reading</span><br><span class="line">habit: PlayGuitar</span><br></pre></td></tr></table></figure>
+<p>唯一要注意的就是上面注释的那句话：<strong>可以通过获取容器注解的方式来获取其中的所有注解。</strong></p>
+<h2 id="注解属性"><a href="#注解属性" class="headerlink" title="注解属性"></a>注解属性</h2><p>注解的属性也叫做成员变量。注解只有成员变量，没有方法。注<strong>解的成员变量在注解的定义中以“无形参的方法”形式来声明，其方法名定义了该成员变量的名字，其返回值定义了该成员变量的类型</strong>。这里我就不演示啦，看看下面的栗子就明白了。</p>
+<p>多提一点：<strong>注解中定义属性时它的类型必须是 8 种基本数据类型外加 类、接口、注解及它们的数组</strong>。</p>
+<h3 id="拥有默认值的注解"><a href="#拥有默认值的注解" class="headerlink" title="拥有默认值的注解"></a>拥有默认值的注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> DefaultValueAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">biubiubiu</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，以下两种写法都是可以的</span></span><br><span class="line"><span class="meta">@DefaultValueAnnotation</span>()</span><br><span class="line"><span class="meta">@DefaultValueAnnotation</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注解内只有一个-value-属性"><a href="#注解内只有一个-value-属性" class="headerlink" title="注解内只有一个 value 属性"></a>注解内只有一个 value 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> ValueAnnotation &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ValueAnnotation</span>(<span class="string">"biubiubiu"</span>)</span><br><span class="line"><span class="comment">// 等价于 @ValueAnnotation(value="biubiubiu")</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="没有任何属性的注解"><a href="#没有任何属性的注解" class="headerlink" title="没有任何属性的注解"></a>没有任何属性的注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> NoneValueAnnotation &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 和拥有默认值的注解一样，以下两种方式都可以</span></span><br><span class="line"><span class="meta">@NoneValueAnnotation</span></span><br><span class="line"><span class="meta">@NoneValueAnnotation</span>()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Java8-补充内容"><a href="#Java8-补充内容" class="headerlink" title="Java8 补充内容"></a>Java8 补充内容</h2><p>在Java8中 <strong>ElementType</strong> 新增两个枚举成员，<code>TYPE_PARAMETER</code> 和 <code>TYPE_USE</code> ，在Java8前注解只能标注在一个声明(如字段、类、方法)上，Java8后，新增的 <code>TYPE_PARAMETER</code> 可以用于标注类型参数，而 <code>TYPE_USE</code> 则可以用于标注任意类型(不包括class)。如下所示</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数的注解</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE_PARAMETER)</span><br><span class="line"><span class="meta">@interface</span> Parameter &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LaLaLa</span>&lt;@<span class="title">Parameter</span> <span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TYPE_USE则可以用于标注任意类型(不包括class)</span></span><br><span class="line"><span class="comment">//用于父类或者接口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Image</span> <span class="keyword">implements</span> @<span class="title">Rectangular</span> <span class="title">Shape</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//用于构造函数</span></span><br><span class="line"><span class="keyword">new</span> <span class="meta">@Path</span> String(<span class="string">"/usr/bin"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用于强制转换和instanceof检查,注意这些注解中用于外部工具，它们不会对类型转换或者instanceof的检查行为带来任何影响。</span></span><br><span class="line">String path=(<span class="meta">@Path</span> String)input;</span><br><span class="line"><span class="keyword">if</span>(input <span class="keyword">instanceof</span> <span class="meta">@Path</span> String)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用于指定异常</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Person <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> @Localized IOException.</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//用于通配符绑定</span></span></span><br><span class="line"><span class="function">List&lt;@ReadOnly ? extends Person&gt;</span></span><br><span class="line"><span class="function">List&lt;? extends @ReadOnly Person&gt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">@NotNull String.class <span class="comment">//非法，不能标注class</span></span></span><br><span class="line"><span class="function"><span class="keyword">import</span> java.lang.@NotNull String <span class="comment">//非法，不能标注import</span></span></span><br></pre></td></tr></table></figure>
+<p>这里主要说明一下 <code>TYPE_USE</code>，类型注解用来支持在Java的程序中做强类型检查，配合第三方插件工具（如Checker Framework），可以在编译期检测出 <strong>runtime error</strong>（如<strong>UnsupportedOperationException、NullPointerException</strong>异常），避免异常延续到运行期才发现，从而提高代码质量，这就是类型注解的主要作用。总之Java 8 新增加了两个注解的元素类型 <code>ElementType.TYPE_USE</code> 和 <code>ElementType.TYPE_PARAMETER</code>，通过它们，我们可以把注解应用到各种新场合中。</p>
+<p>除了特定的 <strong>class</strong> 和 <strong>import</strong> 语句外，你会发现，好像万物皆可注解…..</p>
+<h2 id="注解的使用场景"><a href="#注解的使用场景" class="headerlink" title="注解的使用场景"></a>注解的使用场景</h2><p>这里我举栗一个工作中碰到的栗子吧，之前同事做了一个功能，要求后台所有的写操作都记录一个日志，我看了一下它的代码，自定义了一个注解，接受参数是一个枚举，用来定义不同的操作，就像下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123; ElementType.METHOD, ElementType.TYPE &#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> OperateLog &#123;</span><br><span class="line">    <span class="comment">// 业务方法描述</span></span><br><span class="line">    <span class="function">EnumOperateLogType <span class="title">content</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 操作日志类型</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EnumOperateLogType &#123;</span><br><span class="line">    JobBchangeStatus(<span class="number">1</span>, <span class="string">"改变职位状态"</span>),</span><br><span class="line">    UserBchangeStatus(<span class="number">2</span>, <span class="string">"改变B用户状态"</span>),</span><br><span class="line">    UserCchangeStatus(<span class="number">3</span>, <span class="string">"改变C用户状态"</span>),</span><br><span class="line">    SaveAdvertisement(<span class="number">4</span>, <span class="string">"保存广告"</span>),</span><br><span class="line">    DeleteAdvertisement(<span class="number">5</span>, <span class="string">"删除广告"</span>),</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后涉及到相关写操作的地方都要求加上这个注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 改变用户状态</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> userBId</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> status</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> BizException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@OperateLog</span>(content = EnumOperateLogType.UserBchangeStatus)</span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/change-status.json"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changeUserStatus</span><span class="params">(Long userBId, Integer status)</span> <span class="keyword">throws</span> BizException </span>&#123;</span><br><span class="line">    EnumUserStatus userStatus = EnumUserStatus.getEnum(status);</span><br><span class="line">    <span class="keyword">if</span> (XpNumberUtils.isInvalid(userBId) || status == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BizException(SystemEnum.VALIDATE);</span><br><span class="line">    &#125;</span><br><span class="line">    userBBiz.changeStatus(userBId, userStatus);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来其实就是注解的使用啦，因为就像之前 博主说的那样，<strong>注解可以理解为一张便签，对整个程序运行是没有什么影响的，我想贴上去的便签也需要找个地方使用，下面我们就来看看具体使用的地方吧</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(MethodInvocation invocation)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    HttpServletRequest request = ServletHolder.getHttpServletRequest();</span><br><span class="line">    <span class="comment">// 获取注解</span></span><br><span class="line">    OperateLog authority = invocation.getMethod().getAnnotation(OperateLog.class);</span><br><span class="line">    <span class="keyword">if</span> (authority == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 检测该方法中是否存在该注解，如果没有该注解则跳过</span></span><br><span class="line">        <span class="keyword">return</span> invocation.proceed();</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">// 省略拦截到注解方法的逻辑....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里其实就是方法拦截后，看是否存在注解，如果不存在注解就跳过，如果存在就走相应的逻辑。可以简单的理解为注解将方法都打上了标签，拥有标签的方法我们进行特殊的对待，没有拥有标签的方法我们正常处理。</p>
+<h1 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h1><p><a href="https://blog.csdn.net/briblue/article/details/73824058" target="_blank" rel="noopener">秒懂，Java 注解 （Annotation）你可以这样学</a><br><a href="https://blog.csdn.net/javazejian/article/details/71860633#%E6%96%B0%E5%A2%9E%E7%9A%84%E4%B8%A4%E7%A7%8Delementtype" target="_blank" rel="noopener">深入理解Java注解类型(@Annotation)</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>以前的地方可能真的不适合我吧，现在换了一个环境感觉真的很不错啊，加油咯HL。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/16/Java姿势解锁——十万个为什么第一期/" rel="next" title="Java 姿势解锁 —— 十万个为什么第一期">
+                <i class="fa fa-chevron-left"></i> Java 姿势解锁 —— 十万个为什么第一期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/21/协议姿势解锁 —— WebSocket 长连接实战篇/" rel="prev" title="协议姿势解锁 —— WebSocket长连接实战篇">
+                协议姿势解锁 —— WebSocket长连接实战篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解"><span class="nav-number">2.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注解语法"><span class="nav-number">2.1.</span> <span class="nav-text">注解语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元注解"><span class="nav-number">2.2.</span> <span class="nav-text">元注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Retention"><span class="nav-number">2.2.1.</span> <span class="nav-text">@Retention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Documented"><span class="nav-number">2.2.2.</span> <span class="nav-text">@Documented</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Target"><span class="nav-number">2.2.3.</span> <span class="nav-text">@Target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inherited"><span class="nav-number">2.2.4.</span> <span class="nav-text">@Inherited</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Repeatable"><span class="nav-number">2.2.5.</span> <span class="nav-text">@Repeatable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解属性"><span class="nav-number">2.3.</span> <span class="nav-text">注解属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拥有默认值的注解"><span class="nav-number">2.3.1.</span> <span class="nav-text">拥有默认值的注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注解内只有一个-value-属性"><span class="nav-number">2.3.2.</span> <span class="nav-text">注解内只有一个 value 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#没有任何属性的注解"><span class="nav-number">2.3.3.</span> <span class="nav-text">没有任何属性的注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java8-补充内容"><span class="nav-number">2.4.</span> <span class="nav-text">Java8 补充内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解的使用场景"><span class="nav-number">2.5.</span> <span class="nav-text">注解的使用场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REF"><span class="nav-number">3.</span> <span class="nav-text">REF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="长连接,协议相关,WebSocket,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言距离上一次讲理论后已经过去两个月了，终于腾出点时间写了一个扫码登录的栗子出来，em……，其实就是懒啦。">
+<meta name="keywords" content="长连接,协议相关,WebSocket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="协议姿势解锁 —— WebSocket长连接实战篇">
+<meta property="og:url" content="http://yoursite.com/2019/07/21/协议姿势解锁 —— WebSocket 长连接实战篇/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言距离上一次讲理论后已经过去两个月了，终于腾出点时间写了一个扫码登录的栗子出来，em……，其实就是懒啦。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo-bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo2.jpg">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo3.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo4.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo5.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo6.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo7.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo8.png">
+<meta property="og:updated_time" content="2019-07-21T03:51:21.882Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="协议姿势解锁 —— WebSocket长连接实战篇">
+<meta name="twitter:description" content="前言距离上一次讲理论后已经过去两个月了，终于腾出点时间写了一个扫码登录的栗子出来，em……，其实就是懒啦。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/21/协议姿势解锁 —— WebSocket 长连接实战篇/">
+
+
+
+
+
+  <title>协议姿势解锁 —— WebSocket长连接实战篇 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">07月</div>
+			<div class="post-day">21</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/协议姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">协议姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/21/协议姿势解锁 —— WebSocket 长连接实战篇/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">协议姿势解锁 —— WebSocket长连接实战篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-21T12:00:05+08:00">
+                2019-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/协议姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">协议姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>距离上一次讲理论后已经过去两个月了，终于腾出点时间写了一个扫码登录的栗子出来，em……，其实就是懒啦。</p>
+<a id="more"></a>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>咱们先看看具体的流程是什么样子，界面做得很简陋，主要看看功能。原理介绍请参考之前的文章: <a href="https://chllan.cc/2019/05/11/%E5%8D%8F%E8%AE%AE%E5%A7%BF%E5%8A%BF%E8%A7%A3%E9%94%81%20%E2%80%94%E2%80%94%20WebSocket%20%E9%95%BF%E8%BF%9E%E6%8E%A5/" target="_blank" rel="noopener">协议姿势解锁 —— WebSocket长连接</a></p>
+<h2 id="登录首页"><a href="#登录首页" class="headerlink" title="登录首页"></a>登录首页</h2><p>首先是登录首页，在画二维码的时候会种 <strong>cookie</strong> 到前端，并且画二维码的方式使用时一种很<strong>诡异</strong>的操作，但是为了配合这个好看的工具没办法，忍了，后面分析代码再说说吧。</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo1.png" alt=""></p>
+<h2 id="扫描二维码"><a href="#扫描二维码" class="headerlink" title="扫描二维码"></a>扫描二维码</h2><p>使用任何扫描二维码的工具就行了，这里没有写移动端的方法，所以我们使用最最最 low 的方法，将扫描出的地址 <strong>copy</strong> 下来手动访问，以下是微信扫一扫的截图：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo2.jpg" alt=""></p>
+<h2 id="访问扫描后的地址"><a href="#访问扫描后的地址" class="headerlink" title="访问扫描后的地址"></a>访问扫描后的地址</h2><p>这一步如果放到手机端你理解为自动跳转就好了，但这里我也不会移动端，所以…..，先留下没有技术的流水吧。</p>
+<p>这里由于截图手欠刷新了首页，所以 uuid 改变了，我也懒得重新截图，你就当这个唯一标示是一样的吧……</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo3.png" alt=""></p>
+<p>当访问了扫描得到的地址后(再次提醒，手机上是自动跳转，就相当于自动访问啦)，长连接服务器主动发送消息到客户端，前端根据收到的消息更新页面，like this：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo4.png" alt=""></p>
+<h2 id="点击确认登录"><a href="#点击确认登录" class="headerlink" title="点击确认登录"></a>点击确认登录</h2><p>点击确认登录，你可以理解就更手机上点击确认登录按钮一样的啦，这时候又会访问一个地址，下面看看我这简陋的栗子：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo5.png" alt=""></p>
+<p>注意这里和之前的地址是不一样的啦，然后这时候客户端又会接收到新的推送消息，完成自动登录：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo6.png" alt=""></p>
+<p>这里为了简便我什么都没做，但实际上做的时候需要带用户信息过去，然后才能完成用户登录。</p>
+<h1 id="Show-You-The-Code"><a href="#Show-You-The-Code" class="headerlink" title="Show You The Code"></a>Show You The Code</h1><p>好了基本过程我们已经看过啦，接下来看看最主要的代码吧。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">└─websocket  </span><br><span class="line">    └─controller</span><br><span class="line">        ConfirmLogin.java // 扫描后的连接地址映射</span><br><span class="line">        LoginController.java // 登录首页</span><br><span class="line">    └─socket</span><br><span class="line">        WebSocket.java // 建立 Websocket 连接的类</span><br><span class="line">    └─util    </span><br><span class="line">        WebSocketUtil.java // WebSocket 工具类  </span><br><span class="line"></span><br><span class="line">然后整个是基于 Spring 框架搭建的 Web 项目，那些东西我就不赘述了。</span><br></pre></td></tr></table></figure>
+<h2 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lanc4r.websocket.socket;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.websocket.OnClose;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.OnError;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.OnMessage;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.OnOpen;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.Session;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.server.PathParam;</span><br><span class="line"><span class="keyword">import</span> javax.websocket.server.ServerEndpoint;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lanc4r.websocket.util.WebSocketUtil;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此类用于和客户端建立长连接</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过添加一个不可重复的 UserId 的方法与后端建立 Socket 连接，这样就能保证不同的用户连接进来拥有不同的方法</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@ServerEndpoint</span>(<span class="string">"/socket/&#123;userId&#125;"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebSocket</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 客户端发起新的连接时候被调用，session表示连接另一端的信息(其实也就是客户端啦)</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@OnOpen</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(@PathParam(<span class="string">"userId"</span>)</span> String userId, Session session) </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"当前处理用户ID: "</span> + userId);</span><br><span class="line">        WebSocketUtil.addUser(userId, session);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 服务端受到客户端发送的消息</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@OnMessage</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">onMessage</span><span class="params">(Session session, String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Server got your message: "</span> + message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 服务端发生异常时候触发</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> throwable</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@OnError</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable throwable, Session session)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"pathParameters: "</span> + session.getPathParameters());</span><br><span class="line">        System.out.println(<span class="string">"requestParameters: "</span> + session.getRequestParameterMap());</span><br><span class="line">        System.out.println(<span class="string">"Server occer some error: "</span> + throwable.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 关闭连接时候触发</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@OnClose</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClose</span><span class="params">(Session session)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"pathParameters: "</span> + session.getPathParameters());</span><br><span class="line">        System.out.println(<span class="string">"requestParameters: "</span> + session.getRequestParameterMap());</span><br><span class="line">        System.out.println(<span class="string">"Server close."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类就是<strong>与客户端建立长连接</strong>的关键啦，具体的代码我就不说啦，网上很多资料有介绍的。</p>
+<h2 id="WebSocketUtil"><a href="#WebSocketUtil" class="headerlink" title="WebSocketUtil"></a>WebSocketUtil</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lanc4r.websocket.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.websocket.Session;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 长连接工具类，根据不同的用户ID保存其连接信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebSocketUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Session&gt; sessionMap = <span class="keyword">new</span> HashMap&lt;String, Session&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加用户</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userSession</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addUser</span><span class="params">(String userId, Session userSession)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"用户注册成功: userId="</span> + userId);</span><br><span class="line">        sessionMap.put(userId, userSession);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 移除用户</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removeUser</span><span class="params">(String userId)</span> </span>&#123;</span><br><span class="line">        sessionMap.remove(userId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 给特定用户发送消息</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">(String userId, String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"给用户发送数据，当前userId为: "</span> + userId + <span class="string">", message="</span> + message);</span><br><span class="line">        Session session = sessionMap.get(userId);</span><br><span class="line">        <span class="keyword">if</span> (session == <span class="keyword">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">"当前用户还未建立 WebSocket 连接"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        session.getAsyncRemote().sendText(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之前我一直不知道如何才能主动向客户端发送消息，后面看到一个 博主的文章才知道，原来把创建连接时候生成的 Session 保存就好了….</p>
+<h2 id="LoginController"><a href="#LoginController" class="headerlink" title="LoginController"></a>LoginController</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.lanc4r.websocket.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.awt.Color;</span><br><span class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.Cookie;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.boat.visualqrcode.VisualQRCode;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 首页地址映射器，主要完成功能: &lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 1. 生成二维码&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 2. 给前端提供建立 WebSocket 的唯一标识码(当前想通过 Cookie 的方式注入)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 二维码原图地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String BGIMGSOURCE = <span class="string">"/Users/lanc4r/Home/tools/Minitools/ImageLoveQRCode/img/sourceBgImage.jpg"</span>;</span><br><span class="line">    <span class="comment">// 二维码目标地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TARGETIMG = <span class="string">"/Users/lanc4r/Home/tools/Minitools/ImageLoveQRCode/img/scanLogin.png"</span>;</span><br><span class="line">    <span class="comment">// 二维码隐藏地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String JUMP_URL = <span class="string">"/confirm/scan?uuid="</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生成二维码信息&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 生成二维码，并且写入 Cookie 信息</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> FileNotFoundException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/qr-code"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getQrCode</span><span class="params">(HttpServletResponse response, Model model)</span> <span class="keyword">throws</span> FileNotFoundException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 先生成二维码到文件系统，再从文件系统中读取传递到前端页面去</span></span><br><span class="line">        String uuid = UUID.randomUUID().toString();</span><br><span class="line">        String content = JUMP_URL + uuid;</span><br><span class="line">        createImage(content);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 种 Cookie</span></span><br><span class="line">        Cookie uuidCookie = <span class="keyword">new</span> Cookie(<span class="string">"uuid"</span>, uuid);</span><br><span class="line">        uuidCookie.setMaxAge(<span class="number">10</span> * <span class="number">60</span>);</span><br><span class="line">        uuidCookie.setPath(<span class="string">"/"</span>);</span><br><span class="line">        uuidCookie.setHttpOnly(<span class="keyword">false</span>);</span><br><span class="line">        response.addCookie(uuidCookie);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 画二维码 (这里通过再次读取图片来画)</span></span><br><span class="line">        BufferedImage bufferedImage = ImageIO.read(<span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(TARGETIMG)));</span><br><span class="line">        ByteArrayOutputStream out = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        ImageIO.write(bufferedImage, <span class="string">"jpeg"</span>, out);</span><br><span class="line">        response.setContentType(<span class="string">"image/jpeg;"</span>);</span><br><span class="line">        response.getOutputStream().write(out.toByteArray());</span><br><span class="line">        response.getOutputStream().flush();</span><br><span class="line">        response.getOutputStream().close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 登录首页，JS 逻辑写在此处:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 获取 Cookie 中的 UUID，然后与 服务器建立 WebSocket 连接</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/index"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">loginIndex</span><span class="params">(Model model)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 确认登录 Url，校验用户的操作，并且完成跳转，这里就简单的完成跳转即可</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/success"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">loginSuccess</span><span class="params">(Model model)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"loginSuccess"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建二维码</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bgImgSource</span></span><br><span class="line"><span class="comment">     *            背景图片地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> content</span></span><br><span class="line"><span class="comment">     *            二维码隐藏的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">createQrcode</span><span class="params">(String bgImgSource, String targetImg, String content, Color color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            VisualQRCode.createQRCode(content, bgImgSource, targetImg, <span class="string">'H'</span>, color, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="number">449</span>, <span class="keyword">true</span>,</span><br><span class="line">                    VisualQRCode.POSITION_DETECTION_SHAPE_MODEL_RECTANGLE, VisualQRCode.FILL_SHAPE_MODEL_CIRCLE);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createImage</span><span class="params">(String content)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Color 类用于指定二维码颜色(R、G、B)</span></span><br><span class="line">        Color color = <span class="keyword">new</span> Color(<span class="number">2</span>, <span class="number">85</span>, <span class="number">43</span>);</span><br><span class="line">        createQrcode(BGIMGSOURCE, TARGETIMG, content, color);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如前面所述，画这种带有背景的二维码使用了别人的工具，但是这个工具只能支持输出到文件系统，你肯定会说这样的操作在并发下会出问题，em….，fine，这次的重点不再这里啦。另外这个画二维码的工具请参考我的小工具项目，<a href="https://github.com/lanc4r/MiniTool" target="_blank" rel="noopener">地址戳这里</a></p>
+<h2 id="ConfirmLogin"><a href="#ConfirmLogin" class="headerlink" title="ConfirmLogin"></a>ConfirmLogin</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lanc4r.websocket.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lanc4r.websocket.util.WebSocketUtil;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/confirm"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfirmLogin</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证扫描，主要完成以下操作：&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 1. 返回一个确认登录按钮&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 2. 向前端发送一个消息，表示已完成二维码的扫描</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> uuid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/scan"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">confirmScan</span><span class="params">(String uuid, Model model)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 传递 "1" 表示服务端已经完成了校验</span></span><br><span class="line">        String message = <span class="string">"1"</span>;</span><br><span class="line">        WebSocketUtil.sendMessage(uuid, message);</span><br><span class="line">        model.addAttribute(<span class="string">"uuid"</span>, uuid);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"scan"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证登录，主要完成以下操作：&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 1. 跳转确认登录成功页面 &lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 2. 向前端发送一个消息，表示已经点击确认登录了</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> uuid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">confirmLogin</span><span class="params">(String uuid)</span> </span>&#123;</span><br><span class="line">        String message = <span class="string">"2"</span>;</span><br><span class="line">        WebSocketUtil.sendMessage(uuid, message);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"confirmLogin"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>扫描后地址映射，没什么好说的，如果放在实际项目中的话，这些都是写在移动端的啦。</p>
+<h2 id="index-jsp"><a href="#index-jsp" class="headerlink" title="index.jsp"></a>index.jsp</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html; charset=UTF-8"</span></span><br><span class="line">    pageEncoding=<span class="string">"UTF-8"</span>%&gt;</span><br><span class="line">&lt;%@ taglib uri=<span class="string">"http://java.sun.com/jsp/jstl/core"</span> prefix=<span class="string">"c"</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">	String path = request.getContextPath();</span><br><span class="line">	String socPath=<span class="string">"ws://"</span>+request.getServerName()+<span class="string">":"</span>+request.getServerPort()+path+<span class="string">"/"</span>;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;title&gt;扫码登录&lt;/title&gt;</span><br><span class="line">		&lt;%@ page isELIgnored=<span class="string">"false"</span> %&gt;</span><br><span class="line">		&lt;script src="/resources/js/jquery.js"&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;h1&gt;扫码登录~&lt;/h1&gt;</span><br><span class="line">		&lt;img id=<span class="string">"qr-code"</span> style=<span class="string">"display:block;"</span> alt=<span class="string">"QR-CODE"</span> src=<span class="string">"/login/qr-code"</span>&gt;</span><br><span class="line">		&lt;h2 id="scan-success" style="display:none;"&gt;扫描成功&lt;/h2&gt;</span><br><span class="line">		&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">			<span class="keyword">var</span> ws = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">var</span> uuid;</span><br><span class="line">			<span class="comment">// 获取 Cookie 传递过来的 UUID</span></span><br><span class="line">			$(document).ready(function()&#123;</span><br><span class="line">				<span class="keyword">var</span> cookie = document.cookie;</span><br><span class="line">				uuid = getCookie(<span class="string">'uuid'</span>);</span><br><span class="line">				<span class="comment">// 使用 UUID 和 WebSocket 建立连接</span></span><br><span class="line">				<span class="keyword">var</span> wsuri = <span class="string">"&lt;%=socPath%&gt;socket/"</span> + uuid;</span><br><span class="line">				console.log(<span class="string">"wsuri: "</span> + wsuri);</span><br><span class="line">				init(wsuri);</span><br><span class="line">			&#125;); </span><br><span class="line">			</span><br><span class="line">	        <span class="function">function <span class="title">startWebSocket</span><span class="params">(wsuri)</span> </span>&#123;</span><br><span class="line">	            <span class="keyword">if</span> (<span class="string">'WebSocket'</span> in window)</span><br><span class="line">	                ws = <span class="keyword">new</span> WebSocket(wsuri);</span><br><span class="line">	            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">'MozWebSocket'</span> in window)</span><br><span class="line">	                ws = <span class="keyword">new</span> MozWebSocket(wsuri);</span><br><span class="line">	            <span class="keyword">else</span></span><br><span class="line">	            	console.error(<span class="string">"not support WebSocket!"</span>);</span><br><span class="line">	            </span><br><span class="line">	            <span class="comment">// 接受消息监听函数</span></span><br><span class="line">	            ws.onmessage = function(evt) &#123;</span><br><span class="line">	            	console.log(evt.data);</span><br><span class="line">	            	<span class="comment">// 如果返回值为1，则修改当前页面的显示情况</span></span><br><span class="line">	            	<span class="keyword">if</span> (evt.data == <span class="string">'1'</span>)&#123;</span><br><span class="line">	            		$(<span class="string">'#qr-code'</span>).css(<span class="string">"display"</span>, <span class="string">"none"</span>);</span><br><span class="line">	            		$(<span class="string">'#scan-success'</span>).css(<span class="string">"display"</span>, <span class="string">"block"</span>);</span><br><span class="line">	            	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (evt.data == <span class="string">'2'</span>)&#123;</span><br><span class="line">	            		<span class="comment">// 返回值为2，表示登录成功跳转到登录成功页面</span></span><br><span class="line">	            		window.location.href = <span class="string">"/login/success"</span>;</span><br><span class="line">	            	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	            		alert(<span class="string">"数据错误"</span>);</span><br><span class="line">	            	&#125;</span><br><span class="line">	            &#125;;</span><br><span class="line">	 </span><br><span class="line">	            ws.onclose = function(evt) &#123;</span><br><span class="line">	            	console.log(<span class="string">"close"</span>);</span><br><span class="line">	                console.info(evt);</span><br><span class="line">	            &#125;;</span><br><span class="line">	 </span><br><span class="line">	            ws.onopen = function(evt) &#123;</span><br><span class="line">	            	console.log(<span class="string">"open"</span>);</span><br><span class="line">	                console.info(evt);</span><br><span class="line">	            &#125;;</span><br><span class="line">	        &#125;;</span><br><span class="line">	        </span><br><span class="line">	        <span class="function">function <span class="title">init</span><span class="params">(wsuri)</span></span>&#123;</span><br><span class="line">	        	startWebSocket(wsuri);</span><br><span class="line">	        &#125;;</span><br><span class="line">	        </span><br><span class="line">	 </span><br><span class="line">	        <span class="function">function <span class="title">sendMsg</span><span class="params">()</span></span>&#123;     	</span><br><span class="line">	            ws.send(document.getElementById(<span class="string">'writeMsg'</span>).value);</span><br><span class="line">	        &#125;</span><br><span class="line">	        </span><br><span class="line">	        <span class="comment">// 获取 cookie</span></span><br><span class="line">	        <span class="function">function <span class="title">getCookie</span><span class="params">(cname)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">var</span> name = cname + <span class="string">"="</span>;</span><br><span class="line">				<span class="keyword">var</span> ca = document.cookie.split(<span class="string">';'</span>);</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;ca.length; i++) &#123;</span><br><span class="line">			    	<span class="keyword">var</span> c = ca[i].trim();</span><br><span class="line">			    	<span class="keyword">if</span> (c.indexOf(name)==<span class="number">0</span>) <span class="keyword">return</span> c.substring(name.length,c.length);</span><br><span class="line">			  	&#125;</span><br><span class="line">			  	<span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>主要是看看 JS 与 服务端建立长连接的代码，其实网上也有很多，自己去搜索就好了。</p>
+<h2 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h2><p>下面截图一下 WebSocket 传递消息的地方，因为走的是 <code>ws://</code> 协议，所以数据都是明文的啦：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo7.png" alt=""></p>
+<p><img src="https://view.moezx.cc/images/2019/07/21/lanc4r-socketdemo8.png" alt=""></p>
+<p>突然发现就传了第一个标识1，感觉好尴尬，不过，fine，能看出栗子就好了，如果这时候传递2的话页面就跳转啦，所以值是看不到的。总之两边交互的数据都存在这里啦。</p>
+<h2 id="记录一下遇到的两个小问题"><a href="#记录一下遇到的两个小问题" class="headerlink" title="记录一下遇到的两个小问题"></a>记录一下遇到的两个小问题</h2><h3 id="JavaWeb-添加第三方-Jar-问题"><a href="#JavaWeb-添加第三方-Jar-问题" class="headerlink" title="JavaWeb 添加第三方 Jar 问题"></a>JavaWeb 添加第三方 Jar 问题</h3><p><strong>JavaWeb</strong> 添加外部的 <strong>Jar</strong> 包时候，如果想要发布使用的话，光添加到 <strong>IDE</strong> 当中是没用的(我使用的是 Eclipse)，需要添加到所关联的 <strong>Tomcat 的 lib 目录</strong>下，至于为什么后面找个机会了解一下，当前可以参考博客 <a href="https://blog.csdn.net/a460550542/article/details/50927551" target="_blank" rel="noopener">javaWeb项目如何添加jar包</a></p>
+<h3 id="老版本-JavaWeb-项目中-EL-相关问题"><a href="#老版本-JavaWeb-项目中-EL-相关问题" class="headerlink" title="老版本 JavaWeb 项目中 EL 相关问题"></a>老版本 JavaWeb 项目中 EL 相关问题</h3><p>老版本的 <strong>JavaWeb</strong>(2.3版本，IDE 是 Eclipse)  所编写的 <strong>JSP</strong> 页面中，默认 <strong>EL</strong> 表达式是关闭的，需要手动开启，参考博客 <a href="https://blog.csdn.net/problc/article/details/23768999" target="_blank" rel="noopener">spring mvc EL ModelAndView的 Model 值 在jsp中不显示</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>算是又填了一个坑 ε=ε=ε=ε=ε=ε=┌(;￣◇￣)┘</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/长连接/" rel="tag"># 长连接</a>
+          
+            <a href="/tags/协议相关/" rel="tag"># 协议相关</a>
+          
+            <a href="/tags/WebSocket/" rel="tag"># WebSocket</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/18/注解简介/" rel="next" title="Java 姿势解锁 —— 注解初识">
+                <i class="fa fa-chevron-left"></i> Java 姿势解锁 —— 注解初识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/26/Java姿势解锁 —— 十万个为什么第二期/" rel="prev" title="Java 姿势解锁 —— 十万个为什么第二期">
+                Java 姿势解锁 —— 十万个为什么第二期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登录首页"><span class="nav-number">2.1.</span> <span class="nav-text">登录首页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扫描二维码"><span class="nav-number">2.2.</span> <span class="nav-text">扫描二维码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问扫描后的地址"><span class="nav-number">2.3.</span> <span class="nav-text">访问扫描后的地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点击确认登录"><span class="nav-number">2.4.</span> <span class="nav-text">点击确认登录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Show-You-The-Code"><span class="nav-number">3.</span> <span class="nav-text">Show You The Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">3.1.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocket"><span class="nav-number">3.2.</span> <span class="nav-text">WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocketUtil"><span class="nav-number">3.3.</span> <span class="nav-text">WebSocketUtil</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LoginController"><span class="nav-number">3.4.</span> <span class="nav-text">LoginController</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConfirmLogin"><span class="nav-number">3.5.</span> <span class="nav-text">ConfirmLogin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#index-jsp"><span class="nav-number">3.6.</span> <span class="nav-text">index.jsp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#截图"><span class="nav-number">3.7.</span> <span class="nav-text">截图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录一下遇到的两个小问题"><span class="nav-number">3.8.</span> <span class="nav-text">记录一下遇到的两个小问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaWeb-添加第三方-Jar-问题"><span class="nav-number">3.8.1.</span> <span class="nav-text">JavaWeb 添加第三方 Jar 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#老版本-JavaWeb-项目中-EL-相关问题"><span class="nav-number">3.8.2.</span> <span class="nav-text">老版本 JavaWeb 项目中 EL 相关问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

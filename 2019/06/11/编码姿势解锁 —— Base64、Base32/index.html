@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="字符编码,Base全家桶,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这次聊聊 Base全家桶中的 Base64 和 Base32 编码，同样是老博客…..">
+<meta name="keywords" content="字符编码,Base全家桶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编码姿势解锁 —— Base64、Base32 编码">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/编码姿势解锁 —— Base64、Base32/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言这次聊聊 Base全家桶中的 Base64 和 Base32 编码，同样是老博客…..">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/11/lanc4r-base-bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/11/lanc4r-base-1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/11/lanc4r-base-2.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/06/11/lanc4r-base-3.png">
+<meta property="og:updated_time" content="2019-06-12T05:36:04.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编码姿势解锁 —— Base64、Base32 编码">
+<meta name="twitter:description" content="前言这次聊聊 Base全家桶中的 Base64 和 Base32 编码，同样是老博客…..">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/06/11/lanc4r-base-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/11/编码姿势解锁 —— Base64、Base32/">
+
+
+
+
+
+  <title>编码姿势解锁 —— Base64、Base32 编码 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">06月</div>
+			<div class="post-day">11</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/编码姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">编码姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/11/编码姿势解锁 —— Base64、Base32/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编码姿势解锁 —— Base64、Base32 编码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T16:00:05+08:00">
+                2019-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/编码姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">编码姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/06/11/lanc4r-base-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次聊聊 Base全家桶中的 Base64 和 Base32 编码，同样是老博客…..</p>
+<a id="more"></a>
+<h1 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>以下是 Wikipedia 的解释：</p>
+<blockquote>
+<p>Base64是一种基于64个可打印字符来表示二进制数据的表示方法。由于 2的6次方为64，所以每6个比特为一个单元，对应某个可打印字符。3个字节有24个比特，对应于4个Base64单元，即3个字节可由4个可打印字符来表示。它可用来作为电子邮件的传输编码。在Base64中的可打印字符包括字母A-Z、a-z、数字0-9，这样共有62个字符，此外两个可打印符号在不同的系统中而不同。一些如uuencode的其他编码方法，和之后BinHex的版本使用不同的64字符集来代表6个二进制数字，但是不被称为Base64。<br>Base64常用于在通常处理文本数据的场合，表示、传输、存储一些二进制数据，包括MIME的电子邮件及XML的一些复杂数据。</p>
+</blockquote>
+<p>简单说就是 把3个8位字符 <code>(3*8=24)</code> 转化为4个6位的字符 <code>(4*6=24)</code>，<strong>之后在6位的前面补两个0，形成8位一个字节的形式</strong>。 <strong>不足的位数用0补充，如果字符数不够，在最后使用 “=” 填充，使字符数达到 4个</strong>，因此编码后输出的文本末尾可能会出现1或2个”=”。</p>
+<p>转换后的 6位字符将对照着编码输出即可。</p>
+<p><img src="https://view.moezx.cc/images/2019/06/11/lanc4r-base-1.png" alt=""></p>
+<h2 id="不同编码下的-Base64-编码"><a href="#不同编码下的-Base64-编码" class="headerlink" title="不同编码下的 Base64 编码"></a>不同编码下的 Base64 编码</h2><p>首先，不同编码下的 <strong>Base64</strong> 编码值不一样，比如 <strong>UTF-8</strong> 和 <strong>UTF-16</strong> 的编码值就不同，因为它是以三个字节为单位进行编码的嘛，<strong>UTF-8</strong> 和 <strong>UTF-16</strong> 的字节数都不一样，所以最后编码的结果肯定也不一样咯。何况 <strong>UTF-8</strong> 还有些占位符，这在编码的时候是需要被排除掉的。</p>
+<p>这里呢我只聊聊最常见的 <strong>UTF-8</strong> 编码，对于其他编码都是一样的道理，知道原理之后可以自己动手试试。</p>
+<h2 id="UTF-16-和-UTF-8-的转换"><a href="#UTF-16-和-UTF-8-的转换" class="headerlink" title="UTF-16 和 UTF-8 的转换"></a>UTF-16 和 UTF-8 的转换</h2><p>因为是 JavaScript 实现的，且在 <strong>Javascript 内部的字符串，都以UTF-16的形式进行保存</strong>，因此编码的时候，我们首先必须将 <strong>UTF-8</strong> 的值转成 <strong>UTF-16</strong> 再编码，解码的时候，则是解码后还需要将 <strong>UTF-16</strong> 的值转回成 <strong>UTF-8</strong>。</p>
+<p>有了之前将字符集的知识，我们知道 <strong>UTF-8 根据字符的字节大小会将其分配在不同的代码单元</strong>，这里只举栗 <strong>Unicode</strong> 第一版，也就是最长只有两个字节的字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">U-0000 - U-007F: 0xxxxxxx</span><br><span class="line">U-0080 - U-07FF: 110xxxxx 10xxxxxx</span><br><span class="line">U-0800 - U-FFFF: 1110xxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure>
+<p>然后我们结合之前 <strong>UTF-8</strong> 的编解码过程，很容易就能写出伪代码：</p>
+<h3 id="编码伪代码"><a href="#编码伪代码" class="headerlink" title="编码伪代码"></a>编码伪代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 判断字符的大小</span><br><span class="line">2. 字符在 U-0000 - U-007F 区间内，原封不动的输出</span><br><span class="line">3. 字符在 U-0080 - U-07FF 区间内：</span><br><span class="line">    从高位开始，依次取出 5位 和 6位，分别放入 110xxxxx 和 10xxxxxx 对应的位置</span><br><span class="line">4. 字符在 U-0800 - U-FFFF 区间内:</span><br><span class="line">    从高位开始，依次取出 4位、6位、6位，分别放入 1110xxxx、10xxxxxx、10xxxxxx 对应的位置</span><br></pre></td></tr></table></figure>
+<h3 id="解码伪代码"><a href="#解码伪代码" class="headerlink" title="解码伪代码"></a>解码伪代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 先判断第一个字符的大小</span><br><span class="line">2. 第一个字符小于等于 0x7F 也即字符小于等于 01111111，这时表示当前字符只占据一个字节</span><br><span class="line">    直接将输出该字符即可</span><br><span class="line">3. 第一个字符大于 0xE0 也即字符大于 11100000，这时表示当前字符占据三个字节</span><br><span class="line">    从当前字节开始一次往后读取三个字节 c1、c2、c3</span><br><span class="line">    取第一个字节的 低4位、第二和第三个字节的 低6位，将其组合形成一个字符</span><br><span class="line">4. 剩余的情况表示字符占据两个字节</span><br><span class="line">    从当前字节开始往后读取两个字节：c1、c2</span><br><span class="line">    取第一个字节的 低5位 和 第二个字节的 低6位，组成字符 (最高的5位补0)</span><br></pre></td></tr></table></figure>
+<h3 id="JS实现"><a href="#JS实现" class="headerlink" title="JS实现"></a>JS实现</h3><p>这是摘自网上一个老哥的代码，但是出处找不到了…..</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">utf16to8</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> out, a, i;</span><br><span class="line">	out = <span class="string">""</span>;</span><br><span class="line"> </span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; str.length; i++)&#123;</span><br><span class="line">		<span class="comment">// 从第一个字符开始获取，因为是 UTF-16 编码，每个字符都会占据两个字节</span></span><br><span class="line">		a = str.charCodeAt(i);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// U-0000 - U-007F 区间内不做编码，直接输出</span></span><br><span class="line">		<span class="keyword">if</span> ((a &gt;= <span class="number">0x0001</span>) &amp;&amp; (a &lt;= <span class="number">0x007F</span>))&#123;</span><br><span class="line">			out += str.charAt(i);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(a &gt; <span class="number">0x07FF</span>)&#123;</span><br><span class="line">          		<span class="comment">// U-0800 - U-FFFF 区间需要进行三次操作，获得不同位置的值</span></span><br><span class="line">			<span class="comment">// 右移 12 位获得最高四位，然后与 0xE0(1110 0000) 做或运算，将取出四位的值放入其中成为编码后的第一个字节</span></span><br><span class="line">			out += <span class="built_in">String</span>.fromCharCode(<span class="number">0xE0</span> | (a &gt;&gt; <span class="number">12</span>));</span><br><span class="line">          		<span class="comment">// 右移 6位，此时中间的六位就处于最低位，这时与 0x3F(00111111) 做与运算，将排除掉高位的“杂质”，得到中间六位</span></span><br><span class="line">          		<span class="comment">// 然后与 0x80(10 000000) 做或运算，将取出的六位值放入其中作为编码后的第二个字节</span></span><br><span class="line">			out += <span class="built_in">String</span>.fromCharCode(<span class="number">0x80</span> | ((a &gt;&gt; <span class="number">6</span>) &amp; <span class="number">0x3F</span>));</span><br><span class="line">          		<span class="comment">// 同理直接将 当前字符与 0x3F(00111111) 做与运算，排除掉所有杂质，只剩下最低六位</span></span><br><span class="line">          		<span class="comment">// 然后与 0x80(10 000000) 做或运算，将取出的六位值放入其中作为编码后的第三个字节</span></span><br><span class="line">			out += <span class="built_in">String</span>.fromCharCode(<span class="number">0x80</span> | (a &amp; <span class="number">0x3F</span>));</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          		<span class="comment">// U-0080 - U-07FF 区间需要进行俩次操作，获得不同位置的值</span></span><br><span class="line">          		<span class="comment">// 右移 6位得到最高的 5位（因为0x7FF 00000111 11111111 最高也只有 11位）</span></span><br><span class="line">          		<span class="comment">// 然后与 0xC0(110 00000) 做 或运算，将取出的 五位的值放入其中作为第一个字节</span></span><br><span class="line">			out += <span class="built_in">String</span>.fromCharCode(<span class="number">0xC0</span> | (a &gt;&gt; <span class="number">6</span>));</span><br><span class="line">          		<span class="comment">// 将直接将 当前字符与 0x3F(00111111) 做与运算，排除掉所有“杂质”，只剩下最低六位</span></span><br><span class="line">          		<span class="comment">// 然后与 0x80(10 000000) 做或运算，将取出的六位值放入其中作为编码后的第二个字节</span></span><br><span class="line">			out += <span class="built_in">String</span>.fromCharCode(<span class="number">0x80</span> | (a &amp; <span class="number">0x3F</span>));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">utf8to16</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> i, len, out, c1, c2, c3;</span><br><span class="line">	i = <span class="number">0</span>; len = str.length; out = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (i &lt; len)&#123;</span><br><span class="line">             	<span class="comment">// str.charCodeAt(i) 获取第一个字符</span></span><br><span class="line">             	<span class="comment">// 如果第一个字符小于等于 0x7F(01111111)，也即在 U-0000 - U-007F 区间内，此时直接输出</span></span><br><span class="line">		 <span class="keyword">if</span> (str.charCodeAt(i) &lt;= <span class="number">0x7F</span>)&#123;</span><br><span class="line">		 	out += str.charAt(i);</span><br><span class="line">		 	i++;</span><br><span class="line">		 &#125;<span class="keyword">else</span> <span class="keyword">if</span> (str.charCodeAt(i) &gt; <span class="number">0xE0</span>)&#123;</span><br><span class="line">                   	<span class="comment">// 当第一个字符大于 0xE0(1110 0000)，也即是 1110xxxx 格式，此时：</span></span><br><span class="line">                   	<span class="comment">// 读取第一个字节</span></span><br><span class="line">		 	c1 = str.charCodeAt(i++);</span><br><span class="line">                    	<span class="comment">// 读取第二个字节</span></span><br><span class="line">		 	c2 = str.charCodeAt(i++);</span><br><span class="line">                    	<span class="comment">// 读取第三个字节</span></span><br><span class="line">		 	c3 = str.charCodeAt(i++);</span><br><span class="line">                    	<span class="comment">// 取第一个字节的后四位作为最高的四位，第二个字节的后六位作为中间的六位，第三个字节的后六位作为最后的六位</span></span><br><span class="line">		 	out += <span class="built_in">String</span>.fromCharCode(((c1 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">12</span>) | ((c2 &amp; <span class="number">0x3F</span>) &lt;&lt; <span class="number">6</span>) | (c3 &amp; <span class="number">0x3F</span>));</span><br><span class="line">		 &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                   	<span class="comment">// 否则是两个字节的情况</span></span><br><span class="line">                   	<span class="comment">// 取第一个字节</span></span><br><span class="line">		 	c1 = str.charCodeAt(i++);</span><br><span class="line">                    	<span class="comment">// 取第二个字节</span></span><br><span class="line">		 	c2 = str.charCodeAt(i++);</span><br><span class="line">                    	<span class="comment">// 去第一个字节的后五位作为高五位，第二个字节的后六位作为低六位</span></span><br><span class="line">		 	out += <span class="built_in">String</span>.fromCharCode(((c1 &amp; <span class="number">0x1F</span>) &lt;&lt; <span class="number">6</span>) | (c2 &amp; <span class="number">0x3F</span>));</span><br><span class="line">		 &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Base64-编码"><a href="#Base64-编码" class="headerlink" title="Base64 编码"></a>Base64 编码</h2><p>准备工作做完了，现在我们来看看如何把 <strong>UTF-8</strong> 编码后的字符进行 <strong>Base64</strong> 编码。</p>
+<p>这里以最简单的英文字符 <code>flag</code> 为例吧，因为它们的值都小于 <strong>0x7F</strong>，<strong>UTF-8</strong> 编码后的字符跟编码前的完全一样。下图展示了编码过程：</p>
+<p><img src="https://view.moezx.cc/images/2019/06/11/lanc4r-base-2.png" alt=""></p>
+<h3 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码"></a>JS代码</h3><p>有了上面的原理，接下来使用 JS代码来实现一下，同样是摘自别人的代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">baseEncode</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 按照编码表定义字符串，下标值刚好对应其字符值，比如 （A 就对应下标值 0，也就是对应着编码表中的值 0）</span></span><br><span class="line">	<span class="keyword">var</span> encode_str = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"</span>;</span><br><span class="line">	<span class="keyword">var</span> len, i, out, c1, c2, c3, c4;</span><br><span class="line">	out = <span class="string">""</span>;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	len = str.length;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (i &lt; len)&#123;</span><br><span class="line">            <span class="comment">// 获取第一个字符</span></span><br><span class="line">		c1 = str.charCodeAt(i++);</span><br><span class="line">           <span class="comment">// 判断 c1 是否为最后一个字节</span></span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">                   <span class="comment">// 如果为最后一个字节</span></span><br><span class="line">                   <span class="comment">// 获取前六位作为第一个字节，通过当前字节大小寻找其对应的 Base64 编码值</span></span><br><span class="line">			out += encode_str.charAt(c1 &gt;&gt; <span class="number">2</span>);</span><br><span class="line">                   <span class="comment">// 获取后两位作为第二个字节的高位，并通过其大小寻找其对应的 Base64 编码值</span></span><br><span class="line">			out += encode_str.charAt((c1 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">4</span>);</span><br><span class="line">                   <span class="comment">// 最后加上两个 "=" 组成四个字符</span></span><br><span class="line">			out += <span class="string">"=="</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">           <span class="comment">// 如果不为最后一个字节，取当前字节的 高六位作为第一个字节，通过其寻找 Base64 编码</span></span><br><span class="line">		out += encode_str.charAt(c1 &gt;&gt; <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">           <span class="comment">// 获取第二个字节</span></span><br><span class="line">		c2 = str.charCodeAt(i++);</span><br><span class="line">		<span class="comment">// 同样判断 c2 是不是最后一个字符</span></span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">                   <span class="comment">// 如果第二个字符是最后一个字符</span></span><br><span class="line">                   <span class="comment">// 取第一个字符的后两位 和 第二个字符的前四位 作为一个字节，通过其寻找 Base64 编码</span></span><br><span class="line">			out += encode_str.charAt(((c1 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">4</span>) | (c2 &gt;&gt; <span class="number">4</span>));</span><br><span class="line">                   <span class="comment">// 将第二个字节的后四位作为一个字节，通过其寻找 Base64 编码</span></span><br><span class="line">			out += encode_str.charAt((c2 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">2</span>);</span><br><span class="line">                   <span class="comment">// 最后加上一个 "=" 组成四个字符</span></span><br><span class="line">			out += <span class="string">"="</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">           <span class="comment">// 如果第二个字节不是最后一个字节，取第一个字符的后两位 和 第二个字符的前四位 作为一个字节，通过其寻找 Base64 编码</span></span><br><span class="line">		out += encode_str.charAt(((c1 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">4</span>) | (c2 &gt;&gt; <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">           <span class="comment">// 取第三个字符</span></span><br><span class="line">		c3 = str.charCodeAt(i++);</span><br><span class="line">           <span class="comment">// 将第二个字符的后四位 和 第三个字符的前二位组成一个字节编码</span></span><br><span class="line">		out += encode_str.charAt(((c2 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">2</span>) | (c3 &gt;&gt; <span class="number">6</span>));</span><br><span class="line">           <span class="comment">// 将第三个字节后六位组成一个字节编码</span></span><br><span class="line">		out += encode_str.charAt(c3 &amp; <span class="number">0x3F</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">baseDecode</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> i, len, out, c1, c2, c3, c4;</span><br><span class="line">     <span class="comment">// 定义解码的数组，这里的目的是 Ascii 和 Base64 值转换</span></span><br><span class="line">	<span class="keyword">var</span> decode_arr = <span class="keyword">new</span> <span class="built_in">Array</span>(</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">62</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">63</span>,</span><br><span class="line">    <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>, <span class="number">56</span>, <span class="number">57</span>, <span class="number">58</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">61</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>,  <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>,</span><br><span class="line">    <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>, <span class="number">36</span>, <span class="number">37</span>, <span class="number">38</span>, <span class="number">39</span>, <span class="number">40</span>,</span><br><span class="line">    <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>, <span class="number">46</span>, <span class="number">47</span>, <span class="number">48</span>, <span class="number">49</span>, <span class="number">50</span>, <span class="number">51</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">	len = str.length;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	out = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (i &lt; len)&#123;</span><br><span class="line">            <span class="comment">// 获取第一个编码字符的 Base64 值</span></span><br><span class="line">            <span class="comment">// 这里简单解释一下，因为 char 字符大小对应的是 ASCII 表，比如 A 字符，对应 ASCII 表的值是 65，但其对应 Base64 码表值为 0</span></span><br><span class="line">            <span class="comment">// 所以我们可以通过上面的数组得到编码前的大小</span></span><br><span class="line">		c1 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 同理得到第二个 Base64 编码字符编码前的大小</span></span><br><span class="line">		c2 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将第一个值作为高六位，第二个值取最高的两位，其实就是编码的逆过程啦，组成第一个字节</span></span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode((c1 &lt;&lt; <span class="number">2</span>) | ((c2 &amp; <span class="number">0x30</span>) &gt;&gt; <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 然后获取第三个字符编码前的大小</span></span><br><span class="line">		c3 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">            <span class="comment">// 如果值为 -1，说明遇到 等号，或者是非 Base64 的值，此时退出</span></span><br><span class="line">		<span class="keyword">if</span> (c3 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">// 如果第三个值有效，则将第二个值的后四位作为高位，第三个值的中间四位作为低位，组成第二个字节  </span></span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c2 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">4</span>) | ((c3 &amp; <span class="number">0x3C</span>) &gt;&gt; <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 同理判断 第四个字符</span></span><br><span class="line">		c4 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		<span class="keyword">if</span> (c4 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">// 将第三个值的最后两位作为高位，将第四个字节的后六位作为低位，组成第三个字节。</span></span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c3 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">6</span>) | (c4 &amp; <span class="number">0x3F</span>));</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上就是针对于 <strong>UTF-8</strong> 编码字符的 <strong>Base64</strong> 编码的原理及实现啦，接下来说说不是那么常用的 <strong>Base32</strong> 编码~</p>
+<h1 id="Base32"><a href="#Base32" class="headerlink" title="Base32"></a>Base32</h1><p><strong>Base32</strong> 编码的原理和 <strong>Base64</strong> 很类似，<strong>Base64</strong> 是 <code>3 x 8bit =&gt; 4 x 6bit</code>，而 <strong>Base32</strong> 就是<strong>把 5个8位字符编码为 8个5位的字符</strong>，也即是 <code>5 x 8bit =&gt; 8 x 5bit</code>。</p>
+<p>这里就不再赘述原理了，只需要对着 <strong>Base32</strong> 编码表撸就行了</p>
+<p><img src="https://view.moezx.cc/images/2019/06/11/lanc4r-base-3.png" alt=""></p>
+<h2 id="JS-实现"><a href="#JS-实现" class="headerlink" title="JS 实现"></a>JS 实现</h2><p>我们还是以 <strong>UTF-8</strong> 编码的字符为例，原理这里就不讲啦，和 <strong>Base64</strong> 一样的玩法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 32编码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base32Encode</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> out, len, i;</span><br><span class="line">	<span class="keyword">var</span> encode_str = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"</span>;</span><br><span class="line"></span><br><span class="line">	len = str.length;</span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	out = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(i &lt; len)&#123;</span><br><span class="line">		c1 = str.charCodeAt(i++);</span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">			out += encode_str.charAt(c1 &gt;&gt; <span class="number">3</span>);</span><br><span class="line">			out += encode_str.charAt((c1 &amp; <span class="number">0x07</span>) &lt;&lt; <span class="number">2</span>);</span><br><span class="line">			out += <span class="string">"======"</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		out += encode_str.charAt(c1 &gt;&gt; <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">		c2 = str.charCodeAt(i++);</span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">			out += encode_str.charAt(((c1 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">2</span>) | ((c2 &amp; <span class="number">0xC0</span>) &gt;&gt; <span class="number">6</span>));</span><br><span class="line">			out += encode_str.charAt((c2 &amp; <span class="number">0x3E</span>) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">			out += encode_str.charAt((c2 &amp; <span class="number">0x01</span>) &lt;&lt; <span class="number">4</span>);</span><br><span class="line">			out += <span class="string">"===="</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		out += encode_str.charAt(((c1 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">2</span>) | ((c2 &amp; <span class="number">0xC0</span>) &gt;&gt; <span class="number">6</span>));</span><br><span class="line">		out += encode_str.charAt((c2 &amp; <span class="number">0x3E</span>) &gt;&gt; <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		c3 = str.charCodeAt(i++);</span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">			out += encode_str.charAt(((c2 &amp; <span class="number">0x01</span>) &lt;&lt; <span class="number">4</span>) | ((c3 &amp; <span class="number">0xF0</span>) &gt;&gt; <span class="number">4</span>));</span><br><span class="line">			out += encode_str.charAt((c3 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">1</span>);</span><br><span class="line">			out += <span class="string">"==="</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		out += encode_str.charAt(((c2 &amp; <span class="number">0x01</span>) &lt;&lt; <span class="number">4</span>) | ((c3 &amp; <span class="number">0xF0</span>) &gt;&gt; <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">		c4 = str.charCodeAt(i++);</span><br><span class="line">		<span class="keyword">if</span> (i == len)&#123;</span><br><span class="line">			out += encode_str.charAt(((c3 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">1</span>) | ((c4 &amp; <span class="number">0x80</span>) &gt;&gt; <span class="number">7</span>));</span><br><span class="line">			out += encode_str.charAt((c4 &amp; <span class="number">0x7C</span>) &gt;&gt; <span class="number">2</span>);</span><br><span class="line">			out += encode_str.charAt((c4 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">3</span>);</span><br><span class="line">			out += <span class="string">"="</span>;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		out += encode_str.charAt(((c3 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">1</span>) | ((c4 &amp; <span class="number">0x80</span>) &gt;&gt; <span class="number">7</span>));</span><br><span class="line">		out += encode_str.charAt((c4 &amp; <span class="number">0x7C</span>) &gt;&gt; <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">		c5 = str.charCodeAt(i++);</span><br><span class="line">		out += encode_str.charAt(((c4 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">3</span>) | ((c5 &amp; <span class="number">0xE0</span>) &gt;&gt; <span class="number">5</span>));</span><br><span class="line">		out += encode_str.charAt(c5 &amp; <span class="number">0x1F</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 32解码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">base32Decode</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> i, len, out;</span><br><span class="line">	<span class="keyword">var</span> decode_arr = <span class="keyword">new</span> <span class="built_in">Array</span>(</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>,  <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>,</span><br><span class="line">    <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>,</span><br><span class="line">    <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">	i = <span class="number">0</span>;</span><br><span class="line">	len = str.length;</span><br><span class="line">	out = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(i &lt; len)&#123;</span><br><span class="line">		c1 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		</span><br><span class="line">		c2 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode((c1 &lt;&lt; <span class="number">3</span>) | ((c2 &amp; <span class="number">0x1C</span>) &gt;&gt; <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">		c3 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		<span class="keyword">if</span> (c3 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">		c4 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c2 &amp; <span class="number">0x03</span>) &lt;&lt; <span class="number">6</span>) | (c3 &lt;&lt; <span class="number">1</span>) | ((c4 &amp; <span class="number">0x10</span>) &gt;&gt; <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">		c5 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		<span class="keyword">if</span> (c5 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c4 &amp; <span class="number">0x0F</span>) &lt;&lt; <span class="number">4</span>) | ((c5 &amp; <span class="number">0x1E</span>) &gt;&gt; <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">		c6 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		<span class="keyword">if</span> (c6 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">		c7 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c5 &amp; <span class="number">0x01</span>) &lt;&lt; <span class="number">7</span>) | (c6 &lt;&lt; <span class="number">2</span>) | ((c7 &amp; <span class="number">0x18</span>) &gt;&gt; <span class="number">3</span>));</span><br><span class="line"></span><br><span class="line">		c8 = decode_arr[str.charCodeAt(i++)];</span><br><span class="line">		<span class="keyword">if</span> (c8 == <span class="number">-1</span>) <span class="keyword">break</span>;</span><br><span class="line">		out += <span class="built_in">String</span>.fromCharCode(((c7 &amp; <span class="number">0x07</span>) &lt;&lt; <span class="number">5</span>) | c8);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><p>好像还有 <strong>Base16</strong> 编码，原理都是一样的，之后找个机会了解一下吧，就酱紫~</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>认真努力的生活先从戒掉熬夜开始。</p>
+<p>上个端午后两天假期过得像活死人一样，总是玩游戏、补番到深夜，然后早上一睁眼又到了中午，精神萎靡不振，下午为了补充精力继续睡觉，到了晚上睡不着了继续熬夜……</p>
+<p>所以第一个目标：<strong>戒掉熬夜，成为一名退役熬夜选手！</strong></p>
+<p>总之，无论生活变成什么样子，都要认真地去对待啊！</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/字符编码/" rel="tag"># 字符编码</a>
+          
+            <a href="/tags/Base全家桶/" rel="tag"># Base全家桶</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/数据库姿势解锁 —— 实例、视图/" rel="next" title="数据库姿势解锁 —— 实例、视图">
+                <i class="fa fa-chevron-left"></i> 数据库姿势解锁 —— 实例、视图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/15/Java姿势解锁 —— 类加载过程/" rel="prev" title="Java姿势解锁 —— 类加载过程">
+                Java姿势解锁 —— 类加载过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Base64"><span class="nav-number">2.</span> <span class="nav-text">Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不同编码下的-Base64-编码"><span class="nav-number">2.2.</span> <span class="nav-text">不同编码下的 Base64 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-16-和-UTF-8-的转换"><span class="nav-number">2.3.</span> <span class="nav-text">UTF-16 和 UTF-8 的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编码伪代码"><span class="nav-number">2.3.1.</span> <span class="nav-text">编码伪代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解码伪代码"><span class="nav-number">2.3.2.</span> <span class="nav-text">解码伪代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS实现"><span class="nav-number">2.3.3.</span> <span class="nav-text">JS实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base64-编码"><span class="nav-number">2.4.</span> <span class="nav-text">Base64 编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JS代码"><span class="nav-number">2.4.1.</span> <span class="nav-text">JS代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Base32"><span class="nav-number">3.</span> <span class="nav-text">Base32</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JS-实现"><span class="nav-number">3.1.</span> <span class="nav-text">JS 实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展"><span class="nav-number">4.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">5.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

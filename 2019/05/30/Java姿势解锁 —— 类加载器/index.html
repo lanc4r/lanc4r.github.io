@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言这次说说类加载器，算是疑惑很久的问题了。">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java姿势解锁 —— 类加载器">
+<meta property="og:url" content="http://yoursite.com/2019/05/30/Java姿势解锁 —— 类加载器/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言这次说说类加载器，算是疑惑很久的问题了。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/30/lanc4r-classloaderbg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/30/lanc4r-classloader1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/05/30/lanc4r-classloader2.png">
+<meta property="og:updated_time" content="2019-05-30T14:51:58.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java姿势解锁 —— 类加载器">
+<meta name="twitter:description" content="前言这次说说类加载器，算是疑惑很久的问题了。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/05/30/lanc4r-classloaderbg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/30/Java姿势解锁 —— 类加载器/">
+
+
+
+
+
+  <title>Java姿势解锁 —— 类加载器 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">05月</div>
+			<div class="post-day">30</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/Java姿势解锁 —— 类加载器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java姿势解锁 —— 类加载器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T23:30:05+08:00">
+                2019-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/05/30/lanc4r-classloaderbg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这次说说类加载器，算是疑惑很久的问题了。</p>
+<a id="more"></a>
+<h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>Class loaders属于JRE的一部分，负责在运行时将Java类动态加载到JVM</strong>。得益于<strong>class loaders</strong>，JVM在无需知晓底层文件或文件系统时就可以运行Java程序。<br>此外，<strong>Java类是按需加载，并不会一次全部加载到内存中</strong>。<strong>Class loaders</strong>负责将类加载到内存。</p>
+<p>举个栗子来说说</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">    String url = <span class="string">"jdbc:mysql://localhost:3306/havefun"</span>;</span><br><span class="line">    String username = <span class="string">"root"</span>;</span><br><span class="line">    String password = <span class="string">"123456"</span>;</span><br><span class="line">    Connection conn = DriverManager.getConnection(url, username, password);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是java使用Mysql的常见Demo，在代码的第一行中我们使用 java 代码动态加载了一个限定名为 <strong>com.mysql.jdbc.Driver</strong> 的类，请注意，这里涉及到加载类了。</p>
+<h2 id="debug-分析"><a href="#debug-分析" class="headerlink" title="debug 分析"></a>debug 分析</h2><p>省略中间的一堆东西，核心会调到 <strong>ClassLoader</strong> 的 <strong>loadClass</strong> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">        <span class="comment">// 首先检测类是否已经被加载过了</span></span><br><span class="line">        Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">long</span> t0 = System.nanoTime();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 判断当前 ClassLoader 的父加载器是否存在</span></span><br><span class="line">                <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// 存在则调用 父级ClassLoader 的 loadClass 方法</span></span><br><span class="line">                    c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 如果当前 classLoader 的父加载器为空，则寻找 BootstrapClass 来加载</span></span><br><span class="line">                    c = findBootstrapClassOrNull(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                <span class="comment">// to find the class.</span></span><br><span class="line">                <span class="keyword">long</span> t1 = System.nanoTime();</span><br><span class="line">                <span class="comment">// 如果通过上面的调用链没有找到类，则通过调用 findClass 方法来寻找此类</span></span><br><span class="line">                <span class="comment">// 这里这个调用链其实就是不断的查询父级ClassLoader 有没有这个类啦</span></span><br><span class="line">                c = findClass(name);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// this is the defining class loader; record the stats</span></span><br><span class="line">                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</span><br><span class="line">                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</span><br><span class="line">                sun.misc.PerfCounter.getFindClasses().increment();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 参数 resolve 决定 JVM是否执行 loadClass() 解析该类。</span></span><br><span class="line">        <span class="comment">// 我们并非总是需要解析一个类。 如果只需要判断类是否存在，可以将 resolve参数设置为false。</span></span><br><span class="line">        <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先看看 <code>findBootstrapClassOrNull()</code>，它的方法介绍是：通过 <strong>bootstrap class loader</strong> 来加载个类，如果没有找到的话返回 null。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a class loaded by the bootstrap class loader;</span></span><br><span class="line"><span class="comment"> * or return null if not found.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> Class&lt;?&gt; findBootstrapClassOrNull(String name)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!checkName(name)) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> findBootstrapClass(name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// return null if not found</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">native</span> Class&lt;?&gt; findBootstrapClass(String name);</span><br></pre></td></tr></table></figure>
+<p><strong>当前面所有的父级ClassLoader都没有找到该类的时候，此时会调用到 URLClassLoader 的 findClass() 方法</strong>，也就是去 <code>classpath</code> 中寻找啦，待会会细说的，现在先简单的了解一下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(<span class="keyword">final</span> String name) <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt; result;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        result = AccessController.doPrivileged(</span><br><span class="line">            <span class="keyword">new</span> PrivilegedExceptionAction&lt;Class&lt;?&gt;&gt;() &#123;</span><br><span class="line">                <span class="keyword">public</span> Class&lt;?&gt; run() <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">                    <span class="comment">// 这个地方是不是很熟悉呀！将 包名的 "." 字符转换为路径分隔符 "/"，然后在最后加上了一个 .class 后缀</span></span><br><span class="line">                    String path = name.replace(<span class="string">'.'</span>, <span class="string">'/'</span>).concat(<span class="string">".class"</span>);</span><br><span class="line">                    <span class="comment">// 根据上一步得到的 class文件路径 加载资源</span></span><br><span class="line">                    Resource res = ucp.getResource(path, <span class="keyword">false</span>);</span><br><span class="line">                    <span class="keyword">if</span> (res != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="keyword">return</span> defineClass(name, res);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name, e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, acc);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (java.security.PrivilegedActionException pae) &#123;</span><br><span class="line">        <span class="keyword">throw</span> (ClassNotFoundException) pae.getException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果没有找到则抛出 ClassNotFoundException 异常</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>后面的操作具体就不再分析了，简单总结一下栗子中加载类的过程</strong></p>
+<ol>
+<li>首先调到 <strong>AppClassLoader.loadClass()</strong> 方法</li>
+<li>然后<strong>判断是否存在父级加载器</strong>，调用到 <strong>ExtClassLoader.loadClass()</strong> 方法 (注意，这里 <strong>ExtClassLoader</strong> 是 <strong>AppClassLoader</strong> 的父级加载器，可以理解为 先查看父级加载器有没有找到，再看看子级加载器，这个后面会说)</li>
+<li>继续判断 <strong>ExtClassLoader</strong> 不再存在父级加载器，此时会调用到 <strong>findBootstrapClass()</strong> 这个方法，看方法注释我们知道，其作用是尝试<strong>通过 bootstrap class loader 来加载类</strong>。所以我们其实可以理解为 <strong>bootstrap class loader 其实是 ExtClassLoader 的父级加载器</strong>，仅仅是 <strong>ExtClassLoader</strong> 的 <code>parent</code> 属性为空而已。</li>
+<li>最后<strong>如果父级加载器都无法加载该类，则调用到 URLClassLoader 的 findClass()</strong> 方法，通过将包名转换为文件系统的路径在文件系统中寻找。</li>
+</ol>
+<h2 id="三种类加载器"><a href="#三种类加载器" class="headerlink" title="三种类加载器"></a>三种类加载器</h2><p>通过上面的一个简单的栗子我们了解到了三种类加载器，网上找了找资料，下面摘抄至一位老哥的博客：</p>
+<h3 id="启动类加载器-Bootstrap-Class-Loader"><a href="#启动类加载器-Bootstrap-Class-Loader" class="headerlink" title="启动类加载器(Bootstrap Class Loader)"></a>启动类加载器(Bootstrap Class Loader)</h3><p>Java类由 java.lang.ClassLoader 的实例进行加载，不过，class loader本身也是Java类，那么 java.lang.ClassLoader 又是由谁加载的呢？<br>这就是Bootstrap class loader大显身手的地方。它主要负责加载JDK核心类，通常是 <code>rt.jar</code> 和位于 <code>$JAVA_HOME/jre/lib</code> 下的核心库。此外，它也是所有其他 ClassLoader实例的parent。<br>Bootstrap class loader 是JVM核心之一，由Native代码所写，这点在上述例子中提到过。不同平台Bootstrap class loader可能有不同的实现。</p>
+<h3 id="拓展类加载器-Extension-Class-Loader"><a href="#拓展类加载器-Extension-Class-Loader" class="headerlink" title="拓展类加载器(Extension Class Loader)"></a>拓展类加载器(Extension Class Loader)</h3><p>Extension class loader是Bootstrap class loader的子级加载器，负责加载Java核心库外的拓展类，正因如此所有的应用程序都能够运行在Java平台上。<br>Extension class loader从JDK拓展目录加载类，通常是 <code>$JAVA_HOME/lib/ext</code> 目录或 <code>java.ext.dirs</code> 系统属性中配置的目录。</p>
+<h3 id="系统类加载器-System-Class-Loader"><a href="#系统类加载器-System-Class-Loader" class="headerlink" title="系统类加载器(System Class Loader)"></a>系统类加载器(System Class Loader)</h3><p>System class loader是Extensions class loader的子级加载器，负责加载所有应用程序级别的类到JVM，它会加载classpath环境变量或 <code>-classpath</code> 以及 <code>-cp</code> 命令行参数中指定的文件。</p>
+<p>这个系统类加载器从我们上面 debug 结果来看的话，就是 APPClassLoader 嘛。</p>
+<hr>
+<p><strong>来看看一个更加直观的栗子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.javafx.animation.TickCalculation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"HelloWorld's ClassLoader is: "</span> + HelloWorld.class.getClassLoader());</span><br><span class="line">		System.out.println(<span class="string">"TickCalculation's ClassLoader is: "</span> + TickCalculation.class.getClassLoader());</span><br><span class="line">		System.out.println(<span class="string">"System's ClassLoader is: "</span> + System.class.getClassLoader());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>输出结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HelloWorld<span class="string">'s ClassLoader is: sun.misc.Launcher$AppClassLoader@2a139a55</span></span><br><span class="line"><span class="string">TickCalculation'</span>s ClassLoader is: sun.misc.Launcher$ExtClassLoader@<span class="number">5</span>c647e05</span><br><span class="line">System<span class="string">'s ClassLoader is: null</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>HelloWorld 是我们自定义的类，所以它由系统的类加载器进行加载，本质是到 user classpath 的目录中去加载</li>
+<li>TickCalculation 是位于 <code>jre/lib/ext</code> 目录下的扩展类，所以它由专门的扩展加载类 ExtClassLoader 到 <code>jre/lib/ext</code> 目录下去加载</li>
+<li>System 是位于 <code>rt.jar</code> 中的核心类，所以它由启动类加载器 Bootstrap class loader 加载，这里为什么是 null 呢，这是因为<strong>bootstrap class loader是由native代码所写，所以它不会以Java类的形式体现</strong>。由于这个原因，bootstrap class loader在不同JVM之中行为会有所不同。还记得之前代码的逻辑吗，当 ExtensionClassLoader 的父加载器为空时候，就会调用 Bootstrap class loader 去加载，这也是为什么我们打出当前的类加载器为 null 原因啦。</li>
+</ul>
+<h2 id="类加载器执行的顺序"><a href="#类加载器执行的顺序" class="headerlink" title="类加载器执行的顺序"></a>类加载器执行的顺序</h2><p>总结一下类加载器执行的顺序</p>
+<ol>
+<li>首先判断是否被加载过</li>
+<li>当类没有被加载时，首先会<strong>由低层的类加载器开始，递归调用父级加载器来加载</strong>，第一个执行加载的是启动类加载器 (Bootstrap class loader) 尝试加载</li>
+<li>当启动类加载器没有找到的时候，调用 扩展类加载器(Extension class loader) 进行加载，<strong>扩展类加载器会调用 URLClassLoader 加载器去加载，此时的类路径是 扩展类的路径</strong>，这个后面会说的。</li>
+<li>当扩展类加载器也没有找到的时候，这是才<strong>轮到系统加载器(AppClassLoader)来加载，同样会调用到 URLClassLoader 加载器</strong>，此时的加载路径就是用户自定义的 class path 啦，也就是我们常说的 class path。</li>
+<li>当最底层的 URLClassLoader 都无法加载的时候就会抛出 ClassNotFoundException 异常</li>
+</ol>
+<hr>
+<p><strong>这里我们试着加载一个不存在的类，查看堆栈的报错踪迹</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        Class.forName(<span class="string">"biubiubiu"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>错误信息如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.ClassNotFoundException: biubiubiu</span><br><span class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:<span class="number">381</span>)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:<span class="number">424</span>)</span><br><span class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:<span class="number">331</span>)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:<span class="number">357</span>)</span><br><span class="line">	at java.lang.Class.forName0(Native Method)</span><br><span class="line">	at java.lang.Class.forName(Class.java:<span class="number">264</span>)</span><br><span class="line">	at ClassLoad.ClassLoadTest.main(ClassLoadTest.java:<span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+<p>可以看到最终到父级加载器都没能加载到类的时候，会调用到底层(AppClassLoader) URLClassLoader.findClass() 方法，通过路径来加载类啦。<br>注意这里省略了父级加载器加载的过程哦，因为它们抛出的异常都被 catch 掉了，看看最开始 debug 的那个 demo 就知道了。</p>
+<h3 id="再说一个特别有意思的事情"><a href="#再说一个特别有意思的事情" class="headerlink" title="再说一个特别有意思的事情"></a>再说一个特别有意思的事情</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就上面一段代码，对没错，就写了一个 main 方法，并且<strong>没有方法体</strong>，这时候我们在 java.lang.ClassLoader.loadClass(String, boolean) 方法打上断点</p>
+<p><img src="https://view.moezx.cc/images/2019/05/30/lanc4r-classloader1.png" alt=""></p>
+<p>debug 运行 main 方法发现进入断点了，嘿嘿嘿是不是很有意思，我猜测在这其中它至少要加载两个类：ClassLoadTest 和 String，可以 Debug 跟踪一下，并且针对于 String 使用启动类加载器返回的值就不是 null 啦。</p>
+<h2 id="ClassLoader-三种特性"><a href="#ClassLoader-三种特性" class="headerlink" title="ClassLoader 三种特性"></a>ClassLoader 三种特性</h2><h3 id="委派模型-Delegation-Model"><a href="#委派模型-Delegation-Model" class="headerlink" title="委派模型(Delegation Model)"></a>委派模型(Delegation Model)</h3><p>当需要查找class或resource时，Class loaders会遵守委派模型，它们首先会将查找请求委派给其父加载器。<br>假设我们需要将应用中的一个类加载到JVM，system class loader首先会将加载请求委派给extension class loader，后者又会将加载请求委派给bootstrap class loader。<br>只有当bootstrap class loader和extension class loader都无法加载该类时，system class loader才会尝试自行加载该类。</p>
+<h3 id="唯一性-Unique-Classes"><a href="#唯一性-Unique-Classes" class="headerlink" title="唯一性(Unique Classes)"></a>唯一性(Unique Classes)</h3><p>作为委派模型的结果，我们总是尝试向上委托，因此很容易保证类的唯一性。如果父加载器无法找到该类，当前加载器才会尝试加载该类。换句话说就是，只要父类找到了，子类就不会再去找了。</p>
+<h3 id="可见性-Visibility"><a href="#可见性-Visibility" class="headerlink" title="可见性(Visibility)"></a>可见性(Visibility)</h3><p>此外，父加载器加载的类对子加载器是可见的。<br>举个例子，system class loader可以看到extension class loader和bootstrap class loader加载的类，但是反之不行，父加载器无法看到子加载器加载的类。<br>为了说明这一点，假如类A由system class loader加载，类B由extension class loader加载，那么A和B对于对于system class loader来说都是可见的，extension class loader只能看到类B。</p>
+<p>我的理解是<strong>可见性其实这也是为了针对于唯一性</strong>的吧：</p>
+<p>回顾 java.lang.ClassLoader.loadClass(String, boolean) 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// 最开始的时候检查类是否被加载过</span></span><br><span class="line">        Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">            ....</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>在每次进行类加载的时候都会检测一次类是否存在，因为子加载器总是可以看到父加载器加载的类</strong>。比如一个 String 类，因为父加载器 bootstrap class loader 已经加载过了，所以到 extension class loader 和 system class loader 就不会再次加载了(此时判断类已经被加载过了)。也确保了唯一性嘛。</p>
+<h1 id="ClassPath"><a href="#ClassPath" class="headerlink" title="ClassPath"></a>ClassPath</h1><p>前面介绍类的加载顺序时候说过，针对于扩展类加载器和系统类加载器，在其父级加载器没能成功加载的时候就会调用 URLClassLoader 执行加载。</p>
+<p>但是在哪里去找呢，<strong>findClass() 方法只是将 包名的路径换成了文件系统的地址，但是我们去哪里找这个包的地址呢</strong>？</p>
+<p>答案就是：<strong>class path</strong>，<strong>class path</strong> 又名 <strong><big>class search path</big></strong>，也就是类查找的路径</p>
+<h2 id="Oracle-官方解释"><a href="#Oracle-官方解释" class="headerlink" title="Oracle 官方解释"></a>Oracle 官方解释</h2><h3 id="How-the-Java-Launcher-Finds-Classes"><a href="#How-the-Java-Launcher-Finds-Classes" class="headerlink" title="How the Java Launcher Finds Classes"></a>How the Java Launcher Finds Classes</h3><p>The Java launcher, <strong>java</strong>, initiates the Java virtual machine. The virtual machine searches for and loads classes in this order:</p>
+<ul>
+<li><strong>Bootstrap classes</strong> - Classes that comprise the Java platform, including the classes in <code>rt.jar</code> and several other important jar files.</li>
+<li><strong>Extension classes</strong> - Classes that use the Java Extension mechanism. These are bundled as <code>.jar</code> files located in the extensions directory.</li>
+<li><strong>User classes</strong> - Classes defined by developers and third parties that do not take advantage of the extension mechanism. You identify the location of these classes using the <code>-classpath</code> option on the command line (the preferred method) or by using the CLASSPATH environment variable. </li>
+</ul>
+<p>In effect, these three search paths are joined to form a simple class path. This is similar to the “flat” class path previously used, but the current model has some important differences:</p>
+<ul>
+<li>It is relatively difficult to accidentally “hide” or omit the bootstrap classes.</li>
+<li>In general, you only have to specify the location of user classes. Bootstrap classes and extension classes are found “automatically”.</li>
+<li>The tools classes are now in a separate archive (<code>tools.jar</code>) and can only be used if included in the user class path (to be explained shortly).</li>
+</ul>
+<h3 id="How-the-Java-Launcher-Finds-Bootstrap-Classes"><a href="#How-the-Java-Launcher-Finds-Bootstrap-Classes" class="headerlink" title="How the Java Launcher Finds Bootstrap Classes"></a>How the Java Launcher Finds Bootstrap Classes</h3><p>Bootstrap classes are the classes that implement the Java 2 Platform. Bootstrap classes are in the <code>rt.jar</code> and several other jar files in the <code>jre/lib</code> directory. These archives are specified by the value of the bootstrap class path which is stored in the <code>sun.boot.class.path</code> system property. This system property is for reference only, and should not be directly modified.<br>It is very unlikely that you will need to redefine the bootstrap class path. The nonstandard option, <strong>-Xbootclasspath</strong>, allows you to do so in those rare cicrcumstances in which it is necessary to use a different set of core classes.<br>Note that the classes which implement the Java 2 SDK tools are in a separate archive from the bootstrap classes. The tools archive is the SDK’s <code>/lib/tools.jar</code> file. The development tools add this archive to the user class path when invoking the launcher. However, this augmented user class path is only used to execute the tool. The tools that process source code, <strong>javac</strong> and <strong>javadoc</strong>, use the original class path, not the augmented version. (For more information, see <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html#srcfiles" target="_blank" rel="noopener">How Javac and Javadoc Find Classes</a>, below.)</p>
+<h3 id="How-the-Java-Launcher-Finds-Extension-Classes"><a href="#How-the-Java-Launcher-Finds-Extension-Classes" class="headerlink" title="How the Java Launcher Finds Extension Classes"></a>How the Java Launcher Finds Extension Classes</h3><p>Extension classes are classes which extend the Java platform. Every <code>.jar</code> file in the extension directory, <code>jre/lib/ext</code>, is assumed to be an extension and is loaded using the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/extensions/index.html" target="_blank" rel="noopener">Java Extension Framework</a>. Loose class files in the extension directory will not be found. They must be contained in a <code>.jar</code> file (or <code>.zip</code> file). There is no option provided for changing the location of the extension directory.<br>If the <code>jre/lib/ext</code> directory contains multiple .jar files, and those files contain classes with the same name, such as:<br><code>smart-extension1_0.jar contains class smart.extension.Smart</code><br><code>smart-extension1_1.jar contains class smart.extension.Smart</code><br>the class that actually gets loaded is undefined.</p>
+<h3 id="How-the-Java-Launcher-Finds-User-Classes"><a href="#How-the-Java-Launcher-Finds-User-Classes" class="headerlink" title="How the Java Launcher Finds User Classes"></a>How the Java Launcher Finds User Classes</h3><p>User classes are classes which build on the Java platform. To find user classes, the launcher refers to the <em>user class path</em> – a list of directories, JAR archives, and ZIP archives which contain class files.<br>A class file has a subpath name that reflects the class’s fully-qualified name. For example, if the class <code>com.mypackage.MyClass</code> is stored under <code>/myclasses</code>, then <code>/myclasses</code> must be in the user class path and the full path to the class file must be <code>/myclasses/com/mypackage/MyClass.class</code>. If the class is stored in an archive named <code>myclasses.jar</code>, then <code>myclasses.jar</code> must be in the user class path, and the class file must be stored in the archive as <code>com/mypackage/MyClass.class</code>.<br>The user class path is specified as a string, with a colon (:) separating the class path entries on Solaris, and a semi-colon (;) separating entries on Microsoft Windows systems. The <strong>java</strong> launcher puts the user class path string in the <code>java.class.path</code> system property. The possible sources of this value are:</p>
+<ul>
+<li>The default value, “.”, meaning that user class files are all the class files in the current directory (or under it, if in a package).</li>
+<li>The value of the <strong>CLASSPATH</strong> environment variable, which overrides the default value.</li>
+<li>The value of the <strong>-cp</strong> or <strong>-classpath</strong> command line option, which overrides both the default value and the <strong>CLASSPATH</strong> value.</li>
+<li>The JAR archive specified by the <strong>-jar</strong> option, which overrides all other values. If this option is used, all user classes must come from the specified archive.</li>
+</ul>
+<hr>
+<h2 id="简单总结一下"><a href="#简单总结一下" class="headerlink" title="简单总结一下"></a>简单总结一下</h2><h3 id="如何寻找启动类"><a href="#如何寻找启动类" class="headerlink" title="如何寻找启动类"></a>如何寻找启动类</h3><p>启动类都存放在 <code>rt.jar</code> 和 <code>jre/lib</code> 目录下的 jar包中，这些文件路径都被定义到了一个叫做 <code>bootstrap class path</code> 的变量中，这个变量存储在 <code>sun.boot.class.path</code> 这个系统变量中。<br>通常是不会去修改 <code>bootstrap class path</code>，但如果你确实有特殊情况需要修改核心类的加载路径，可以使用 <code>-Xbootclasspath</code> 参数来指定核心类的加载路径。</p>
+<h3 id="如何寻找扩展类"><a href="#如何寻找扩展类" class="headerlink" title="如何寻找扩展类"></a>如何寻找扩展类</h3><p>所有存放在 <code>jre/lib/ext</code> 路径下的 jar包都属于扩展类，扩展类加载路径是不支持修改的。其实可以理解为存在一个 <code>extension class path</code> 啦，其保存的地址就是 <code>jre/lib/ext</code>。</p>
+<h3 id="如何寻找用户类"><a href="#如何寻找用户类" class="headerlink" title="如何寻找用户类"></a>如何寻找用户类</h3><p>这个用户类路径就是我们常说的 <code>class path</code> 啦，默认值有当前目录”.”以及 <strong>CLASSPATH</strong> 环境变量的值，它可以通过 <code>-cp</code> 或是 <code>-classpath</code> 参数指定(上一篇我们说过了)。</p>
+<p>如何修改 <strong>classpath</strong> 我就不多BB了，直接参考官网给出的文档吧 <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html" target="_blank" rel="noopener">Setting the Class Path</a>，这里面还解释了编译带包名的类改如何运行。</p>
+<ul>
+<li>所以启动类加载器会到 <code>bootstrap class path</code> 这个变量指定的路径去加载类，它们处于 <code>jre/lib</code> 下的jar包、<code>rt.jar</code> 包中。</li>
+<li>扩展类加载器会到 <code>jre/lib/ext</code> 目录中寻找。</li>
+<li>系统类加载器会去 <code>class path</code> 中去寻找，默认是 当前路径 或由 <strong>CLASSPATH</strong> 这个环境变量指定，同时我们也可以修改通过参数修改啦。</li>
+</ul>
+<p>最终的加载地址就变成了，<strong>各个类加载器定义的地址 + 包名解析后的地址。</strong></p>
+<h1 id="解决上一次遗留下来的问题"><a href="#解决上一次遗留下来的问题" class="headerlink" title="解决上一次遗留下来的问题"></a>解决上一次遗留下来的问题</h1><p>我们在通过命令行形式运行 Java 代码的时候，例如一个 HelloWorld 程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"hellow, world~"</span>);	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们没有手动System 类所在的路径，为什么会自动的找到 System 这个类呢？</p>
+<h2 id="先看看-Oracle-官方做出的解释"><a href="#先看看-Oracle-官方做出的解释" class="headerlink" title="先看看 Oracle 官方做出的解释"></a>先看看 Oracle 官方做出的解释</h2><p><img src="https://view.moezx.cc/images/2019/05/30/lanc4r-classloader2.png" alt=""></p>
+<p>通常情况下你只需要设置用户类的路径，对于启动类、扩展类来说他们都会自动被找到。</p>
+<h2 id="HL-瞎BB"><a href="#HL-瞎BB" class="headerlink" title="HL 瞎BB"></a>HL 瞎BB</h2><p>之前我们说过存在一个 <code>bootstrap class path</code>  的路径，它存放的就是所有启动类(核心类)的路径，所以在加载的时候，因为首先会到 启动类加载器里，这时候就回去 <code>bootstrap class path</code> 中寻找，于是就找到了 <strong>System</strong> 的所在地了。</p>
+<p>可以理解为 <code>bootstrap class path</code> 就是一个事先设置好的路径咯，而我们之前在 <strong>Eclipse</strong> 中删掉 <strong>JRE</strong> 这个 <strong>Library</strong> 实际上就是删除这个路径嘛，当然就会报错。</p>
+<p>另外你也可以在 <strong>ClassLoader</strong> 的 <code>loadClass()</code> 方法设置断点，通过 Debug 分析一下这个 <strong>System</strong> 类的加载情况。当然也可以使用 <code>javac</code> 的参数 <code>-bootclasspath</code> 来修改启动类的路径。</p>
+<h1 id="HL-的简单总结"><a href="#HL-的简单总结" class="headerlink" title="HL 的简单总结"></a>HL 的简单总结</h1><p>可以理解为有三种 <strong>classpath</strong> 对应着三种类加载器：</p>
+<ul>
+<li>启动类加载器 <strong>Bootstrap class loader</strong> —— <strong>Bootstrap class path</strong></li>
+<li>扩展类加载器 <strong>Extension class loader</strong> —— <strong>Extension class path</strong></li>
+<li>系统类加载器 <strong>System class loader</strong> —— <strong>User class path</strong></li>
+</ul>
+<p>最终加载类的地方就是在 <code>java.net.URLClassLoader.findClass(String)</code> 方法内，路径就变成对应类加载器的 <strong>classpath + 包名转换的路径名</strong>。</p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://chenyongjun.vip/articles/67" target="_blank" rel="noopener">Java中的类加载器</a><br><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/findingclasses.html" target="_blank" rel="noopener">How Classes are Found</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>自从搬了工作地点之后现在每天要坐一个多小时的地铁，晚上到家都快十点。以前晚上睡觉前还会看半小时的书，现在是根本没时间，就算有那么一点点的时间我都是想睡觉，这样子的生活开始有点点吃不消了。</p>
+<p>果然是咸鱼不配拥有幸福生活吗？</p>
+<p>HL想变强啊，很强很强的那种。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/Java姿势解锁——Eclipse的Buildpath/" rel="next" title="Java姿势解锁 —— Eclipse 的 BuildPath">
+                <i class="fa fa-chevron-left"></i> Java姿势解锁 —— Eclipse 的 BuildPath
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/31/细思极恐小故事(一)/" rel="prev" title="细思极恐小故事(一)">
+                细思极恐小故事(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类加载器"><span class="nav-number">2.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-分析"><span class="nav-number">2.2.</span> <span class="nav-text">debug 分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三种类加载器"><span class="nav-number">2.3.</span> <span class="nav-text">三种类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动类加载器-Bootstrap-Class-Loader"><span class="nav-number">2.3.1.</span> <span class="nav-text">启动类加载器(Bootstrap Class Loader)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展类加载器-Extension-Class-Loader"><span class="nav-number">2.3.2.</span> <span class="nav-text">拓展类加载器(Extension Class Loader)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统类加载器-System-Class-Loader"><span class="nav-number">2.3.3.</span> <span class="nav-text">系统类加载器(System Class Loader)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载器执行的顺序"><span class="nav-number">2.4.</span> <span class="nav-text">类加载器执行的顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#再说一个特别有意思的事情"><span class="nav-number">2.4.1.</span> <span class="nav-text">再说一个特别有意思的事情</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClassLoader-三种特性"><span class="nav-number">2.5.</span> <span class="nav-text">ClassLoader 三种特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#委派模型-Delegation-Model"><span class="nav-number">2.5.1.</span> <span class="nav-text">委派模型(Delegation Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唯一性-Unique-Classes"><span class="nav-number">2.5.2.</span> <span class="nav-text">唯一性(Unique Classes)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可见性-Visibility"><span class="nav-number">2.5.3.</span> <span class="nav-text">可见性(Visibility)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ClassPath"><span class="nav-number">3.</span> <span class="nav-text">ClassPath</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-官方解释"><span class="nav-number">3.1.</span> <span class="nav-text">Oracle 官方解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-the-Java-Launcher-Finds-Classes"><span class="nav-number">3.1.1.</span> <span class="nav-text">How the Java Launcher Finds Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-the-Java-Launcher-Finds-Bootstrap-Classes"><span class="nav-number">3.1.2.</span> <span class="nav-text">How the Java Launcher Finds Bootstrap Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-the-Java-Launcher-Finds-Extension-Classes"><span class="nav-number">3.1.3.</span> <span class="nav-text">How the Java Launcher Finds Extension Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-the-Java-Launcher-Finds-User-Classes"><span class="nav-number">3.1.4.</span> <span class="nav-text">How the Java Launcher Finds User Classes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单总结一下"><span class="nav-number">3.2.</span> <span class="nav-text">简单总结一下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何寻找启动类"><span class="nav-number">3.2.1.</span> <span class="nav-text">如何寻找启动类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何寻找扩展类"><span class="nav-number">3.2.2.</span> <span class="nav-text">如何寻找扩展类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何寻找用户类"><span class="nav-number">3.2.3.</span> <span class="nav-text">如何寻找用户类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决上一次遗留下来的问题"><span class="nav-number">4.</span> <span class="nav-text">解决上一次遗留下来的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#先看看-Oracle-官方做出的解释"><span class="nav-number">4.1.</span> <span class="nav-text">先看看 Oracle 官方做出的解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HL-瞎BB"><span class="nav-number">4.2.</span> <span class="nav-text">HL 瞎BB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HL-的简单总结"><span class="nav-number">5.</span> <span class="nav-text">HL 的简单总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-number">6.</span> <span class="nav-text">Ref</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">7.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

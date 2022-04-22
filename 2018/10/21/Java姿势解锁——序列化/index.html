@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="序列化~序列化是持久化对象的一种方法，它可以将对象信息完整的保存下来，让数据脱离于程序运行的生命周期。同时序列化的数据也方便进行传输。">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— 序列化">
+<meta property="og:url" content="http://yoursite.com/2018/10/21/Java姿势解锁——序列化/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="序列化~序列化是持久化对象的一种方法，它可以将对象信息完整的保存下来，让数据脱离于程序运行的生命周期。同时序列化的数据也方便进行传输。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2f51eb4.jpg">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2e51331.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2e800db.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2e847a8.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2e9d157.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2e846f7.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2eb0e6c.png">
+<meta property="og:image" content="https://i.loli.net/2018/10/21/5bcbed2eca867.png">
+<meta property="og:updated_time" content="2019-05-24T15:30:04.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— 序列化">
+<meta name="twitter:description" content="序列化~序列化是持久化对象的一种方法，它可以将对象信息完整的保存下来，让数据脱离于程序运行的生命周期。同时序列化的数据也方便进行传输。">
+<meta name="twitter:image" content="https://i.loli.net/2018/10/21/5bcbed2f51eb4.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/21/Java姿势解锁——序列化/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— 序列化 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">10月</div>
+			<div class="post-day">21</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/21/Java姿势解锁——序列化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— 序列化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-21T11:30:59+08:00">
+                2018-10-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2018/10/21/5bcbed2f51eb4.jpg" alt=""></p>
+<h1 id="序列化"><a href="#序列化" class="headerlink" title="序列化~"></a>序列化~</h1><p>序列化是持久化对象的一种方法，它可以将对象信息完整的保存下来，让数据脱离于程序运行的生命周期。同时序列化的数据也方便进行传输。</p>
+<a id="more"></a>
+<h2 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h2><h3 id="序列化-1"><a href="#序列化-1" class="headerlink" title="序列化"></a>序列化</h3><p>举个栗子：</p>
+<p>我们来模拟一下日常玩游戏的情况，这里创建了一个玩家类，他拥有 <strong>昵称</strong>、<strong>经验</strong>、<strong>等级</strong> 三个属性，他可以进行做任务，获取经验，升级</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> exp;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> level;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">(String name, <span class="keyword">int</span> exp, <span class="keyword">int</span> level)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.exp = exp;</span><br><span class="line">        <span class="keyword">this</span>.level = level;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expUpgrade</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.exp++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">levelUpgrade</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.level++;</span><br><span class="line">        <span class="keyword">this</span>.exp = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Player [name="</span> + name + <span class="string">", exp="</span> + exp + <span class="string">", level="</span> + level + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SerializableTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 创建玩家，经验、等级置为 0</span></span><br><span class="line">        Player player = <span class="keyword">new</span> Player(<span class="string">"栗子能剥开核桃吗"</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        player.expUpgrade();</span><br><span class="line">        player.expUpgrade();</span><br><span class="line">        System.out.println(player);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 叮，升级~</span></span><br><span class="line">        player.expUpgrade();</span><br><span class="line">        player.levelUpgrade();</span><br><span class="line">        System.out.println(player);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Player [name=栗子能剥开核桃吗, exp=<span class="number">2</span>, level=<span class="number">0</span>]</span><br><span class="line">Player [name=栗子能剥开核桃吗, exp=<span class="number">0</span>, level=<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>以上代码模拟了这样一件事情：</p>
+<p>一位玩家创建了一个角色，然后做了几个小任务拿经验，接着一道金光落下，伴随着叮的一声响，他升级了。</p>
+<p>这时候这位玩家突然不想玩了，关闭程序。当他再次进入的时候，却发现之前创建的人物数据丢了！也就是说他需要重新做任务，拿经验才能回到他退出之前的状态。</p>
+<p>王德发？？？</p>
+<p>这是一件很糟糕的事情，所以我们需要在程序退出的时候，保存上一次退出的状态，这就好像游戏里的存档功能。</p>
+<h4 id="序列化开始"><a href="#序列化开始" class="headerlink" title="序列化开始"></a>序列化开始</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 序列化需要将类实现 Serializable 接口</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> exp;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> level;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    Player player = <span class="keyword">new</span> Player(<span class="string">"栗子能剥开核桃吗"</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    player.expUpgrade();</span><br><span class="line">    player.expUpgrade();</span><br><span class="line">    player.expUpgrade();</span><br><span class="line">    player.levelUpgrade();</span><br><span class="line"></span><br><span class="line">    String filePath = <span class="string">"D:\\Blog\\序列化\\data.dat"</span>;</span><br><span class="line">    serialization(player, filePath);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 序列化 —— 将数据保存到文件中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialization</span><span class="params">(Object obj, String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">    ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">    oos.writeObject(obj);</span><br><span class="line">    oos.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们使用了 ObjectOutputStream 把序列化生成的二进制数据传入到 文件输出流，然后输出到文件中。Like this~</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2e51331.png" alt=""></p>
+<p>大概保存了一点点东西，像上面 Serializable 关键字，Player 类名，还有上面 exp、level、name 几个属性，后面那堆乱码应该就是数据了吧~</p>
+<h4 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h4><p>反序列化就可以理解为游戏存档点嘛，你喝了一杯咖啡后继续玩，此时我们需要做的是<strong>恢复现场</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    String filePath = <span class="string">"D:\\Blog\\序列化\\data.dat"</span>;</span><br><span class="line">    Object obj = deserialization(filePath);</span><br><span class="line">    <span class="keyword">if</span> (obj != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Player player = (Player) obj;</span><br><span class="line">        System.out.println(player);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">deserialization</span><span class="params">(String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Player [name=栗子能剥开核桃吗, exp=<span class="number">0</span>, level=<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>跟我们之前退出的一样，ok，这样就简单的实现序列化啦</p>
+<h2 id="奇怪的-serialVersionUID"><a href="#奇怪的-serialVersionUID" class="headerlink" title="奇怪的 serialVersionUID"></a>奇怪的 serialVersionUID</h2><p>我们在实现 <strong>Serializable</strong> 后，IDE 会提示这样一句话</p>
+<p><code>The serializable class xxx does not declear a final static serialVersionUID...</code></p>
+<p>那么这个 serialVersionUID 有什么用呢？ 来看看官方文档是怎么解释的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * The serialization runtime associates with each serializable class a version</span></span><br><span class="line"><span class="comment"> * number, called a serialVersionUID, which is used during deserialization to</span></span><br><span class="line"><span class="comment"> * verify that the sender and receiver of a serialized object have loaded</span></span><br><span class="line"><span class="comment"> * classes for that object that are compatible with respect to serialization.</span></span><br><span class="line"><span class="comment"> * If the receiver has loaded a class for the object that has a different</span></span><br><span class="line"><span class="comment"> * serialVersionUID than that of the corresponding sender's class, then</span></span><br><span class="line"><span class="comment"> * deserialization will result in an &#123;@link InvalidClassException&#125;.  A</span></span><br><span class="line"><span class="comment"> * serializable class can declare its own serialVersionUID explicitly by</span></span><br><span class="line"><span class="comment"> * declaring a field named &lt;code&gt;"serialVersionUID"&lt;/code&gt; that must be static,</span></span><br><span class="line"><span class="comment"> * final, and of type &lt;code&gt;long&lt;/code&gt;:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;PRE&gt;</span></span><br><span class="line"><span class="comment"> * ANY-ACCESS-MODIFIER static final long serialVersionUID = 42L;</span></span><br><span class="line"><span class="comment"> * &lt;/PRE&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * If a serializable class does not explicitly declare a serialVersionUID, then</span></span><br><span class="line"><span class="comment"> * the serialization runtime will calculate a default serialVersionUID value</span></span><br><span class="line"><span class="comment"> * for that class based on various aspects of the class, as described in the</span></span><br><span class="line"><span class="comment"> * Java(TM) Object Serialization Specification.  However, it is &lt;em&gt;strongly</span></span><br><span class="line"><span class="comment"> * recommended&lt;/em&gt; that all serializable classes explicitly declare</span></span><br><span class="line"><span class="comment"> * serialVersionUID values, since the default serialVersionUID computation is</span></span><br><span class="line"><span class="comment"> * highly sensitive to class details that may vary depending on compiler</span></span><br><span class="line"><span class="comment"> * implementations, and can thus result in unexpected</span></span><br><span class="line"><span class="comment"> * &lt;code&gt;InvalidClassException&lt;/code&gt;s during deserialization.  Therefore, to</span></span><br><span class="line"><span class="comment"> * guarantee a consistent serialVersionUID value across different java compiler</span></span><br><span class="line"><span class="comment"> * implementations, a serializable class must declare an explicit</span></span><br><span class="line"><span class="comment"> * serialVersionUID value.  It is also strongly advised that explicit</span></span><br><span class="line"><span class="comment"> * serialVersionUID declarations use the &lt;code&gt;private&lt;/code&gt; modifier where</span></span><br><span class="line"><span class="comment"> * possible, since such declarations apply only to the immediately declaring</span></span><br><span class="line"><span class="comment"> * class--serialVersionUID fields are not useful as inherited members. Array</span></span><br><span class="line"><span class="comment"> * classes cannot declare an explicit serialVersionUID, so they always have</span></span><br><span class="line"><span class="comment"> * the default computed value, but the requirement for matching</span></span><br><span class="line"><span class="comment"> * serialVersionUID values is waived for array classes.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>大致是讲：</p>
+<blockquote>
+<p>序列化在运行期间会为每一个实现序列化接口的类关联一个 <strong>版本码</strong>，这也就是 serialVersionUID，它被用来验证在反序列化的时候，发送者发送的和接受者接受到的是否兼容。如果接受者拿到的对象的 serialVersionUID 和 发送者的不一致，这时候就会抛出 InvalidClassException 异常。一个可序列化的对象可以声明专属于自己的 serialVersionUID，但必须添加修饰 static final long。<br>如果一个可序列化的对象没有特别声明 serialVersionUID，那么在运行就会 依据这个类的各种信息 计算一个默认的 serialVersionUID 值，就像在 “Java对象序列化声明” 所描述的那样。然鹅，我们还是推荐为每一个对象声明 serialVersionUID，毕竟默认计算出的 serialVersionUID 与编译器的实现有关(大概就是不同版本的 jdk)。同时还建议将其用 private 修饰。</p>
+</blockquote>
+<p>ok，接下来实际操作一下：</p>
+<ol>
+<li>设置 serialVersionUID 为固定值，然后将序列化后的结果保存到文件中</li>
+<li>Player 增加字段，但是不改变 serialVersionUID，尝试反序列化</li>
+<li>Player 不改变字段，仅修改 serialVersionUID，尝试反序列化</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> exp;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> level;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新增字段</span></span><br><span class="line">    <span class="keyword">private</span> String skill;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">(String name, <span class="keyword">int</span> exp, <span class="keyword">int</span> level)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.exp = exp;</span><br><span class="line">        <span class="keyword">this</span>.level = level;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expUpgrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.exp++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">levelUpgrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.level++;</span><br><span class="line">        <span class="keyword">this</span>.exp = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Player [name="</span> + name + <span class="string">", exp="</span> + exp + <span class="string">", level="</span> + level + <span class="string">", skill="</span> + skill + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    String filePath = <span class="string">"D:\\Blog\\序列化\\data.dat"</span>;</span><br><span class="line">    Object obj = deserialization(filePath);</span><br><span class="line">    <span class="keyword">if</span> (obj != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Player player = (Player) obj;</span><br><span class="line">        System.out.println(player);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">deserialization</span><span class="params">(String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Player [name=栗子能剥开核桃吗, exp=<span class="number">0</span>, level=<span class="number">1</span>, skill=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<p>没有抛出异常，只是新加的字段没有值而已，这其实就相当于我们做了新的版本但是能够兼容之前的老版本，没有更新到最新版的用户只是无法使用新功能，但是不影响正常使用。</p>
+<p>接下来我们修改一下 Player，将新增的 skill 字段删除掉，并修改 serialVersionUID</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 修改 serialVersionUID 为 2</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">2L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> exp;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> level;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">(String name, <span class="keyword">int</span> exp, <span class="keyword">int</span> level)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.exp = exp;</span><br><span class="line">        <span class="keyword">this</span>.level = level;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expUpgrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.exp++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">levelUpgrade</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.level++;</span><br><span class="line">        <span class="keyword">this</span>.exp = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Player [name="</span> + name + <span class="string">", exp="</span> + exp + <span class="string">", level="</span> + level + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略反序列化过程....</span></span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread "main" java.io.InvalidClassException: Serializable.Player; local class incompatible: stream classdesc serialVersionUID = 1, local class serialVersionUID = 2</span><br><span class="line">	at java.io.ObjectStreamClass.initNonProxy(Unknown Source)</span><br><span class="line">	at java.io.ObjectInputStream.readNonProxyDesc(Unknown Source)</span><br><span class="line">	at java.io.ObjectInputStream.readClassDesc(Unknown Source)</span><br><span class="line">	at java.io.ObjectInputStream.readOrdinaryObject(Unknown Source)</span><br><span class="line">	at java.io.ObjectInputStream.readObject0(Unknown Source)</span><br><span class="line">	at java.io.ObjectInputStream.readObject(Unknown Source)</span><br><span class="line">	at Serializable.SerializableTest.deserialization(SerializableTest.java:<span class="number">108</span>)</span><br><span class="line">	at Serializable.SerializableTest.main(SerializableTest.java:<span class="number">89</span>)</span><br></pre></td></tr></table></figure>
+<p>当修改 serialVersionUID 会抛出 InvalidClassException 异常：输入流中数据描述的 serialVersionUID 值为1，但是 本地类中的 serialVersionUID 为 2。等同于我们的新版本不能兼容之前的版本，可以理解为这里需要用户强制升级才能正常使用。</p>
+<h2 id="transient"><a href="#transient" class="headerlink" title="transient"></a>transient</h2><p>transient 关键字作用于实现了 Serializable 接口的类，当某个字段不需要序列化的时候，可以使用 transient 修饰，这样在序列化时就会忽略掉这个字段。</p>
+<h3 id="简单栗子"><a href="#简单栗子" class="headerlink" title="简单栗子"></a>简单栗子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> String skill;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Player owner;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pet</span><span class="params">(<span class="keyword">int</span> count, String name, <span class="keyword">int</span> age, String skill)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.skill = skill;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Pet [count="</span> + count + <span class="string">", name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", skill="</span> + skill + <span class="string">", owner="</span> + owner</span><br><span class="line">                + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransientTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        Pet pet = <span class="keyword">new</span> Pet(<span class="number">1</span>, <span class="string">"Cat"</span>, <span class="number">1</span>, <span class="string">"Miao-Punch"</span>);</span><br><span class="line">        Player player = <span class="keyword">new</span> Player(<span class="string">"Lanc4r"</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        pet.setOwner(player);</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"D:\\Blog\\序列化\\pet.dat"</span>);</span><br><span class="line"></span><br><span class="line">        serialization(pet, file);</span><br><span class="line"></span><br><span class="line">        Object petObject = deserialization(file);</span><br><span class="line">        System.out.println(petObject);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialization</span><span class="params">(Object obj, File file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">deserialization</span><span class="params">(File file)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        Object obj = ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Pet [count=<span class="number">1</span>, name=Cat, age=<span class="number">0</span>, skill=<span class="keyword">null</span>, owner=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<p>从结果我们可以看出，被 transient 修饰的三个字段并没有被序列化，保存的是默认值。同时我们看看输出的 pet.dat 中也只有没有被 transient 修饰的字段 count 和 name。</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2e800db.png" alt=""></p>
+<h3 id="transient-关键字使用总结"><a href="#transient-关键字使用总结" class="headerlink" title="transient 关键字使用总结"></a>transient 关键字使用总结</h3><ol>
+<li><p>transient 只会作用于 Serializable 接口，而不能作用于 Externalizable 接口(之后证明)</p>
+</li>
+<li><p>transient 关键字只能修饰成员变量，不能修饰 类 和 方法，如果成员变量是用户自定义的类，那么此类也需要实现 Serializable。</p>
+</li>
+<li><p>静态变量不会被序列化，无论是否有 transient 修饰!</p>
+</li>
+</ol>
+<p>关于第二点就不多演示了，大概就是这个样子，新增一个 Trick 类，但是没有实现 Serializable 接口，这时候如果对 Pet 进行序列化就会报错啦:</p>
+<p><code>Exception in thread &quot;main&quot; java.io.NotSerializableException: Serializable.Trick</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trick</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String trick;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trick</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trick</span><span class="params">(String trick)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.trick = trick;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Trick trick;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> String skill;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> Player owner;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>咱们重点看看第三点，基于上面的例子简单的修改一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pet</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">static</span> String Name;</span><br><span class="line">    <span class="keyword">transient</span> <span class="keyword">static</span> String Skill;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Pet</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String dataName)</span> </span>&#123;</span><br><span class="line">        Name = dataName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSkill</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Skill;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSkill</span><span class="params">(String dataSkill)</span> </span>&#123;</span><br><span class="line">        Skill = dataSkill;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        Pet pet = <span class="keyword">new</span> Pet(<span class="number">1</span>);</span><br><span class="line">        pet.setName(<span class="string">"Cat"</span>);</span><br><span class="line">        pet.setSkill(<span class="string">"Miao-Punch~"</span>);</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"D:\\Blog\\序列化\\pet.dat"</span>);</span><br><span class="line"></span><br><span class="line">        serialization(pet, file);</span><br><span class="line"></span><br><span class="line">        Pet pet2 = (Pet) deserialization(file);</span><br><span class="line">        System.out.println(<span class="string">"age = "</span> + pet2.getAge());</span><br><span class="line">        System.out.println(<span class="string">"Name = "</span> + pet2.getName());</span><br><span class="line">        System.out.println(<span class="string">"Skill = "</span> + pet2.getSkill());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先看看生成的 pet.dat 含有哪些字段：</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2e847a8.png" alt=""></p>
+<p>根据结果可以发现只有 age 被序列化，静态变量 Name 和 Skill 均没有被序列化，无论其是否被 transient 修饰。</p>
+<p>输出结果<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">1</span></span><br><span class="line">Name = Cat</span><br><span class="line">Skill = Miao-Punch~</span><br></pre></td></tr></table></figure></p>
+<p>其实上诉结果已经可以证明 <strong>静态变量是不能被序列化的</strong>，但是为了更加明显，我们再试试下面这个例子！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        Pet pet = <span class="keyword">new</span> Pet(<span class="number">1</span>);</span><br><span class="line">        pet.setName(<span class="string">"Cat"</span>);</span><br><span class="line">        pet.setSkill(<span class="string">"Miao-Punch~"</span>);</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"D:\\Blog\\序列化\\pet.dat"</span>);</span><br><span class="line"></span><br><span class="line">        serialization(pet, file);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 反序列化之前我们修改一下 静态变量的值</span></span><br><span class="line">        Pet.Name = <span class="string">"Dog"</span>;</span><br><span class="line">        Pet.Skill = <span class="string">"Bite"</span>;</span><br><span class="line">        Pet pet2 = (Pet) deserialization(file);</span><br><span class="line">        System.out.println(<span class="string">"age = "</span> + pet2.getAge());</span><br><span class="line">        System.out.println(<span class="string">"Name = "</span> + pet2.getName());</span><br><span class="line">        System.out.println(<span class="string">"Skill = "</span> + pet2.getSkill());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age = <span class="number">1</span></span><br><span class="line">Name = Dog</span><br><span class="line">Skill = Bite</span><br></pre></td></tr></table></figure>
+<p>从结果可以看出，Name 和 Skill 并没有保存序列化之前的值，也即 <strong>Name 和 Skill 的值和序列化这个过程没有关系~</strong></p>
+<h2 id="Externalizable"><a href="#Externalizable" class="headerlink" title="Externalizable"></a>Externalizable</h2><p>在了解序列化的过程中发现了另一个接口 Externalizable，它含有两个抽象方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="实践一下"><a href="#实践一下" class="headerlink" title="实践一下"></a>实践一下</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Externalizable;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInput;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutput;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Game</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> BigDecimal price;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"writeExternal() has execute~"</span>);</span><br><span class="line">        out.writeObject(title);</span><br><span class="line">        out.writeObject(price);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"readExternal() has execute~"</span>);</span><br><span class="line">        title = (String) in.readObject();</span><br><span class="line">        price = (BigDecimal) in.readObject();</span><br><span class="line">        System.out.println(title + <span class="string">" || "</span> + price);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Game [title="</span> + title + <span class="string">", price="</span> + price + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Game</span><span class="params">(String title, BigDecimal price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Game</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        String title = <span class="string">"INSIDE"</span>, filePath = <span class="string">"D:\\Blog\\序列化\\data2.dat"</span>;</span><br><span class="line">        BigDecimal price = <span class="keyword">new</span> BigDecimal(<span class="number">49</span>);</span><br><span class="line">        Game game = <span class="keyword">new</span> Game(title, price);</span><br><span class="line"></span><br><span class="line">        serialization(game, filePath);</span><br><span class="line">        <span class="comment">// deserialization(filePath);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">serialization</span><span class="params">(Object obj, String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">deserialization</span><span class="params">(String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        ois.readObject();</span><br><span class="line">        ois.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先来看看执行序列化的输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writeExternal() has execute~</span><br></pre></td></tr></table></figure>
+<p>然后是执行反序列化的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readExternal() has execute~</span><br><span class="line">INSIDE || 49</span><br></pre></td></tr></table></figure>
+<p>实践后我有两个疑问：</p>
+<ol>
+<li>在重写 writeExternal() 方法时，能不能将对象整个输出到 输出流，而不是将字段一个一个的输出</li>
+<li>当执行 oos.writeObject(obj); 或是 ois.readObject(); 为什么会直接跳转到相应的 writeExternal() 和 readExternal() 方法呢。</li>
+</ol>
+<p>带着这两个问题我们来继续分析一下</p>
+<h4 id="输出整个对象到流中，就像-Serializable-那样"><a href="#输出整个对象到流中，就像-Serializable-那样" class="headerlink" title="输出整个对象到流中，就像 Serializable 那样"></a>输出整个对象到流中，就像 Serializable 那样</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只需要修改实现的两个方法</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"writeExternal() has execute~"</span>);</span><br><span class="line">    out.writeObject(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"readExternal() has execute~"</span>);</span><br><span class="line">    Game game = (Game) in.readObject();</span><br><span class="line">    System.out.println(game);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        String title = <span class="string">"INSIDE"</span>, filePath = <span class="string">"D:\\Blog\\序列化\\data-this.dat"</span>;</span><br><span class="line">        BigDecimal price = <span class="keyword">new</span> BigDecimal(<span class="number">49</span>);</span><br><span class="line">        Game game = <span class="keyword">new</span> Game(title, price);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// serialization(game, filePath);</span></span><br><span class="line">        deserialization(filePath);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>当我们执行反序列化后，输出的结果是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">readExternal() has execute~</span><br><span class="line">Game [title=<span class="keyword">null</span>, price=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<p>咦！？为毛两个字段的值都没有呢？？来看看序列化后保存到文件中数据是什么样子</p>
+<p>data-field.dat 对应具体某个字段序列化<br>data-this.dat 对应序列化整个对象(this)</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2e9d157.png" alt=""></p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2e846f7.png" alt=""></p>
+<p>咦，生成的数据完全不一样。第二个文件中仅保存了类名信息。</p>
+<p>看来我们直接使用 <code>out.writeObject(this)</code> 行不通呢，ok，那我好像有了一个大胆的想法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改 writeExternal()，让其在执行时候创建新的 Game 对象，然后再传入进行序列化</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"writeExternal() has execute~"</span>);</span><br><span class="line">    Game game = <span class="keyword">new</span> Game(title, price);</span><br><span class="line">    out.writeObject(game);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>恩，只要写对象的时候，利用当前数据创建一个新的对象写入输出流就好了嘛，肯定很稳，Run~</p>
+<p>光速打脸，直接报堆栈溢出….</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2eb0e6c.png" alt=""></p>
+<p>这里就是溢出的关键了，每一次执行 out.writeObject(game) 的时候，都会进到 writeExternal() 方法中，然后在 writeExternal() 里我们会 创建新的 Game，然后执行 out.writeObject(game)…</p>
+<p>就好像，game1，执行 writeExternal() 时候，发现，哦，要完成这个方法，我需要创建 game2，然后执行 out.writeObject(game2)</p>
+<p>执行 out.writeObject(game2) 的时候又会到 game2 的 writeExternal() 方法，这是它会发现，哦，我需要创建 game3…</p>
+<p><img src="https://i.loli.net/2018/10/21/5bcbed2eca867.png" alt=""></p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>自己尝试无果，尝试搜了搜资料，但是我发现并没有文章讲到需要通过 out.writeObject() 来直接传入整个对象数据到输出流中，就好像</p>
+<p>这本就是一个不合理的存在！</p>
+<p>因为 Serializable 已经提供了这个功能了，如果你需要完全可以使用它而不是 Externalizable。 Externalizable 应该因 个性化、自定义 需求而存在的。</p>
+<p><strong>说说我自己的理解：</strong></p>
+<p>实现 Serializable 接口的对象序列化时：奥，需要序列化了呀，那就序列化吧</p>
+<p>实现 Externalizable 接口的对象序列化时：奥，需要序列化了呀，等等，我好像有 writeExternal() 方法，找它去吧。</p>
+<p>Externalizable 会多做一步，并且能够在序列化的过程中提供操作的能力，也能提供自定义选择序列化的字段。</p>
+<h4 id="执行时候的自动跳转"><a href="#执行时候的自动跳转" class="headerlink" title="执行时候的自动跳转"></a>执行时候的自动跳转</h4><p>当执行 oos.writeObject(obj); 或是 ois.readObject(); 为什么会直接跳转到相应的 writeExternal() 和 readExternal() 方法呢？</p>
+<p>至于为什么我也不知道诶，应该是 writeObject() 或 readObject() 内部进行了操作，找了半天也没有找到入口，这个就先这样记录着吧，等后面有时间撸一下代码…..</p>
+<h3 id="正确的使用姿势"><a href="#正确的使用姿势" class="headerlink" title="正确的使用姿势"></a>正确的使用姿势</h3><p>Externalizable 支持的就是自定义，正确的 序列化 和 反序列化 的操作应该是这样的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Game</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> BigDecimal price;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"writeExternal() has execute~"</span>);</span><br><span class="line">        out.writeObject(title);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput in)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"readExternal() has execute~"</span>);</span><br><span class="line">        title = (String) in.readObject();</span><br><span class="line">        System.out.println(title + <span class="string">" || "</span> + price);</span><br><span class="line">        System.out.println(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Game [title="</span> + title + <span class="string">", price="</span> + price + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Game</span><span class="params">(String title, BigDecimal price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.title = title;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Game</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalizableTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        String title = <span class="string">"INSIDE"</span>, filePath = <span class="string">"D:\\Blog\\序列化\\data-field.dat"</span>;</span><br><span class="line">        BigDecimal price = <span class="keyword">new</span> BigDecimal(<span class="number">49</span>);</span><br><span class="line">        Game game = <span class="keyword">new</span> Game(title, price);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// externalization(game, filePath);</span></span><br><span class="line">        Game game = <span class="keyword">new</span> Game();</span><br><span class="line">        reExternalization(game, filePath);</span><br><span class="line">        System.out.println(game);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 序列化</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">externalization</span><span class="params">(Game game, String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        game.writeExternal(oos);</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 反序列化</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reExternalization</span><span class="params">(Game game, String filePath)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(filePath);</span><br><span class="line">        ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        game.readExternal(ois);</span><br><span class="line">        ois.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">readExternal() has execute~</span><br><span class="line">INSIDE || <span class="keyword">null</span></span><br><span class="line">Game [title=INSIDE, price=<span class="keyword">null</span>]</span><br><span class="line">Game [title=INSIDE, price=<span class="keyword">null</span>]</span><br></pre></td></tr></table></figure>
+<p>这里我们在序列化的时候只选择了 title，所以在输出的时候 price 是没有值的。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>我们先整理一下这一次遇到的问题：</p>
+<ul>
+<li>当执行 oos.writeObject(obj); 或是 ois.readObject(); 为什么会直接跳转到相应的 writeExternal() 和 readExternal() 方法呢。</li>
+</ul>
+<p>一直以来我有一个误区，我以为序列化会发生在 SeriXX 或是 ExternalXXX 接口里面，在我看完源代码之后发现并没有相应的代码来支撑，后来看了一下发现原来是在 ObjectWriteStream | ObjectReadStream中，这个放到下一次来分析吧，我是真的不想写了…</p>
+<h2 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h2><p>最近真的是一点都不想写代码，自从工作以来我发现自己越来越不适合干程序猿了(笑 cry)，我真的</p>
+<p>好想出去玩！</p>
+<p>巨想！</p>
+<p>下次去哪玩呢？</p>
+<p>没钱没时间的咸鱼这样憧憬着…..</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/07/记一次呼吸上层资本主义的空气/" rel="next" title="记一次呼吸上层资本主义的空气">
+                <i class="fa fa-chevron-left"></i> 记一次呼吸上层资本主义的空气
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/创作许可协议/" rel="prev" title="给博客用上 —— 创作共用许可协议">
+                给博客用上 —— 创作共用许可协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序列化"><span class="nav-number">1.</span> <span class="nav-text">序列化~</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serializable"><span class="nav-number">1.1.</span> <span class="nav-text">Serializable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列化-1"><span class="nav-number">1.1.1.</span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#序列化开始"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">序列化开始</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反序列化"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">反序列化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#奇怪的-serialVersionUID"><span class="nav-number">1.2.</span> <span class="nav-text">奇怪的 serialVersionUID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transient"><span class="nav-number">1.3.</span> <span class="nav-text">transient</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单栗子"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单栗子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transient-关键字使用总结"><span class="nav-number">1.3.2.</span> <span class="nav-text">transient 关键字使用总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Externalizable"><span class="nav-number">1.4.</span> <span class="nav-text">Externalizable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实践一下"><span class="nav-number">1.4.1.</span> <span class="nav-text">实践一下</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输出整个对象到流中，就像-Serializable-那样"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">输出整个对象到流中，就像 Serializable 那样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行时候的自动跳转"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">执行时候的自动跳转</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确的使用姿势"><span class="nav-number">1.4.2.</span> <span class="nav-text">正确的使用姿势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">1.5.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随笔"><span class="nav-number">1.6.</span> <span class="nav-text">随笔</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

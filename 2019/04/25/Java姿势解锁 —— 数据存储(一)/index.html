@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言 看得越多，发现不知道的就越多…..  记得最开始学习 Java 的时候，经常会听到什么，”局部变量存储栈中”，”对象存储于堆中”，然后还有什么”常量池、方法区” 等等一堆的概念，这一次彻底看一遍，顺带做做笔记。">
+<meta name="keywords" content="Java,后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java姿势解锁 —— 数据存储(一)">
+<meta property="og:url" content="http://yoursite.com/2019/04/25/Java姿势解锁 —— 数据存储(一)/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言 看得越多，发现不知道的就越多…..  记得最开始学习 Java 的时候，经常会听到什么，”局部变量存储栈中”，”对象存储于堆中”，然后还有什么”常量池、方法区” 等等一堆的概念，这一次彻底看一遍，顺带做做笔记。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/04/25/5cc159b6850a3.jpg">
+<meta property="og:updated_time" content="2019-05-24T15:36:50.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java姿势解锁 —— 数据存储(一)">
+<meta name="twitter:description" content="前言 看得越多，发现不知道的就越多…..  记得最开始学习 Java 的时候，经常会听到什么，”局部变量存储栈中”，”对象存储于堆中”，然后还有什么”常量池、方法区” 等等一堆的概念，这一次彻底看一遍，顺带做做笔记。">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/25/5cc159b6850a3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/25/Java姿势解锁 —— 数据存储(一)/">
+
+
+
+
+
+  <title>Java姿势解锁 —— 数据存储(一) | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">25</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/25/Java姿势解锁 —— 数据存储(一)/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java姿势解锁 —— 数据存储(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-25T15:00:05+08:00">
+                2019-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2019/04/25/5cc159b6850a3.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>看得越多，发现不知道的就越多…..</p>
+</blockquote>
+<p>记得最开始学习 Java 的时候，经常会听到什么，”局部变量存储栈中”，”对象存储于堆中”，然后还有什么”常量池、方法区” 等等一堆的概念，这一次彻底看一遍，顺带做做笔记。</p>
+<a id="more"></a>
+<p>这里我们会将聊一下 Java 中的数据存储区域，开头会列一些常见的存储区域，然后分开讲，flag 先立好，最好近期能够把坑填完。</p>
+<h1 id="Java-数据存储区域简介"><a href="#Java-数据存储区域简介" class="headerlink" title="Java 数据存储区域简介"></a>Java 数据存储区域简介</h1><p>首先简单介绍一下 Java 程序中常见的几个存储区域：</p>
+<p><strong>寄存器</strong>：很熟悉的东西，位于 CPU 内的存储空间，可谓近水楼台先得月，所以速度也是最快的。其数量很少，一般都是根据需求自动分配的，不受人为控制。</p>
+<p><strong>栈内存</strong>：位于 RAM 中，就是我们常听到的栈。有一个栈顶指针，通过指针移动进行压栈和出栈，从而分配和释放内存。这种方式的存储速度仅次于寄存器。<br>(Java中常用于存放 对象引用 和 基本数据类型，而不用于存储对象)</p>
+<p><strong>堆内存</strong>：位于 RAM 中的一种通用内存池。其中存放的数据由 JVM 自动进行管理。<br>(堆相对于栈的好处来说：编译器不需要知道存储的数据在堆里存活多长。当需要一个对象时，使用 new 写一行代码，当执行这行代码时，会自动在堆里进行存储分配。同时，因为以上原因，用堆进行数据的存储分配和清理，需要花费更多的时间)</p>
+<p><strong>方法区</strong>: 方法区又称 静态区。其中存放着程序运行时一直存在的数据。你可以使用关键字 static 来标识一个对象的特定元素是静态的，但 Java 对象本身从来不会存放在静态存储空间里。</p>
+<p><strong>常量池</strong>：常量 (字符串常量 和 基本类型常量) 通常直接存储在程序代码内部 (常量池)。这样做是安全的，因为它们的值在初始化时就已经被确定，并不会被改变，常量池在 java 用于保存在编译器已经确定，已编译的 class 文件中的一份数据。它包括了关于类，方法，接口等中的常量，也包括字符串常量，如 String s = “java” 这种申明方法。</p>
+<p><strong>非 RAM 存储区</strong>：如果数据完全存活于程序之外，那么它可以不受程序的任何控制，在程序没有运行时也可以存在。其中两个基本的栗子是：流对象 和 持久化对象。</p>
+<hr>
+<p>这次主要聊聊 <strong>常量池</strong>。</p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>首先见名知意嘛，就是一个存储常量的池子对吧，我们知道在 java 中常量都是被 final 关键字修饰的。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> a = <span class="number">1</span>; <span class="comment">// 静态常量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> b = <span class="number">2</span>; <span class="comment">// 实例常量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> c = <span class="number">3</span>; <span class="comment">// 局部常量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道了常量是存放在常量池中，<strong>但是常量池中存放的却不仅仅是常量</strong>。常量池主要用于存放两大类常量：<strong>字面量(Literal)</strong> 和 <strong>符号引用量(Symbolic References)</strong>。</p>
+<p>字面量相当于Java语言层面常量的概念，包括：</p>
+<ul>
+<li>文本字符串  </li>
+<li>八种基本类型的值</li>
+<li>被声明为final的常量等</li>
+</ul>
+<p>符号引用则属于编译原理方面的概念，包括了如下三种类型的常量：</p>
+<ul>
+<li>类和接口的全限定名</li>
+<li>字段名称和描述符</li>
+<li>方法名称和描述符</li>
+</ul>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>常量池分为 <strong>编译期常量池</strong>、<strong>运行时常量池</strong> 和 <strong>字符串常量池</strong>。</p>
+<h4 id="编译期常量池"><a href="#编译期常量池" class="headerlink" title="编译期常量池"></a>编译期常量池</h4><p>编译期常量池存放编译期中能够确定的常量，对其中的常量进行访问不会引发类的初始化。它们存储于 Class 文件中，所以通常又称为 Class 文件中的常量池。</p>
+<p>在Class文件结构中，最头的4个字节用于存储魔数(Magic Number)，用于确定一个文件是否能被JVM接受，再接着4个字节用于存储版本号，前2个字节存储次版本号，后2个存储主版本号。再接着是用于存放常量的常量池，由于常量的数量是不固定的，所以常量池的入口放置一个U2类型的数据(constant_pool_count)存储常量池容量计数值。</p>
+<p>(关于 Class文件的介绍先立个 Flag，后面找时间慢慢了解。)</p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池中存放的常量往往都是编译期无法被确定，只有在运行时期才能确定的。它的存储位置位于方法区，所以有时候也称为方法区的运行时常量池。</p>
+<p>运行时常量池相对于编译期常量池的另外一个重要特征是<strong>具备动态性</strong>，Java语言并不要求常量一定只有编译期才能产生，也就是并非预置入编译期常量池的内容才能进入常量池，运行期间也可能将新的常量放入池中，这种特性被开发人员利用比较多的就是 <strong>String类的intern()</strong> 方法。</p>
+<p><strong>敲黑板：</strong><br>编译期常量池实际上就是存在于编译期间的，它将数据存放到了 .class 文件中(这个后面会有反编译栗子)，当类进入到加载阶段时候    ，.class 文件就会被加载到内存当中，这时候 <strong>编译期常量池里的内容就会被加载到运行时常量池中</strong>，你可以理解为又编译期过渡到了运行时。</p>
+<h3 id="字符串常量池"><a href="#字符串常量池" class="headerlink" title="字符串常量池"></a>字符串常量池</h3><p><strong>字符串常量池中存放的内容：</strong></p>
+<p>在JDK6.0及之前版本中，字符串常量池里放的都是字符串常量；<br>在JDK7.0中，由于 String#intern() 发生了改变，因此字符串常量池中也可以存放放于堆内的字符串对象的引用。关于String#intern()方法，咱们在后面聊聊。</p>
+<p><strong>字符串常量池是如何存储数据的：</strong></p>
+<ul>
+<li><p>在HotSpot VM里实现的string pool功能的是一个StringTable类，它是一个Hash表，默认值大小长度是1009；这个StringTable在每个HotSpot VM的实例只有一份，被所有的类共享。字符串常量由一个一个字符组成，放在了StringTable上。</p>
+</li>
+<li><p>在JDK6.0中，StringTable的长度是固定的，长度就是1009，因此如果放入String Pool中的String非常多，就会造成hash冲突，导致链表过长，当调用String#intern()时会需要到链表上一个一个找，从而导致性能大幅度下降；</p>
+</li>
+<li><p>在JDK7.0中，StringTable的长度可以通过参数指定： -XX:StringTableSize=66666</p>
+</li>
+</ul>
+<p><strong>字符串常量池的位置随 JDK 的版本不同有着不同的存储位置。(这个我们待会再讲)</strong></p>
+<h2 id="三种常量池的相关实践分析"><a href="#三种常量池的相关实践分析" class="headerlink" title="三种常量池的相关实践分析"></a>三种常量池的相关实践分析</h2><h3 id="实践一"><a href="#实践一" class="headerlink" title="实践一"></a>实践一</h3><p>还记得我们前面讲 Class 对象的时候所举的栗子吗：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstDemoHelp2</span></span>&#123;</span><br><span class="line">	<span class="comment">// 编译期静态常量</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> staticFinal = <span class="number">47</span>;</span><br><span class="line">    <span class="comment">// 非编译期静态常量 —— 运行时常量</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> staticFinal2 = <span class="keyword">new</span> Random(<span class="number">47</span>).nextInt(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	System.out.println(ConstDemoHelp2.staticFinal);</span><br><span class="line">    	System.out.println(ConstDemoHelp2.staticFinal2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的栗子中 <code>staticFinal</code> 是在编译期就已经能确定的值(当然就是 47嘛)，它存储的位置就位于编译期常量池，也就是我们说的 Class 文件中的常量池，它在<strong>类的加载时候</strong>(Class 文件就被加载)被载入内存中。<br>而 <code>staticFinal2</code> 在编译时期是没有办法确定的，因为它需要先创建 <code>Random</code> 对象，然后再执行其方法才能确定值，所以 <code>staticFinal2</code> 被称为运行时常量。它只有在类初始化之后，执行到这行代码时才被载入到内存中，当然也是放入常量池中，不过是运行时候放入进来的，所以称为运行时常量。</p>
+<p>关于类的加载过程以及是否初始化可以参加之前的 <a href="https://chllan.cc/2019/04/11/Java%E5%A7%BF%E5%8A%BF%E8%A7%A3%E9%94%81%20%E2%80%94%E2%80%94%20Class%E5%AF%B9%E8%B1%A1/" target="_blank" rel="noopener">Class对象</a></p>
+<p><strong>再看看另一个栗子</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstDemoHelper</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 编译期常量，其值存在 .class 文件中，访问时需要触发类的加载</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String s = <span class="string">"aaa"</span>;</span><br><span class="line">    <span class="comment">// 运行时常量，存储于运行时常量池中，访问时需要触发类的加载</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> a = <span class="keyword">new</span> Random(<span class="number">47</span>).nextInt(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">new</span> ConstDemoHelper().s);</span><br><span class="line">        System.out.println(<span class="keyword">new</span> ConstDemoHelper().a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里想说的是 <strong>编译期常量 和 编译期静态常量的比较</strong>。</p>
+<ol>
+<li>它们俩都是在编译后被放入到 .class 文件中存储(编译期常量池中)</li>
+<li>对后者的访问不会触发类的初始化，但是对前者的访问会触发类的初始化。其实你可以理解为，前者需要创建对象，而后者不需要，并且创建对象会触发类的初始化。</li>
+</ol>
+<h3 id="实践二"><a href="#实践二" class="headerlink" title="实践二"></a>实践二</h3><p>有一个经典的问题：<code>String s = new String(&quot;biubiubiu&quot;);</code> 产生几个对象？</p>
+<p><strong>答案是一个或两个</strong></p>
+<p>我们先来看看这段代码的执行过程：</p>
+<ol>
+<li>定义了一个名为 s 的 String 类型的引用</li>
+<li>检查在字符串常量池中是否存在值为 “biubiubiu” 的字符串对象</li>
+<li><strong>如果不存在，则在字符串常量池存储进一个值为”abc”的字符串对象。如果已经存在，则跳过这一步工作。</strong></li>
+<li><strong>在堆中创建存储一个 “abc” 字符串对象(堆我们后面讲)。</strong></li>
+<li>将对象引用指向堆中的对象。</li>
+</ol>
+<p>这里指的注意的是，采用new的方式，<strong>虽然是在堆中存储对象，但是也会在存储之前检查常量池中是否已经含有此对象</strong>，如果没有，则会先在常量池创建对象，然后在堆中创建这个对象的”拷贝对象“。这也就是为什么答案是一个或两个的原因。</p>
+<p>其实你可以理解为，当看到 “xxx” 或是 1、true、2.3333f 等这种数据出现在代码中，它们都会被先放入到常量池中，我们来看看下一个栗子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> b = <span class="number">2.3333f</span>;</span><br><span class="line">	String s1 = <span class="string">"aaa"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    	String s2 = <span class="keyword">new</span> String(<span class="string">"bbb"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行反编译得到以下结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">Classfile ConstDemo2.class</span><br><span class="line">  Last modified <span class="number">2019</span>-<span class="number">4</span>-<span class="number">24</span>; size <span class="number">459</span> bytes</span><br><span class="line">  MD5 checksum cf407873233e147abae64593e34969c8</span><br><span class="line">  Compiled from <span class="string">"ConstDemo2.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AboutStore</span>.<span class="title">ConstDemo2</span></span></span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: <span class="number">52</span></span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #10.#23        // java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">   #2 = Float              2.3333f</span><br><span class="line">   #3 = Fieldref           #9.#24         // AboutStore/ConstDemo2.b:F</span><br><span class="line">   #4 = String             #25            // aaa</span><br><span class="line">   #5 = Fieldref           #9.#26         // AboutStore/ConstDemo2.s1:Ljava/lang/String;</span><br><span class="line">   #6 = Class              #27            // java/lang/String</span><br><span class="line">   #7 = String             #28            // bbb</span><br><span class="line">   #8 = Methodref          #6.#29         // java/lang/String."&lt;init&gt;":(Ljava/lang/String;)V</span><br><span class="line">   #9 = Class              #30            // AboutStore/ConstDemo2</span><br><span class="line">  #10 = Class              #31            // java/lang/Object</span><br><span class="line">  #11 = Utf8               b</span><br><span class="line">  #12 = Utf8               F</span><br><span class="line">  #13 = Utf8               s1</span><br><span class="line">  #14 = Utf8               Ljava/lang/String;</span><br><span class="line">  #15 = Utf8               &lt;init&gt;</span><br><span class="line">  #16 = Utf8               ()V</span><br><span class="line">  #17 = Utf8               Code</span><br><span class="line">  #18 = Utf8               LineNumberTable</span><br><span class="line">  #19 = Utf8               main</span><br><span class="line">  #20 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #21 = Utf8               SourceFile</span><br><span class="line">  #22 = Utf8               ConstDemo2.java</span><br><span class="line">  #23 = NameAndType        #15:#16        // "&lt;init&gt;":()V</span><br><span class="line">  #24 = NameAndType        #11:#12        // b:F</span><br><span class="line">  #25 = Utf8               aaa</span><br><span class="line">  #26 = NameAndType        #13:#14        // s1:Ljava/lang/String;</span><br><span class="line">  #27 = Utf8               java/lang/String</span><br><span class="line">  #28 = Utf8               bbb</span><br><span class="line">  #29 = NameAndType        #15:#32        // "&lt;init&gt;":(Ljava/lang/String;)V</span><br><span class="line">  #30 = Utf8               AboutStore/ConstDemo2</span><br><span class="line">  #31 = Utf8               java/lang/Object</span><br><span class="line">  #32 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">float</span> b;</span><br><span class="line">    descriptor: F</span><br><span class="line">    flags:</span><br><span class="line"></span><br><span class="line">  java.lang.String s1;</span><br><span class="line">    descriptor: Ljava/lang/String;</span><br><span class="line">    flags:</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> AboutStore.ConstDemo2();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">2</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">         <span class="number">4</span>: aload_0</span><br><span class="line">         5: ldc           #2                  // float 2.3333f</span><br><span class="line">         7: putfield      #3                  // Field b:F</span><br><span class="line">        <span class="number">10</span>: aload_0</span><br><span class="line">        11: ldc           #4                  // String aaa</span><br><span class="line">        13: putfield      #5                  // Field s1:Ljava/lang/String;</span><br><span class="line">        <span class="number">16</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">5</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">7</span>: <span class="number">4</span></span><br><span class="line">        line <span class="number">8</span>: <span class="number">10</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>;</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">3</span>, locals=<span class="number">2</span>, args_size=<span class="number">1</span></span><br><span class="line">         0: new           #6                  // class java/lang/String</span><br><span class="line">         <span class="number">3</span>: dup</span><br><span class="line">         4: ldc           #7                  // String bbb</span><br><span class="line">         6: invokespecial #8                  // Method java/lang/String."&lt;init&gt;":(Ljava/lang/String;)V</span><br><span class="line">         <span class="number">9</span>: astore_1</span><br><span class="line">        <span class="number">10</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">11</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">12</span>: <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line">SourceFile: <span class="string">"ConstDemo2.java"</span></span><br></pre></td></tr></table></figure>
+<p>其中 <strong>Constant pool</strong> 就是我们说的常量池，我们可以发现其中存储了相应的 <strong>字面量(2.3333f、aaa、bbb)</strong> 以及 <strong>符号引用量(b、s1、main 等等)</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#2 = Float              2.3333f</span><br><span class="line">#4 = String             #25            // aaa</span><br><span class="line">#7 = String             #28            // bbb</span><br><span class="line">#11 = Utf8              b</span><br><span class="line">#13 = Utf8              s1</span><br><span class="line">#19 = Utf8              main</span><br><span class="line">#25 = Utf8              aaa</span><br><span class="line">#28 = Utf8              bbb</span><br></pre></td></tr></table></figure>
+<p>再来看看这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstDemoHelper3</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 编译期常量，其值存在 .class 文件中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String s = <span class="string">"aaa"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo3</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 编译期常量，其值存在 .class 文件中</span></span><br><span class="line">        String ss = <span class="string">"aaa"</span>;</span><br><span class="line">        System.out.println(ss == ConstDemoHelper3.s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回结果为：<code>true</code></p>
+<p>解释一下：</p>
+<ol>
+<li>首先在常量池(字符串)中寻找 “aaa” 的值，发现没有值，于是将 “aaa” 放入到常量池中，并且返回引用赋值给 s</li>
+<li>再次去常量池中寻找 “aaa” 的值，发现存在，于是将其引用赋值给 ss</li>
+<li>s 和 ss 都指向常量池中的  “aaa”，其地址相同，所以 ss == ConstDemoHelper3.s 结果返回 true</li>
+</ol>
+<h3 id="实践三"><a href="#实践三" class="headerlink" title="实践三"></a>实践三</h3><p>这里探究一下 <code>String.intern()</code> 方法，先看一波 API 文档：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a canonical representation for the string object.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * A pool of strings, initially empty, is maintained privately by the</span></span><br><span class="line"><span class="comment"> * class &#123;<span class="doctag">@code</span> String&#125;.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * When the intern method is invoked, if the pool already contains a</span></span><br><span class="line"><span class="comment"> * string equal to this &#123;<span class="doctag">@code</span> String&#125; object as determined by</span></span><br><span class="line"><span class="comment"> * the &#123;<span class="doctag">@link</span> #equals(Object)&#125; method, then the string from the pool is</span></span><br><span class="line"><span class="comment"> * returned. Otherwise, this &#123;<span class="doctag">@code</span> String&#125; object is added to the</span></span><br><span class="line"><span class="comment"> * pool and a reference to this &#123;<span class="doctag">@code</span> String&#125; object is returned.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * It follows that for any two strings &#123;<span class="doctag">@code</span> s&#125; and &#123;<span class="doctag">@code</span> t&#125;,</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@code</span> s.intern() == t.intern()&#125; is &#123;<span class="doctag">@code</span> true&#125;</span></span><br><span class="line"><span class="comment"> * if and only if &#123;<span class="doctag">@code</span> s.equals(t)&#125; is &#123;<span class="doctag">@code</span> true&#125;.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * All literal strings and string-valued constant expressions are</span></span><br><span class="line"><span class="comment"> * interned. String literals are defined in section 3.10.5 of the</span></span><br><span class="line"><span class="comment"> * &lt;cite&gt;The Java&amp;trade; Language Specification&lt;/cite&gt;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>  a string that has the same contents as this string, but is</span></span><br><span class="line"><span class="comment"> *          guaranteed to be from a pool of unique strings.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">intern</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>对，没错，还是渣翻：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这个方法返回一个String对象的标准形式，常量池的String对象在初始的状态是空的，由String类单独维护。</span><br><span class="line"></span><br><span class="line">当 intern() 方法被调用的时候，如果常量池中已经存在此 String对象(由 equals() 方法决定)，那么就会把</span><br><span class="line">池中的对象返回；如果不存在，则这个 String对象将会被加入到常量池中，并且返回其引用。</span><br><span class="line"></span><br><span class="line">这里遵循着一个原则：有两个 String 对象 s 和 t，当且仅当 s.equals(t) 等于 true 时才有 s.intern() == t.intern() 等于 true</span><br><span class="line"></span><br><span class="line">所有字符字面量和字符数据常量表达式都适用于 intern() 方法。字符字面量被定义在 Java规范(3.10.5版本)中</span><br><span class="line"></span><br><span class="line">此方法返回与这个字符串相同的内容，只不过它是位于常量池中的唯一字符。</span><br></pre></td></tr></table></figure>
+<p><strong>总结一下就是</strong><br>String.intern() 返回的是常量池中的地址，如果常量池中存在就返回其中的数据，如果不存在就先往常量池中放，然后返回其地址。</p>
+<p>来看看这样一个栗子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstDemo4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="keyword">new</span> String(<span class="string">"biubiubiu"</span>);</span><br><span class="line">        String s2 = s1.intern();</span><br><span class="line">        String s3 = <span class="string">"biubiubiu"</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s2 == s3);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+<p><strong>简单解释一下步骤：</strong></p>
+<ol>
+<li>查看常量池(字符串)中是否含有 “biubiubiu” 字面量，发现没有然后将其加入到常量池中并把地址返回赋值给 s1。</li>
+<li>然后在 堆中创建 String 对象，并将其地址的值赋值给 s2</li>
+<li>再次查看常量池中是否含有 “biubiubiu” 字面量，这时候存在，然后将其地址赋值给 s2</li>
+<li>重复3的操作，将其地址值赋值给 s3</li>
+</ol>
+<p><strong>因为在字符串常量池中，相同的数据只会存在一份，所以其返回的地址也是相同的。</strong></p>
+<p><strong>敲黑板</strong></p>
+<p>另外一点值得注意的是，虽然 <code>String.intern()</code> 的返回值永远等于字符串常量。但这并不代表在系统的每时每刻，相同的字符串的 <code>intern()</code> 返回都会是一样的（虽然在95%以上的情况下，都是相同的）。因为存在这么一种可能：<strong>在一次intern()调用之后，该字符串在某一个时刻被回收</strong>，之后，再进行一次intern()调用，那么字面量相同的字符串重新被加入常量池，但是引用位置已经不同。</p>
+<h2 id="常量池的益处"><a href="#常量池的益处" class="headerlink" title="常量池的益处"></a>常量池的益处</h2><p>常量池是为了避免频繁的创建和销毁对象而影响系统性能，其实现了对象的共享。例如字符串常量池，在编译阶段就把所有的字符串文字放到一个常量池中。</p>
+<ol>
+<li>节省内存空间：常量池中所有相同的字符串常量被合并，只占用一个空间。</li>
+<li>节省运行时间：比较字符串时，==比equals()快。对于两个引用变量，只用==判断引用是否相等，也就可以判断实际值是否相等。</li>
+</ol>
+<h2 id="运行时常量池-和-编译期常量池-的区别"><a href="#运行时常量池-和-编译期常量池-的区别" class="headerlink" title="运行时常量池 和 编译期常量池 的区别"></a>运行时常量池 和 编译期常量池 的区别</h2><ol>
+<li>JVM对Class文件中每一部分的格式都有严格的要求，每一个字节用于存储那种数据都必须符合规范上的要求才会被虚拟机认可、装载和执行；但运行时常量池没有这些限制，除了保存Class文件中描述的符号引用，还会把翻译出来的直接引用也存储在运行时常量区。</li>
+<li>相较于Class文件常量池，运行时常量池更具动态性，在运行期间也可以将新的变量放入常量池中，而不是一定要在编译时确定的常量才能放入。最主要的运用便是String类的intern()方法。</li>
+</ol>
+<h2 id="字符串常量池的位置问题"><a href="#字符串常量池的位置问题" class="headerlink" title="字符串常量池的位置问题"></a>字符串常量池的位置问题</h2><p>前面我们说到字符串常量池所处位置并不是一成不变的，其会随着 JDK 版本的改变而发生改变。下面是总结了一下网上找的资料：</p>
+<ol>
+<li>JDK 1.6，字符串常量池存在于方法区中</li>
+<li>JDK 1.7，字符串常量池移动到了堆中</li>
+<li>JDK 1.8，有说继续存在于堆中的，还有说存在于 独立于方法区和堆的元空间中，总之说法不一…</li>
+</ol>
+<h2 id="字符串常量池的位置问题-1"><a href="#字符串常量池的位置问题-1" class="headerlink" title="字符串常量池的位置问题"></a>字符串常量池的位置问题</h2><p>前面我们说到字符串常量池所处位置并不是一成不变的，其会随着 JDK 版本的改变而发生改变。下面是总结了一下网上找的资料：</p>
+<ol>
+<li>JDK 1.6，字符串常量池存在于方法区中</li>
+<li>JDK 1.7，字符串常量池移动到了堆中</li>
+<li>JDK 1.8，有说继续存在于堆中的，还有说存在于 独立于方法区和堆的元空间中，总之说法不一…</li>
+</ol>
+<p><strong>找了下网上的栗子证明了 JDK1.6 字符串常量池存在于方法区中：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestString</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">         String str = <span class="string">"abc"</span>;  </span><br><span class="line">            <span class="keyword">char</span>[] array = &#123;<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>&#125;;  </span><br><span class="line">            String str2 = <span class="keyword">new</span> String(array);  </span><br><span class="line">            <span class="comment">//使用intern()将str2字符串内容放入常量池  </span></span><br><span class="line">            str2 = str2.intern();  </span><br><span class="line">            <span class="comment">//这个比较用来说明字符串字面常量和我们使用intern处理后的字符串是在同一个地方  </span></span><br><span class="line">            System.out.println(str == str2);  </span><br><span class="line">            <span class="comment">//那好，下面我们就拼命的intern吧  </span></span><br><span class="line"></span><br><span class="line">            ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();  </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000000</span>; i++) &#123;  </span><br><span class="line">                String temp = String.valueOf(i).intern();  </span><br><span class="line">                list.add(temp);  </span><br><span class="line">            &#125;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码运行结果后会抛出 <strong>Exception in thread “main” java.lang.OutOfMemoryError: PermGen space</strong> 异常，这里这个 <strong>PermGen space</strong> 就是方法区啦，所以在 <strong>JDK1.6</strong> 被证明字符串常量池是出于方法区的。</p>
+<p><strong>然后有人做了基于 JDK 1.8 的测试，证明字符串常量池位于堆中：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestString2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();  </span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;  </span><br><span class="line">            list.add(String.valueOf(i++).intern());  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行上述代码会抛出 <strong>Exception in thread “main” java.lang.OutOfMemoryError: GC overhead limit exceeded</strong> 异常，下面简单解释一下：</p>
+<p>sun官方说明：</p>
+<blockquote>
+<p>并行/并发回收器在GC回收时间过长时会抛出OutOfMemroyError。过长的定义是，超过98%的时间用来做GC并且回收了不到2%的堆内存。用来避免内存过小造成应用不能正常工作。</p>
+</blockquote>
+<p>这里证明了字符串常量池位于堆中，由于 GC 在会检测堆中的数据，在内存满后，会进行垃圾回收，但又会intern新的字符串到String常量池中，那么就会导致垃圾回收器一直不停的干着没有意义的活，时间一久，就报错啦。</p>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a href="https://www.jianshu.com/p/c7f47de2ee80" target="_blank" rel="noopener">Java常量池理解与总结</a><br><a href="https://blog.csdn.net/Sugar_Rainbow/article/details/68150249" target="_blank" rel="noopener">JVM-String常量池与运行时常量池</a><br><a href="https://blog.csdn.net/ghost_Programmer/article/details/40891735" target="_blank" rel="noopener">java中数据的5种存储位置(堆与栈)</a><br><a href="https://blog.csdn.net/zm13007310400/article/details/77534349" target="_blank" rel="noopener">Java中的常量池(字符串常量池、class常量池和运行时常量池)</a><br><a href="https://blog.csdn.net/wangtaomtk/article/details/52267548" target="_blank" rel="noopener">Class文件中的常量池详解（上）</a><br><a href="https://blog.csdn.net/x_iya/article/details/78303623" target="_blank" rel="noopener">java中的编译时常量与运行时常量</a></p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>好菜啊，日常翻车的我现在巨难受。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/从入门到迷路系列——心理学学习笔记(一)/" rel="next" title="从入门到迷路系列 —— 心理学学习笔记(一)">
+                <i class="fa fa-chevron-left"></i> 从入门到迷路系列 —— 心理学学习笔记(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/29/Java姿势解锁 —— 数据存储(二)/" rel="prev" title="Java姿势解锁 —— 数据存储(二)">
+                Java姿势解锁 —— 数据存储(二) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-数据存储区域简介"><span class="nav-number">2.</span> <span class="nav-text">Java 数据存储区域简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常量池"><span class="nav-number">2.1.</span> <span class="nav-text">常量池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类"><span class="nav-number">2.1.2.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译期常量池"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">编译期常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时常量池"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串常量池"><span class="nav-number">2.1.3.</span> <span class="nav-text">字符串常量池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三种常量池的相关实践分析"><span class="nav-number">2.2.</span> <span class="nav-text">三种常量池的相关实践分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实践一"><span class="nav-number">2.2.1.</span> <span class="nav-text">实践一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践二"><span class="nav-number">2.2.2.</span> <span class="nav-text">实践二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实践三"><span class="nav-number">2.2.3.</span> <span class="nav-text">实践三</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量池的益处"><span class="nav-number">2.3.</span> <span class="nav-text">常量池的益处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时常量池-和-编译期常量池-的区别"><span class="nav-number">2.4.</span> <span class="nav-text">运行时常量池 和 编译期常量池 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串常量池的位置问题"><span class="nav-number">2.5.</span> <span class="nav-text">字符串常量池的位置问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串常量池的位置问题-1"><span class="nav-number">2.6.</span> <span class="nav-text">字符串常量池的位置问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-number">3.</span> <span class="nav-text">Ref</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

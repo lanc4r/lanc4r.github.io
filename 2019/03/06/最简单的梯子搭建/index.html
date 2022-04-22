@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="折腾,科学上网,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言由于最近 double 会 的召开，导致大部分的梯子都翻了车，包括棍基的梯子也是不停的在翻车… 这导致了一个很尴尬的问题，每次翻车后我都给他发消息，梯子被封啦，多少还是有点觉得不好意思了，于是乎我决定自己动手撘一个…">
+<meta name="keywords" content="折腾,科学上网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始的科学上网">
+<meta property="og:url" content="http://yoursite.com/2019/03/06/最简单的梯子搭建/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言由于最近 double 会 的召开，导致大部分的梯子都翻了车，包括棍基的梯子也是不停的在翻车… 这导致了一个很尴尬的问题，每次翻车后我都给他发消息，梯子被封啦，多少还是有点觉得不好意思了，于是乎我决定自己动手撘一个…">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb7a71d338.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6e7d9138.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6f010b31.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6f5e6c81.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6e7c35ed.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6e90d360.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/03/06/5c7fb6e7bd590.jpg">
+<meta property="og:updated_time" content="2019-05-24T15:33:39.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始的科学上网">
+<meta name="twitter:description" content="前言由于最近 double 会 的召开，导致大部分的梯子都翻了车，包括棍基的梯子也是不停的在翻车… 这导致了一个很尴尬的问题，每次翻车后我都给他发消息，梯子被封啦，多少还是有点觉得不好意思了，于是乎我决定自己动手撘一个…">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/06/5c7fb7a71d338.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/06/最简单的梯子搭建/">
+
+
+
+
+
+  <title>从零开始的科学上网 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">03月</div>
+			<div class="post-day">06</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/科学上网的正确姿势/" itemprop="url" rel="index">
+          <span itemprop="name">科学上网的正确姿势</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/最简单的梯子搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从零开始的科学上网</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-06T20:50:05+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/科学上网的正确姿势/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">科学上网的正确姿势</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2019/03/06/5c7fb7a71d338.jpg" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>由于最近 <code>double 会</code> 的召开，导致大部分的梯子都翻了车，包括棍基的梯子也是不停的在翻车…</p>
+<p>这导致了一个很尴尬的问题，每次翻车后我都给他发消息，梯子被封啦，多少还是有点觉得不好意思了，于是乎我决定自己动手撘一个…</p>
+<a id="more"></a>
+<h1 id="选择服务商"><a href="#选择服务商" class="headerlink" title="选择服务商"></a>选择服务商</h1><p>这次我选的是大名鼎鼎的 <code>Vultr</code>，之前一直用的 <code>BandwagonHost</code>，但是发现最便宜的主机已经下架了，没办法，贫穷驱使我去寻找更高性价比的主机，所以盯上了 <strong>Vultr</strong>，嘿嘿嘿。</p>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6e7d9138.jpg" alt=""></p>
+<p>官网目前最便宜的价格是 <code>$5/month</code>，算下来一个月 30+，还是有点小贵的，机智的我立马想到和人合租服务器 (我可真是个小机灵鬼 .jpg)</p>
+<p>这次和公司前端的大佬陛哥合租，不多说了，陛哥牛逼~</p>
+<h1 id="选择主机"><a href="#选择主机" class="headerlink" title="选择主机"></a>选择主机</h1><p>我们在 Vultr 注册号账号之后，首先要做的就是充钱，官方貌似经常会搞活动，所以大家在支付之前最好看看，毕竟是有机会白嫖一个月的~</p>
+<p>分享一下我找到一个网站，会不定期更新最新的活动，想要白嫖就得自己时刻关注起来呀 </p>
+<p><a href="https://www.vultrer.com/23.html" target="_blank" rel="noopener">Vultr优惠码汇总页面</a></p>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6f010b31.jpg" alt=""></p>
+<p>充值完后我们就可以选择我们的主机了，它有 16 个地址可以选择，听说是 <strong>Tokyo</strong> 的机房对于国内来说不错，但是不是绝对的，不是绝对的，不是绝对的！</p>
+<p>这里分享两篇 18年，5、6月份的文章，大家可以参考一下：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/36605549" target="_blank" rel="noopener">决定用Vultr？大数据告诉你到底该选哪个机房！</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/38166614" target="_blank" rel="noopener">Vultr VPS 节点选择 | 各节点延迟一览</a></p>
+<p>另外还分享一个国内各个地区运营商测速的，你可以通过你所在地区以及网络运营商来制定更好的计划哟:</p>
+<p><a href="https://tools.ipip.net/ping.php" target="_blank" rel="noopener">IPIP</a></p>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6f5e6c81.jpg" alt=""></p>
+<h2 id="说说我的配置选择"><a href="#说说我的配置选择" class="headerlink" title="说说我的配置选择"></a>说说我的配置选择</h2><p>我选择的是 <code>Tokyo</code> 的节点，然后 系统使用 <code>CentOS 7.0</code>，价格当然是最便宜的 <code>$5/month</code>，最后点击 <code>Deploy Now</code>，等待几分钟你的主机就装好啦。</p>
+<h1 id="连接主机"><a href="#连接主机" class="headerlink" title="连接主机"></a>连接主机</h1><p>Windows 推荐 <code>XShell</code>、<code>putty</code>，我就不多bb了，网上一大堆的资料。</p>
+<p>然后 Linux 我们直接使用 自带的 ssh 连接就好啦，在命令行中输入命令：</p>
+<p><code>ssh -p 端口号 服务器用户名@主机ip</code></p>
+<p>比如: <code>ssh -p 22 root@101.202.101.202</code>，正常情况需要你信任一下当前的主机，输入 yes 就好，接着就是输入密码了，去 Vultr 的管理后台就能找到。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
+<li>如果 ssh 连接时候出现 <code>Operation timed out</code>，你可以试着 <code>ping</code> 一下那个 IP 地址，如果 ping 不通的话就有可能是被封了，但是如果能 ping 通，但是依旧显示 <code>Operation timed out</code> 的话，就使用下面的方法</li>
+</ul>
+<p>在终端输入: <code>vim /Users/lanc4r/.ssh/known_hosts</code></p>
+<p>在其中找到你的 认证 Key ，删掉它，然后重新使用 SSH 连接</p>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6e7c35ed.jpg" alt=""></p>
+<ul>
+<li>如果提示 <code>WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!</code>，解决步骤跟上面的方式一样，其实它都已经告诉你这个解决办法了…</li>
+</ul>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6e90d360.jpg" alt=""></p>
+<h2 id="再解释一下第一个问题"><a href="#再解释一下第一个问题" class="headerlink" title="再解释一下第一个问题"></a>再解释一下第一个问题</h2><p>在遇到第一个问题的时候，我试了试陛哥电脑，我发现他能够顺利连接，但是我搞死就不行….</p>
+<p>但是突然在一次连接的时候，爆出了第二了错误，我改了之后就啥事没有，所以我推测是因为第二个问题没有爆出来所以导致的第一个问题的出现，不过只是猜测，死马当作活马医嘛。</p>
+<p>另外再推荐一篇博客，出现问题也可以参考一下：</p>
+<p><a href="https://www.i5seo.com/vultr-ssh-operation-timed-out.html" target="_blank" rel="noopener">vultr ssh Operation timed out 连不上是什么问题？</a></p>
+<h1 id="搭建-SS"><a href="#搭建-SS" class="headerlink" title="搭建 SS"></a>搭建 SS</h1><p>这里我以 CentOS 来操作一下，我们使用的是 python 版本的 SS</p>
+<h2 id="安装-pip"><a href="#安装-pip" class="headerlink" title="安装 pip"></a>安装 pip</h2><p>pip 是 python 的包管理工具，我们将通过 pip 来安装我们的 SS，所以第一步当然是要安装 pip 啦</p>
+<p>打开终端在命令行中执行:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"</span><br><span class="line">python get-pip.py</span><br></pre></td></tr></table></figure>
+<h2 id="安装-SS"><a href="#安装-SS" class="headerlink" title="安装 SS"></a>安装 SS</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+<h2 id="配置-SS"><a href="#配置-SS" class="headerlink" title="配置 SS"></a>配置 SS</h2><p>安装完 SS 后还需要进行相应的配置</p>
+<p>我们在终端执行 <code>vim /etc/shadowsocks.json</code>，如果没有这个文件将会自动创建，然后在其中输入配置信息。</p>
+<p>注意：这里信息分为单个端口配置 和 多端口配置，多端口配置可以方便你分享给其他的小伙伴</p>
+<h3 id="多个端口配置"><a href="#多个端口配置" class="headerlink" title="多个端口配置"></a>多个端口配置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"server"</span>:<span class="string">"0.0.0.0"</span>, <span class="comment">// 替换为你自己的服务器地址</span></span><br><span class="line"><span class="string">"local_address"</span>: <span class="string">"127.0.0.1"</span>,	<span class="comment">// 输入本地地址(忽略就行)</span></span><br><span class="line"><span class="string">"local_port"</span>:<span class="number">1080</span>,				<span class="comment">// 本地端口(忽略就行)</span></span><br><span class="line"><span class="string">"port_password"</span>:&#123;</span><br><span class="line">	<span class="string">"2333"</span>: <span class="string">"biubiubiu"</span>,		<span class="comment">// 监听的端口 和 密码(用于客户端连接)</span></span><br><span class="line">	<span class="string">"2334"</span>: <span class="string">"piupiupiu"</span>,</span><br><span class="line">	<span class="string">"2335"</span>: <span class="string">"miaomiaomiao"</span>,</span><br><span class="line">	<span class="string">"2336"</span>: <span class="string">"guaguauga"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"timeout"</span>:<span class="number">300</span>,					<span class="comment">// 超时时间</span></span><br><span class="line"><span class="string">"method"</span>:<span class="string">"aes-256-cfb"</span>,			<span class="comment">// 加密方法: aes-128-cfb, aes-192-cfb, aes-256-cfb</span></span><br><span class="line"><span class="string">"fast_open"</span>: <span class="literal">false</span>				<span class="comment">// 快速开开启标识，如果你的服务器 Linux 内核在3.7+，可以开启 fast_open 以降低延迟</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="单个端口配置"><a href="#单个端口配置" class="headerlink" title="单个端口配置"></a>单个端口配置</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">"server"</span>:<span class="string">"0.0.0.0"</span>,            </span><br><span class="line"> "server_port":8888,            // 监听端口，用于客户端连接</span><br><span class="line"> "local_address": "127.0.0.1",  </span><br><span class="line"> "local_port":1080,             </span><br><span class="line"> "password":"password",         // 连接密码，用于客户端连接</span><br><span class="line"> "timeout":300,                 </span><br><span class="line"> "method":"aes-256-cfb"        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="放行防火墙端口-只针对-CentOS-系统"><a href="#放行防火墙端口-只针对-CentOS-系统" class="headerlink" title="放行防火墙端口 (只针对 CentOS 系统)"></a>放行防火墙端口 (只针对 CentOS 系统)</h2><p>CentOS 默认使用 firewall 作为防火墙，我们需要让其放行对我们自己设置的端口的限制：</p>
+<p>在命令行下输入，把端口替换为你自己的端口即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --add-port=2333/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=2334/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=2335/tcp</span><br><span class="line">firewall-cmd --permanent --add-port=2336/tcp</span><br></pre></td></tr></table></figure>
+<p>重启 firewell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<h2 id="启动-SS-服务"><a href="#启动-SS-服务" class="headerlink" title="启动 SS 服务"></a>启动 SS 服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start    #启动</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d stop     #停止</span><br><span class="line">ssserver -c /etc/shadowsocks.json -d restart  #重启</span><br></pre></td></tr></table></figure>
+<h2 id="下载-SS-客户端"><a href="#下载-SS-客户端" class="headerlink" title="下载 SS 客户端"></a>下载 SS 客户端</h2><p>戳下面地址，选择自己的操作对应的SS，然后跑起来，如果访问不了 GayHub 私信我邮箱吧(见文末)</p>
+<p><a href="https://github.com/shadowsocks" target="_blank" rel="noopener">Shadowsocks</a></p>
+<h2 id="配置-SS-客户端"><a href="#配置-SS-客户端" class="headerlink" title="配置 SS 客户端"></a>配置 SS 客户端</h2><p>客户端配置就相对简单啦，对应与你刚才配置好的地址、端口、密码输入进去就好了</p>
+<p><img src="https://i.loli.net/2019/03/06/5c7fb6e7bd590.jpg" alt=""></p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>先简单说一下 SS 的两个常见模式的区别：</p>
+<ul>
+<li>PAC代理模式(又叫自动模式)</li>
+<li>全局代理模式</li>
+</ul>
+<p>先说说全局模式吧，全局模式表示所有的地址都走代理，比如我们在墙内访问什么 百度、新浪，这时候依然走的代理，也就是说我们 访问墙内的东西会先发请求去墙外，然后由墙外向墙内发起请求，如果没有特殊需求不建议使用全局模式…</p>
+<p>然后是 PAC 代理模式，它其实存储了一份地址名单，如果你请求的地址存在于名单上就会走代理，如果不存在于名单上就不会走代理，这样就会避免绕出墙来访问墙内世界的这种操作。</p>
+<p>这个代理规则是有两份名单来决定的，其中线上有一份公用的，几乎能满足你 90% 的代理需求，当然那 10% 也是支持自定义的，点击 SS 选择 <code>编辑PAC用户自定规则</code>，然后根据不同的操作系统自己设置就好了，具体的规则自己去了解吧。</p>
+<p>说了这么多要说一下我们的 Tips，如果你开着代理发现某个网站访问不了，这时候不要急，先切换至 <code>全局模式</code> 试一下，如果全局模式能点开，这时候就需要我们上面讲的自定义用户 PAC 的方法啦。</p>
+<p>当然如果切换至全局模式也访问不了的话，这时候可以选择 ping 一下这个地址，看是不是它的服务器挂了…</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>不知道是不是还有人在看我的博客诶，如果还有的话，我想对你们说句话：</p>
+<p>谢谢你能来到这里，也谢谢你的关注，也许你只是无意间敲错了 Url ，随着浏览器的跳转，来访到此。不过，无论如果都欢迎你…..静下来看看我的吐槽，或是咱们一起聊聊。</p>
+<p>真心希望能够帮到你呀，哪怕一点点也好。芸芸众生，能够相遇已经是件很棒的事情了~</p>
+<p>最后算是一点小小的礼物吧，谢谢您们关注了这么久哈哈哈</p>
+<p>底下是我的邮箱，如果你们有 VPN 的需要的话，可以私信我，让我来满足你们这个小小的需求~</p>
+<p>Email: <code>&lt;lanc4r1996@foxmail.com&gt;</code></p>
+<p>Or If you prefer Gmail: <code>&lt;lanc4r1996@gmail.com&gt;</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/折腾/" rel="tag"># 折腾</a>
+          
+            <a href="/tags/科学上网/" rel="tag"># 科学上网</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/04/考虑用构建器代替多参数构造器/" rel="next" title="Effective Java —— 考虑使用构建器代替多参数构造器">
+                <i class="fa fa-chevron-left"></i> Effective Java —— 考虑使用构建器代替多参数构造器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/16/第N次的LAMP环境搭建折腾 + 炒鸡简单的 HTTPS 创建/" rel="prev" title="第 N 次的 LAMP 环境搭建 + 炒鸡简单的 HTTPS 创建">
+                第 N 次的 LAMP 环境搭建 + 炒鸡简单的 HTTPS 创建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择服务商"><span class="nav-number">2.</span> <span class="nav-text">选择服务商</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择主机"><span class="nav-number">3.</span> <span class="nav-text">选择主机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说说我的配置选择"><span class="nav-number">3.1.</span> <span class="nav-text">说说我的配置选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接主机"><span class="nav-number">4.</span> <span class="nav-text">连接主机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">4.1.</span> <span class="nav-text">FAQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再解释一下第一个问题"><span class="nav-number">4.2.</span> <span class="nav-text">再解释一下第一个问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建-SS"><span class="nav-number">5.</span> <span class="nav-text">搭建 SS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-pip"><span class="nav-number">5.1.</span> <span class="nav-text">安装 pip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-SS"><span class="nav-number">5.2.</span> <span class="nav-text">安装 SS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SS"><span class="nav-number">5.3.</span> <span class="nav-text">配置 SS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多个端口配置"><span class="nav-number">5.3.1.</span> <span class="nav-text">多个端口配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单个端口配置"><span class="nav-number">5.3.2.</span> <span class="nav-text">单个端口配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放行防火墙端口-只针对-CentOS-系统"><span class="nav-number">5.4.</span> <span class="nav-text">放行防火墙端口 (只针对 CentOS 系统)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动-SS-服务"><span class="nav-number">5.5.</span> <span class="nav-text">启动 SS 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载-SS-客户端"><span class="nav-number">5.6.</span> <span class="nav-text">下载 SS 客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SS-客户端"><span class="nav-number">5.7.</span> <span class="nav-text">配置 SS 客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">5.8.</span> <span class="nav-text">Tips</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">6.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

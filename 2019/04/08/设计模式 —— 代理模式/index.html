@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,Mybatis,设计模式,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言HL 真的好菜，最近菜得我开始觉得人间不值得了…o(TヘTo)。">
+<meta name="keywords" content="Java,后端,Mybatis,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式 —— 代理模式初の识">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/设计模式 —— 代理模式/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言HL 真的好菜，最近菜得我开始觉得人间不值得了…o(TヘTo)。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/04/08/5cab3e2431fb2.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/08/5cab3e2235d2d.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/08/5cab3e2237abf.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/08/5cab3e22306a0.png">
+<meta property="og:image" content="https://i.loli.net/2019/04/08/5cab3e2239829.png">
+<meta property="og:updated_time" content="2019-05-24T15:35:48.666Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式 —— 代理模式初の识">
+<meta name="twitter:description" content="前言HL 真的好菜，最近菜得我开始觉得人间不值得了…o(TヘTo)。">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/08/5cab3e2431fb2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/08/设计模式 —— 代理模式/">
+
+
+
+
+
+  <title>设计模式 —— 代理模式初の识 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">04月</div>
+			<div class="post-day">08</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/设计模式/" itemprop="url" rel="index">
+          <span itemprop="name">设计模式</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/设计模式 —— 代理模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式 —— 代理模式初の识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-08T20:30:05+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2019/04/08/5cab3e2431fb2.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>HL 真的好菜，最近菜得我开始觉得人间不值得了…o(TヘTo)。</p>
+<a id="more"></a>
+<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>我们先简单了解一下代理模式，究竟什么是代理模式？它有什么作用？它到底是怎么运作的？</p>
+<p><strong>代理模式，其实质是一种行为的监控。它的主要作用是：将 主要业务 和 次要业务 进行松耦合的组装。让开发人员专注于 主要业务的开发，而不用去次要业务的执行。</strong></p>
+<p>上面这句话先记住，这是一种思想，然后先举栗一个之前很熟悉的栗子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"button"</span> onclick=<span class="string">"处理函数"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>JS 的这种监控事件其实就有代理模式的影子，上面的代码监控了 按钮的点击事件，这里实际上的操作流程是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 确定监控行为 (对用户的点击操作进行监控)</span><br><span class="line">2. 一个通知的角色，当被监控的行为发生了，它需要通知被监控的对象，你应该这么做(处理函数()) (对应到上面是 JS 代码)</span><br><span class="line">3. 一个监控的人，它的作用就是监控此行为(这里我猜是 浏览器 内部的事情)</span><br></pre></td></tr></table></figure>
+<p>上面的代码只是类似于一种代理，但并不是我们说的设计模式里的代理模式，为了更加真实的贴近代理模式，这里我们换一个栗子~</p>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>举栗此刻你身边的手机吧，它的 <strong>支付功能</strong> 和 <strong>更换密码功能</strong> 都需要指纹验证，其中在 支付前 需要指纹验证，在设置新的密码后，为了确认需要再次进行指纹验证。</p>
+<p>由之前代理模式的原理，我们把上面这个栗子也拆分为 主要业务 和 次要业务：</p>
+<p><strong>主要业务：</strong></p>
+<ul>
+<li>支付功能</li>
+<li>更换密码功能</li>
+</ul>
+<p><strong>次要业务：</strong></p>
+<ul>
+<li>指纹验证</li>
+</ul>
+<p><strong>基于上面这个栗子我们来梳理一下 JDK 代理模式的实现</strong></p>
+<ul>
+<li><p><strong>接口角色</strong>：定义所有被监控的行为，根据以上的栗子我们的行为有 (支付功能 和 更换密码功能)</p>
+</li>
+<li><p><strong>接口实现</strong>：实现这些行为的对象 (往大了说是 生物、人类；往小了说是 男人、女人、中国人、日本人)</p>
+</li>
+<li><p><strong>通知类：它主要做以下两件事</strong></p>
+<ul>
+<li>次要业务的具体实现，当被监控的行为发生时，他需要通知被监控的对象，应该怎么做！</li>
+<li>通知 JVM，当前被拦截的主要业务方法 和 次要业务方法 应该如何进行绑定</li>
+</ul>
+</li>
+<li><p><strong>监控对象：又称代理对象，其作用如下：</strong></p>
+<ul>
+<li>确定被监控的对象 和 被监控的行为  (比如当监控行为发生了，它知道是 那种对象 执行的 这种监控行为)</li>
+<li>确定通知类的实例对象</li>
+<li>当监控行为发生时，把这个消息传递给通知类，然后由通知类来告诉触发这个行为的对象应该怎么去做</li>
+</ul>
+</li>
+</ul>
+<p><strong>大概流程就是：</strong><br>监控对象 发现监控的行为发生了，它会告诉 通知类：谁(触发行为的对象)做了某件事了(被监控的行为)。然后通知类获取到这些信息后就会去 告诉这个对象，你应该如何做这个事情(被监控的行为)。</p>
+<p><strong>多BB两句：</strong><br>其实还有点像：学生时代经历的被人给班主任打小报告。总有那么一个监控对象在一直监视着你，当你发生了例如：逃课等行为，监控对象就会告诉通知类(班主任)，然后班主任再来告诉你如果你要逃课你需要做什么哈哈哈哈。</p>
+<h3 id="代码代码"><a href="#代码代码" class="headerlink" title="代码代码"></a>代码代码</h3><p>有了上面的栗子，我们用具体的 Java 代码来实现以下，然后在说一些需要注意的地方。</p>
+<h4 id="定义被监控行为的接口-MainService"><a href="#定义被监控行为的接口-MainService" class="headerlink" title="定义被监控行为的接口 MainService"></a>定义被监控行为的接口 MainService</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> DesignPattern.ProxyPattern.service;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此接口记录所有的被监控行为:&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 只要是被写入次接口的行为都将会被监控，若有具体对象调用了此类的被监控的方法&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 这时候此方法的执行就会被拦截，代理对象会告诉通知类后续的操作应该如何进行</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MainService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟支付功能</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">paying</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟更换密码功能</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changingPassword</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="具体行为的实现类-Person"><a href="#具体行为的实现类-Person" class="headerlink" title="具体行为的实现类 Person"></a>具体行为的实现类 Person</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> DesignPattern.ProxyPattern.serviceImpl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.service.MainService;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">MainService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">paying</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"The gay is paying."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changingPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"The gay is changing password."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通知类-Invocation"><a href="#通知类-Invocation" class="headerlink" title="通知类 Invocation"></a>通知类 Invocation</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> DesignPattern.ProxyPattern.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.service.MainService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此类是我们通知类，他需要在 代理对象告诉它监控行为发生时&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 告诉 被监控的对象 如何执行 被监控的这个行为。&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 此类需要实现 java.lang.reflect.InvocationHandler 这个接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invocation</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * ### 这里还有一个需要注意的地方，当拦截发生时&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 我们不仅可以获取到 被拦截的行为，还可以或得到这个 执行这个行为的对象！！！&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 这个对象是必须的，因为在后面 执行原定方法的时候需要用到此对象，method.invoke() 需要传入</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里还要解释一下这里 obj 的参数时 MainService，我们可以从两个方面来理解:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 1. 一个你可以理解为多态，如果我们写死其具体的实现类，那么其他实现这个接口的类就无法被监听了，这肯定不行&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 2. 由第一点我们可以想到第二点，我们监听面向的是行为，而行为就是定义在 MainService 中的，所以这里也该写 MainService</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MainService obj;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Invocation</span><span class="params">(MainService param)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.obj = param;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解释一下参数：&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * Object proxy ： 代理对象，就是它通知的 Invocation，其实在这个方法内一点卵用没有，忽略&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * Method method：被监控的行为，这里是一个 Method 类型的对象，我们可以通过 反射机制来获取其名字&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 然后根据不同的名字来执行不同的策略 (因为被监控的有很多，并且执行的策略也不一样)&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * Object[] args: 执行 method() 方法需要的参数。&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 再解释一下返回值:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * Object 类型数据: 因为我们可能监听不同的方法，每个方法的返回值类型可能不同，所以这里用一个 Object 来返回&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 最后解释一下这个方法的作用&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 在被监控行为将要执行时，会被JVM拦截，被监控行为和行为实现方会被作为参数输送invoke&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 再由它通知JVM,这个被拦截方法是如何与当前次要业务方法绑定实现(其实就是写具体的实现，到底要爪子)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 我们先定义一个变量来接受我们的返回值</span></span><br><span class="line">        Object returnValue = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 拿去方法的名称，应为被监听的方法有很多，可能不同的方法有不同的策略，我们需要通过名字来区分</span></span><br><span class="line">        <span class="comment">// 这些名字就被定义在保存被监听行为的接口内，在这个栗子中就是 (MainService)</span></span><br><span class="line">        String methodName = method.getName();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据不通的拦截行为，决定主要业务和次要业务如何绑定 (简单说就是如何执行)</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"paying"</span>.equals(methodName)) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 支付前应该进行指纹验证</span></span><br><span class="line">            verifyingFingerprint();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 执行完验证后需要执行原本的方法，并且注意需要接受的返回值 和 需要传递的参数</span></span><br><span class="line">            returnValue = method.invoke(<span class="keyword">this</span>.obj, args);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"changingPassword"</span>.equals(methodName)) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 执行完验证后需要执行原本的方法，并且注意需要接受的返回值 和 需要传递的参数</span></span><br><span class="line">            returnValue = method.invoke(<span class="keyword">this</span>.obj, args);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 修改密码后需要再次验证指纹</span></span><br><span class="line">            verifyingFingerprint();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> returnValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">verifyingFingerprint</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Verifying you fingerprint."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代理工厂-ProxyFactory"><a href="#代理工厂-ProxyFactory" class="headerlink" title="代理工厂 ProxyFactory"></a>代理工厂 ProxyFactory</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> DesignPattern.ProxyPattern.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.service.MainService;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 代理工厂，它就是我们之前所讲的代理对象，它负责监听行为，如果行为发生将其传递给 通知类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 我说说自己的理解：</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 此类名义上是监听行为的，其实就是一个 “对象产生器”，由它产生的对象，在执行被监听的方法时才会被拦截!&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 比如我们自己建立一个 Person 类，然后调用方法，此时是不会发生监听和拦截的。我们需要使用这个代理工厂&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 其创建的对象在执行对应的方法的时候才会 被监听、从而被拦截。</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 最后说一点：&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * 针对每一个 “被监控的对象” 我们都有与之对应的代理对象，一个代理对象只监控一个触发对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProxyFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解释参数:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * Class classFile : 被监控的具体对象的 class 文件&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * (只要是实现了被监控行为的类，其实例对象在运行被监控的方法的时候，他就算作被 监控的对象，因为它执行了被监控的方法了嘛)&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 解释一下返回值:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 前面我们说了，只有靠代理工厂生成的对象，在执行方法时，才会被监听、被拦截，所以这里的参数类型是 MainService，解释很之前一样:&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 1. 一个你可以理解为多态，如果我们写死其具体的实现类，那么其他实现这个接口的类就无法被监听了，这肯定不行&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 2. 由第一点我们可以想到第二点，我们监听面向的是行为，而行为就是定义在 MainService 中的，所以这里也该写 MainService</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MainService <span class="title">Builder</span><span class="params">(Class classFile)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1. 创建 被监控的实例对象&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 通过 class文件来创建 被监听的对象，还记得我们的 通知类(Invocation) 的构造方法，其入参就是被监听的对象&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 这里我们的操作就是给 通知器 Invocation 创建入参&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 注意Invocation的入参类型，之前已经解释过了，我们还可以理解为 被监控的对象实际上就是执行 被监控方法的对象&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 因为有多种类型，所以这里肯定使用其接口类型啦</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        MainService obj = (MainService) classFile.newInstance();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 2. 创建一个通知类</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        Invocation adviser = <span class="keyword">new</span> Invocation(obj);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 3. 向JVM申请负责监控obj对象指定行为的监控对象（代理对象）&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 这一步就是关键啦，它解释了我们前面说的 ：每一个 被监听的对象 都有一个 相应的代理对象 负责监听，一对一的&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 它用到了 java 中的 java.lang.reflect.Proxy 类</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 说说这个方法：&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * Proxy.newProxyInstance() 返回指定接口的代理类的实例，该接口将方法调用分派给指定的调用处理程序。&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 简单说就是返回一个代理类，这个代理类在执行相应的方法时就会 被拦截&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * #### 这里有个重要的一点，代理类 和 被监听的行为 其实是一个类型！！！！ (可以理解为它也要执行被监听的行为呀)&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 再说一下参数(括号内为官方解释):&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * ClassLoader loader : 被监控对象隶属的类文件在内存中真实地址 (定义了代理类的类加载器)&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * Class&lt;?&gt;[] interfaces: 被监控对象隶属的类文件实现接口 (这个代理类实现的接口)&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * InvocationHandler h:</span></span><br><span class="line"><span class="comment">         * 监控对象发现对象要执行被监控行为，应该有哪一个通知对象进行辅助(处理方法调用的调度处理器)&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 再说一下返回值: (渣翻上线)&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 其实就是返回我们的 代理对象(方法返回一个代理实例，它拥有一个特殊的调用处理器，这个调度处理器有一个 拥有特殊类加载器和实现特殊接口</span></span><br><span class="line"><span class="comment">         * 的代理类)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        MainService $proxy = (MainService) Proxy.newProxyInstance(obj.getClass().getClassLoader(),</span><br><span class="line">                obj.getClass().getInterfaces(), adviser);</span><br><span class="line">        <span class="keyword">return</span> $proxy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试类-Run"><a href="#测试类-Run" class="headerlink" title="测试类 Run"></a>测试类 Run</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> DesignPattern.ProxyPattern.run;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.service.MainService;</span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.serviceImpl.Person;</span><br><span class="line"><span class="keyword">import</span> DesignPattern.ProxyPattern.util.ProxyFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Run</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ### 注意，直接这样创建对象 执行方法，是不会被监听被拦截的，我们需要使用代理工厂来做这样事情</span></span><br><span class="line">        <span class="comment">// MainService alex = new Person();</span></span><br><span class="line">        <span class="comment">// alex.paying();</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 下面使用 代理工厂创建的代理类来执行就好&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         * 因为我们的 Builder() 函数中需要传入的是 被监控的具体对象的 class 文件&lt;br&gt;</span></span><br><span class="line"><span class="comment">         * 这里因为 Person 类实现了被监控的方法，所以 Person 就是那个具体的被监控的对象，其.class 就是参数</span></span><br><span class="line"><span class="comment">         * </span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        MainService alex = ProxyFactory.Builder(Person.class);</span><br><span class="line">        alex.paying();</span><br><span class="line">        alex.changingPassword();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li><p>通知类对象需要实现 java.lang.reflect.InvocationHandler 这个接口，并且其构造方法需要传入被监控的对象实例，类型为 被监控行为的描述类。</p>
+</li>
+<li><p>我总感觉代理对象不是监听的，更像一个代理执行的对象，它不是进行监听的，而是它自身就被监听了，一旦它执行了相应的方法，就会被拦截。</p>
+</li>
+<li><p>代理对象的类型其实 和 被监听行为的接口 拥有同样的类型，因为它就是用来执行那些方法的呀，这也印证我的第二点猜想…</p>
+</li>
+<li><p>代理对象一般需要实现一个 Builder(Class classFile) 方法，其中 classFile 是 被监控的具体对象的 class 文件，我们需要用它来创建被监控的实例，然后通过这个实例来找到 其在内存中的地址，和它实现的接口。</p>
+</li>
+</ol>
+<h2 id="看一看-Mybatis-代码中某处的代理模式应用"><a href="#看一看-Mybatis-代码中某处的代理模式应用" class="headerlink" title="看一看 Mybatis 代码中某处的代理模式应用"></a>看一看 Mybatis 代码中某处的代理模式应用</h2><p>上面例子中我们的通知类是 <strong>Invocation</strong> ，但是在 Mybatis 里，它的通知类的命名为：</p>
+<p><code>org.apache.ibatis.plugin.Plugin</code></p>
+<p>下面截取部分代码来简单说一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Plugin</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Object target;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Interceptor interceptor;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Class&lt;?&gt;, Set&lt;Method&gt;&gt; signatureMap;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Plugin</span><span class="params">(Object target, Interceptor interceptor, Map&lt;Class&lt;?&gt;, Set&lt;Method&gt;&gt; signatureMap)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.target = target;</span><br><span class="line">    <span class="keyword">this</span>.interceptor = interceptor;</span><br><span class="line">    <span class="keyword">this</span>.signatureMap = signatureMap;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      Set&lt;Method&gt; methods = signatureMap.get(method.getDeclaringClass());</span><br><span class="line">      <span class="keyword">if</span> (methods != <span class="keyword">null</span> &amp;&amp; methods.contains(method)) &#123;</span><br><span class="line">        <span class="keyword">return</span> interceptor.intercept(<span class="keyword">new</span> Invocation(target, method, args));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> method.invoke(target, args);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> ExceptionUtil.unwrapThrowable(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Plugin</strong> 类在 实现了 <code>InvocationHandler</code> 接口，所以他是一个通知类，下面我们主要看看它的参数 和 重写的 <code>invoke()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Object target;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Interceptor interceptor;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Class&lt;?&gt;, Set&lt;Method&gt;&gt; signatureMap;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">Plugin</span><span class="params">(Object target, Interceptor interceptor, Map&lt;Class&lt;?&gt;, Set&lt;Method&gt;&gt; signatureMap)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.target = target;</span><br><span class="line">    <span class="keyword">this</span>.interceptor = interceptor;</span><br><span class="line">    <span class="keyword">this</span>.signatureMap = signatureMap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数中有一个我们很熟悉的 <code>Object target</code>，它就是被监控的对象实例啦，后面执行 <code>method.invoke()</code> 的时候我们还需要用到它。同时，它也是在构造中被赋值的，当外界项创建 通知类的时候，就需要传递被监听的对象实例。</p>
+<p>然后我们再看看重写 <code>invoke()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Set&lt;Method&gt; methods = signatureMap.get(method.getDeclaringClass());</span><br><span class="line">        <span class="keyword">if</span> (methods != <span class="keyword">null</span> &amp;&amp; methods.contains(method)) &#123;</span><br><span class="line">            <span class="keyword">return</span> interceptor.intercept(<span class="keyword">new</span> Invocation(target, method, args));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> method.invoke(target, args);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> ExceptionUtil.unwrapThrowable(e);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>着重注意这里：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (methods != <span class="keyword">null</span> &amp;&amp; methods.contains(method)) &#123;</span><br><span class="line">    <span class="keyword">return</span> interceptor.intercept(<span class="keyword">new</span> Invocation(target, method, args));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有个判断，如果传入的方法被包含在需要监听的方法内部，这时候就会走监听，否在就会直接执行放过。以上就是 Mybatis 利用代理模式的一个小栗子。</p>
+<h2 id="炒鸡简单的-Mybatis-框架模拟"><a href="#炒鸡简单的-Mybatis-框架模拟" class="headerlink" title="炒鸡简单的 Mybatis 框架模拟"></a>炒鸡简单的 Mybatis 框架模拟</h2><p>前面我们学习了代理模式，并且也简单看了 Mybatis 一处实现代理模式的地方，下面我们试着自己简单模拟一下 Mybatis，用最简单的实现来做一个 <strong>“炒鸡简易版的 Mybatis”</strong></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>前面讲过在使用代理模式的时候，其作用就是把我们的 <strong>主要业务 和 次要业务 松耦合</strong>。那么在写之前我们有必要进行分析一波，针对于 Mybatis 的框架里，哪些业务是 主要业务，哪些是次要业务</p>
+<p>我们先一段最基础的 JDBC 代码，根据他我们来看看 Mybatis 实际上做了哪些事情。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1.注册驱动</span></span><br><span class="line">    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2.获取连接</span></span><br><span class="line">    String url = <span class="string">"jdbc:mysql://localhost:3306/havafun"</span>;</span><br><span class="line">    String username = <span class="string">"root"</span>;</span><br><span class="line">    String password = <span class="string">"xxx"</span>;</span><br><span class="line">    Connection conn = DriverManager.getConnection(url, username, password);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 输送 sql 语句</span></span><br><span class="line">    String sql = <span class="string">"select * from news where id=1"</span>;</span><br><span class="line">    PreparedStatement prepareStatement = conn.prepareStatement(sql);</span><br><span class="line">    ResultSet resultSet = prepareStatement.executeQuery();</span><br><span class="line">    <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">        System.out.println(resultSet.getString(<span class="string">"title"</span>));</span><br><span class="line">        System.out.println(resultSet.getString(<span class="string">"desc"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 关闭连接</span></span><br><span class="line">    prepareStatement.close();</span><br><span class="line">    conn.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码我们可以看出，完成一次简单的查询，我们大概需要做一下几件事情：</p>
+<ul>
+<li>注册驱动</li>
+<li>获取连接</li>
+<li>输送 sql 语句到数据库获得查询结果</li>
+<li>关闭连接</li>
+</ul>
+<p>这样一看 主要业务 和 次要业务 已经分得很清晰了</p>
+<p><strong>主要业务</strong></p>
+<ul>
+<li>输送 sql 语句到数据库获得查询结果</li>
+</ul>
+<p><strong>次要业务</strong></p>
+<ul>
+<li>注册驱动</li>
+<li>获取连接</li>
+<li>关闭连接</li>
+</ul>
+<h3 id="开码开码"><a href="#开码开码" class="headerlink" title="开码开码"></a>开码开码</h3><h4 id="存储被监听方法的接口-SqlSession"><a href="#存储被监听方法的接口-SqlSession" class="headerlink" title="存储被监听方法的接口 SqlSession"></a>存储被监听方法的接口 SqlSession</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimulateMybatis.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 需要被监听的方法，这里我们只举栗一个简单的 select 语句</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SqlSession</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultSet <span class="title">select</span><span class="params">(String sql)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现被监听接口的类-NewsMapper"><a href="#实现被监听接口的类-NewsMapper" class="headerlink" title="实现被监听接口的类 NewsMapper"></a>实现被监听接口的类 NewsMapper</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimulateMybatis.dao;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.service.SqlSession;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实现接口的实体类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewsMapper</span> <span class="keyword">implements</span> <span class="title">SqlSession</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 因为要执行 sql 语句，所以这里需要再这里声明一个 PreparedStatement 对象，由它来执行 sql 语句</span></span><br><span class="line">    <span class="comment">// 后面将会在运行时候通过 反射来对其赋值，所以反射我需要找个时间看看啦，一定要好好看看这个东西，后面好多都在用这个 反射机制</span></span><br><span class="line">    <span class="keyword">private</span> PreparedStatement ps;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultSet <span class="title">select</span><span class="params">(String sql)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ps.executeQuery(sql);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通知类-Invocation-1"><a href="#通知类-Invocation-1" class="headerlink" title="通知类 Invocation"></a>通知类 Invocation</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimulateMybatis.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.service.SqlSession;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通知类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invocation</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SqlSession obj;</span><br><span class="line">    <span class="keyword">private</span> Connection conn;</span><br><span class="line">    <span class="keyword">private</span> PreparedStatement pStatement;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Invocation</span><span class="params">(SqlSession param)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.obj = param;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里有个地方比之前的栗子多的东西：&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 我们被监听的实例对象 (NewsMapper 的实例)，它为了能够执行 sql，其中有个一个 私有的 PreparedStatement</span></span><br><span class="line"><span class="comment">     * 参数，&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 这里我们需要在运行时候，运行反射给其赋值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line"></span><br><span class="line">        Object returnValue;</span><br><span class="line"></span><br><span class="line">        String methodName = method.getName();</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"select"</span>.equals(methodName)) &#123;</span><br><span class="line">            <span class="comment">// 如果是监听的方法，我们进行拦截，然后一些操作</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 1. 初始化运行环境</span></span><br><span class="line">            init();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. 别忘了重要的一部，我们需要通过反射，获取当前被监听的对象，对其的 PreparedStatement ps 变量赋值</span></span><br><span class="line">            Field psField = <span class="keyword">this</span>.obj.getClass().getDeclaredField(<span class="string">"ps"</span>);</span><br><span class="line">            psField.setAccessible(<span class="keyword">true</span>); <span class="comment">// 私有属性我们将其设置为可访问的</span></span><br><span class="line">            psField.set(<span class="keyword">this</span>.obj, <span class="keyword">this</span>.pStatement);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 然后是执行原来方法的逻辑</span></span><br><span class="line">            returnValue = method.invoke(<span class="keyword">this</span>.obj, args);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 最后执行完之后我们需要关闭资源</span></span><br><span class="line">            close();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果不是直接执行原来的方法，不进行拦截</span></span><br><span class="line">            returnValue = method.invoke(<span class="keyword">this</span>.obj, args);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> returnValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化环境，我们需要 注册驱动，创建连接 ...</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 1.注册驱动</span></span><br><span class="line">        Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">        <span class="comment">// 2.获取连接</span></span><br><span class="line">        String url = <span class="string">"jdbc:mysql://localhost:3306/havafun"</span>;</span><br><span class="line">        String username = <span class="string">"root"</span>;</span><br><span class="line">        String password = <span class="string">"wdst123456"</span>;</span><br><span class="line">        conn = DriverManager.getConnection(url, username, password);</span><br><span class="line">        pStatement = conn.prepareStatement(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pStatement != <span class="keyword">null</span>) &#123;</span><br><span class="line">            pStatement.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">            conn.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代理工厂-SqlSessionFactory"><a href="#代理工厂-SqlSessionFactory" class="headerlink" title="代理工厂 SqlSessionFactory"></a>代理工厂 SqlSessionFactory</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimulateMybatis.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.service.SqlSession;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 代理工厂，作用跟之前一样哦</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlSessionFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SqlSession <span class="title">Builder</span><span class="params">(Class classFile)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 获取被监听的实例对象</span></span><br><span class="line">        SqlSession sqlSession = (SqlSession) classFile.newInstance();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 创建一个通知类，其参数需要一个被监听的实例对象，上面我们已经通过 classFile 获取啦</span></span><br><span class="line">        Invocation advise = <span class="keyword">new</span> Invocation(sqlSession);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 生成代理对象 (其实就是为我们被监听的实例对象产生一个代理对象)</span></span><br><span class="line">        SqlSession $proxy = (SqlSession) Proxy.newProxyInstance(sqlSession.getClass().getClassLoader(),</span><br><span class="line">                sqlSession.getClass().getInterfaces(), advise);</span><br><span class="line">        <span class="keyword">return</span> $proxy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RunRunRun"><a href="#RunRunRun" class="headerlink" title="RunRunRun"></a>RunRunRun</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> SimulateMybatis.run;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.dao.NewsMapper;</span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.service.SqlSession;</span><br><span class="line"><span class="keyword">import</span> SimulateMybatis.util.SqlSessionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RunRunRun</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SqlSession biubiubiu = SqlSessionFactory.Builder(NewsMapper.class);</span><br><span class="line">        ResultSet resultSet = biubiubiu.select(<span class="string">"select * from news where id=1"</span>);</span><br><span class="line">        <span class="keyword">while</span> (resultSet.next()) &#123;</span><br><span class="line">            System.out.println(resultSet.getString(<span class="string">"title"</span>));</span><br><span class="line">            System.out.println(resultSet.getString(<span class="string">"desc"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="执行结果："><a href="#执行结果：" class="headerlink" title="执行结果："></a>执行结果：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.sql.SQLException: Operation not allowed after ResultSet closed</span><br><span class="line">	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:<span class="number">959</span>)</span><br><span class="line">	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:<span class="number">898</span>)</span><br><span class="line">	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:<span class="number">887</span>)</span><br><span class="line">	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:<span class="number">862</span>)</span><br><span class="line">	at com.mysql.jdbc.ResultSetImpl.checkClosed(ResultSetImpl.java:<span class="number">743</span>)</span><br><span class="line">	at com.mysql.jdbc.ResultSetImpl.next(ResultSetImpl.java:<span class="number">6320</span>)</span><br><span class="line">	at SimulateMybatis.run.RunRunRun.main(RunRunRun.java:<span class="number">14</span>)</span><br></pre></td></tr></table></figure>
+<p>噫，提示我们的 ResultSet 在调用的时候已经被关闭了~</p>
+<p>我们先 debug 看一下：</p>
+<p>首先代理对象拿到了，是我们的 NewsMapper 类型的数据</p>
+<p><img src="https://i.loli.net/2019/04/08/5cab3e2235d2d.png" alt=""></p>
+<p>接着看发现方法也拿到了</p>
+<p><img src="https://i.loli.net/2019/04/08/5cab3e2237abf.png" alt=""></p>
+<p>哟西，参数也是我们传入的 SQL 语句。</p>
+<p><img src="https://i.loli.net/2019/04/08/5cab3e22306a0.png" alt=""></p>
+<p><strong>那么为啥提示被关闭呢？？？</strong></p>
+<p><img src="https://i.loli.net/2019/04/08/5cab3e2239829.png" alt=""></p>
+<p>继续 跟进 我们发现，返回的 <strong>returnValue</strong> 是查询到数据的，但是这里我们返回之后关闭了连接(我真是个小机灵鬼.jpg)，所以在这个方法执行完之后我们的  <strong>conn 和 pStatement</strong> 这两个连接已经被关闭了，所以使用的时候会提示已经关闭。</p>
+<p>这样更加印证我们的代理模式成功啦~~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/弱鸡HL对源码的正确打开方式 —— Mybatis初の识/" rel="next" title="弱鸡HL对源码的正确打开方式 —— Mybatis初の识">
+                <i class="fa fa-chevron-left"></i> 弱鸡HL对源码的正确打开方式 —— Mybatis初の识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/11/Java姿势解锁 —— Class对象/" rel="prev" title="Java姿势解锁 —— Class对象">
+                Java姿势解锁 —— Class对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理模式"><span class="nav-number">2.</span> <span class="nav-text">代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">2.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个栗子"><span class="nav-number">2.2.</span> <span class="nav-text">举个栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码代码"><span class="nav-number">2.2.1.</span> <span class="nav-text">代码代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义被监控行为的接口-MainService"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">定义被监控行为的接口 MainService</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体行为的实现类-Person"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">具体行为的实现类 Person</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知类-Invocation"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">通知类 Invocation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理工厂-ProxyFactory"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">代理工厂 ProxyFactory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试类-Run"><span class="nav-number">2.2.1.5.</span> <span class="nav-text">测试类 Run</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.2.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看一看-Mybatis-代码中某处的代理模式应用"><span class="nav-number">2.3.</span> <span class="nav-text">看一看 Mybatis 代码中某处的代理模式应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#炒鸡简单的-Mybatis-框架模拟"><span class="nav-number">2.4.</span> <span class="nav-text">炒鸡简单的 Mybatis 框架模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开码开码"><span class="nav-number">2.4.2.</span> <span class="nav-text">开码开码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储被监听方法的接口-SqlSession"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">存储被监听方法的接口 SqlSession</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现被监听接口的类-NewsMapper"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">实现被监听接口的类 NewsMapper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知类-Invocation-1"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">通知类 Invocation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理工厂-SqlSessionFactory"><span class="nav-number">2.4.2.4.</span> <span class="nav-text">代理工厂 SqlSessionFactory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RunRunRun"><span class="nav-number">2.4.2.5.</span> <span class="nav-text">RunRunRun</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行结果："><span class="nav-number">2.4.2.6.</span> <span class="nav-text">执行结果：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

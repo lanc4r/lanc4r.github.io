@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,Effective Java,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言静态工厂和构造器有个共同的局限性：它们都不能很好地扩展到大量的可选参数。下面举个栗子来看这个问题：比如一个类，有两个必要参数，有四个可选参数，我们应该怎么涉及这个类的构建呢？ 我们用一个类来表示 食品外面显示的营养成分标签，这些标签有两个是必须的，有四个是可选择的，它可能会长成下面这个样子:">
+<meta name="keywords" content="Java,后端,Effective Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java —— 考虑使用构建器代替多参数构造器">
+<meta property="og:url" content="http://yoursite.com/2019/03/04/考虑用构建器代替多参数构造器/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言静态工厂和构造器有个共同的局限性：它们都不能很好地扩展到大量的可选参数。下面举个栗子来看这个问题：比如一个类，有两个必要参数，有四个可选参数，我们应该怎么涉及这个类的构建呢？ 我们用一个类来表示 食品外面显示的营养成分标签，这些标签有两个是必须的，有四个是可选择的，它可能会长成下面这个样子:">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7cd6cc46be4.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/04/5c7cd6b7db541.jpg">
+<meta property="og:updated_time" content="2019-05-24T15:32:29.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java —— 考虑使用构建器代替多参数构造器">
+<meta name="twitter:description" content="前言静态工厂和构造器有个共同的局限性：它们都不能很好地扩展到大量的可选参数。下面举个栗子来看这个问题：比如一个类，有两个必要参数，有四个可选参数，我们应该怎么涉及这个类的构建呢？ 我们用一个类来表示 食品外面显示的营养成分标签，这些标签有两个是必须的，有四个是可选择的，它可能会长成下面这个样子:">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/04/5c7cd6cc46be4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/04/考虑用构建器代替多参数构造器/">
+
+
+
+
+
+  <title>Effective Java —— 考虑使用构建器代替多参数构造器 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">03月</div>
+			<div class="post-day">04</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Effective-Java/" itemprop="url" rel="index">
+          <span itemprop="name">Effective Java</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/04/考虑用构建器代替多参数构造器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Effective Java —— 考虑使用构建器代替多参数构造器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-04T15:50:05+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Effective-Java/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Effective Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.loli.net/2019/03/04/5c7cd6cc46be4.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>静态工厂和构造器有个共同的局限性：它们都不能很好地扩展到大量的可选参数</strong>。下面举个栗子来看这个问题：<br>比如一个类，有两个必要参数，有四个可选参数，我们应该怎么涉及这个类的构建呢？</p>
+<p>我们用一个类来表示 食品外面显示的营养成分标签，这些标签有两个是必须的，有四个是可选择的，它可能会长成下面这个样子:</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize;   <span class="comment">// 必须</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> serving;       <span class="comment">// 必须</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories;      <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat;           <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium;        <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cabohydrate;   <span class="comment">// 可选</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="如何实例化大量参数的类"><a href="#如何实例化大量参数的类" class="headerlink" title="如何实例化大量参数的类"></a>如何实例化大量参数的类</h1><p>这里主要介绍三种方式</p>
+<h2 id="1-使用-重叠构造器-来创建此类"><a href="#1-使用-重叠构造器-来创建此类" class="headerlink" title="1. 使用 重叠构造器 来创建此类"></a>1. 使用 重叠构造器 来创建此类</h2><p>在这种模式下，你需要提供 一个只有必要参数的构造器，第二个构造器有一个可选参数、第三个构造器有两个可选参数….</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize; <span class="comment">// 必须</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> serving; <span class="comment">// 必须</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories; <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat; <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium; <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cabohydrate; <span class="comment">// 可选</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只含有必要参数的构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(servingSize, serving, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 含有一个可选参数的构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving, <span class="keyword">int</span> calories)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(servingSize, serving, calories, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 含有两个可选参数的构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(servingSize, serving, calories, fat, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 含有三个可选参数的构造器 (最后一个参数默认传0)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat, <span class="keyword">int</span> sodium)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(servingSize, serving, calories, fat, sodium, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 一个含四个可选参数的构造器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving, <span class="keyword">int</span> calories, <span class="keyword">int</span> fat, <span class="keyword">int</span> sodium, <span class="keyword">int</span> cabohydrate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.servingSize = servingSize;</span><br><span class="line">        <span class="keyword">this</span>.serving = serving;</span><br><span class="line">        <span class="keyword">this</span>.calories = calories;</span><br><span class="line">        <span class="keyword">this</span>.fat = fat;</span><br><span class="line">        <span class="keyword">this</span>.sodium = sodium;</span><br><span class="line">        <span class="keyword">this</span>.cabohydrate = cabohydrate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>举个栗子来说明这种情况的缺点，假如我们只想创建一个不含有 <code>fat</code> 属性的实例，并且需要确保其他属性的值都是存在的，这个时候我们就需要这样调用：</p>
+<p><code>NutritionFacts nutrition = new NutritionFacts(111, 111, 111, 0, 111, 111);</code></p>
+<p>咋一看其实还没有多复杂对不对，但是当我们有 20个属性，有其中 5个属性是不需要设置的，这个时候如果继续使用这种方式来构造，一下子传递 20 个值，根本很让人崩溃好吗，读者需要一个一个的对应着接口上的名称配合注解，才能知道某个参数的作用是什么。如果又换另外 5个属性不需要设置值…</p>
+<p>还有一个情况，如果类型相同的参数，不小心颠倒了顺序，这个时候编译器不会出错，只有在程序运行的情况才能发现，Debug 也会浪费大量的时间….</p>
+<p>简单的说：<strong>重叠构造器模式是可以用的，但是当有许多参数的时候，客户端代码会很难编写，并且仍然较难以阅读。</strong></p>
+<h2 id="2-使用-JavaBean-模式"><a href="#2-使用-JavaBean-模式" class="headerlink" title="2. 使用 JavaBean 模式"></a>2. 使用 JavaBean 模式</h2><p>JavaBeans 模式实际上是：调用一个无参构造器来创建对象，然后调用 setter 方法来设置每个必要的参数，以及每个相关的可选参数，依然通过上述的栗子简单了解一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必选参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> servingSize = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> serving = -<span class="number">1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 可选参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> calories = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> fat = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sodium = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> cabohydrate = <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setters</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServingSize</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.servingSize = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServing</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serving = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCalories</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.calories = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFat</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.fat = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSodium</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sodium = val;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCabohydrate</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cabohydrate = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种模式弥补了重叠构造器模式的不足之处。简言之，就是创建实例变得简单了，产生的代码也易读。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NutritionFacts cocaCola = <span class="keyword">new</span> NutritionFacts();</span><br><span class="line">cocaCola.setServingSize(<span class="number">111</span>);</span><br><span class="line">cocaCola.setServing(<span class="number">111</span>);</span><br><span class="line">cocaCola.setCalories(<span class="number">111</span>);</span><br><span class="line">cocaCola.setFat(<span class="number">0</span>);</span><br><span class="line">cocaCola.setSodium(<span class="number">111</span>);</span><br><span class="line">cocaCola.setCabohydrate(<span class="number">111</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="JavaBeans-模式的缺点"><a href="#JavaBeans-模式的缺点" class="headerlink" title="JavaBeans 模式的缺点"></a>JavaBeans 模式的缺点</h3><p>尽管目前看来 JavaBeans 效果还是蛮不错的，但是我们忽略了一个问题，看看这样一个情况：</p>
+<p>我们已经知道 <strong>servingSize</strong> 和 <strong>serving</strong> 属性是必须的，如果没有保证成功初始化，运行程序会导致一些严重的后果。我们看看上面的代码，我们在最开始的时候使用了无参构造器已经实例化了一条数据，其实这个时候我们的 <strong>cocaCola</strong> 已经是可以调用的了，注意是 <strong>已经可以调用的了</strong>。</p>
+<p>很明显这样做可能就会出现问题，当我忘记执行 <code>cocaCola.setServing(111);</code> 这段代码的时候，<code>serving</code> 没能成功赋值，这时如果程序不知道的话，直接使用 <strong>cocaCola</strong> 变量就会发生错误了。<br>最主要的原因就是 <strong>构造过程被分到了几个调用中去了，在构造过程中 JavaBeans 可能处于不一致的状态</strong>。试图使用处于不一致状态的对象，将会导致失败。</p>
+<p>此外还有一个缺点： <strong>JavaBeans 模式阻止了把类做成不可变的可能，这就需要程序员付出额外的努力来确保它的线程安全。</strong></p>
+<h2 id="使用-Builder-模式"><a href="#使用-Builder-模式" class="headerlink" title="使用 Builder 模式"></a>使用 Builder 模式</h2><p>Builder 模式不会直接生成想要的对象，而是让客户端利用所有必要的参数调用构造器(或者静态工厂)，得到一个 builder对象。简单总结一下其顺序：</p>
+<ol>
+<li>首先客户端调用一个需要所有必要参数的 构造器(或者是 静态工厂)，返回一个 builder 对象</li>
+<li>然后 客户端通过 builder 调用类似的 setter 方法，来自定义可选参数</li>
+<li>最后客户端调用无参的 builder 方法来生成 不可变对象</li>
+</ol>
+<p>看个栗子 (<strong>注意，这个 builder 是它构建的类的静态成员类</strong>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NutritionFacts</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必要参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> servingSize;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> serving;</span><br><span class="line">    <span class="comment">// 可选参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> calories;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> fat;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> sodium;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> cabohydrate;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 内部的静态类 Builder</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 必要参数</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> servingSize;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> serving;</span><br><span class="line">        <span class="comment">// 可选参数 初始化默认值</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> calories = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> fat = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> sodium = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> cabohydrate = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化构建器的时候需要传入必要参数</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> servingSize, <span class="keyword">int</span> serving)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.servingSize = servingSize;</span><br><span class="line">            <span class="keyword">this</span>.serving = serving;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可选参数的赋值 Setter 方法</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">calories</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.calories = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">fat</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.fat = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">sodium</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.sodium = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">cabohydrate</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.cabohydrate = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> NutritionFacts <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> NutritionFacts(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// NutritionFacts 不提供 setter 方法，能保证创建的实例是不可变的</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NutritionFacts</span><span class="params">(Builder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.servingSize = builder.servingSize;</span><br><span class="line">        <span class="keyword">this</span>.serving = builder.serving;</span><br><span class="line">        <span class="keyword">this</span>.fat = builder.fat;</span><br><span class="line">        <span class="keyword">this</span>.sodium = builder.sodium;</span><br><span class="line">        <span class="keyword">this</span>.calories = builder.calories;</span><br><span class="line">        <span class="keyword">this</span>.cabohydrate = builder.cabohydrate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有一个小技巧注意一下，我们发现 Builder 对象的 setter 方法返回的是 对象本身，所以我们在使用 Builder 构造参数的时候，可以采用下面这种方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NutritionFacts.Builder builder = <span class="keyword">new</span> Builder(<span class="number">111</span>, <span class="number">111</span>);</span><br><span class="line">builder.calories(<span class="number">111</span>).fat(<span class="number">0</span>).sodium(<span class="number">111</span>).cabohydrate(<span class="number">111</span>);</span><br><span class="line">NutritionFacts nutrition = builder.build();</span><br></pre></td></tr></table></figure>
+<p>可以发现这种链式调用赋值的形式，即容易编写，又容易阅读，很棒棒哟。</p>
+<h3 id="约束性检查"><a href="#约束性检查" class="headerlink" title="约束性检查"></a>约束性检查</h3><p>使用 Builder 模式依然可以传入参数的约束性检查，一般有三个地方可以进行检查：</p>
+<ol>
+<li>调用 Builder 类 内部的 build() 方法的时候，我们会将 Builder 类的对象传递到 NutritionFacts 类中去，在传递之前我们可以对 Builder 对象自身进行检测</li>
+<li>在 执行 NutritionFacts(Builder builder) 方法的时候，我们可以对 传入的 Builder 对象的值进行检测，如果有什么不合法的参数可以直接在这里的过程检测出来</li>
+<li>在 Builder setter 方法(或者是 构造器方法) 中，每次传入参数的时候都可以进行检测，这是最根本的检测参数异常的地方。</li>
+</ol>
+<h3 id="一些-Builder-优点的深入探讨-目前还没有看明白，等看到后面之后再回过头来复习-："><a href="#一些-Builder-优点的深入探讨-目前还没有看明白，等看到后面之后再回过头来复习-：" class="headerlink" title="一些 Builder 优点的深入探讨(目前还没有看明白，等看到后面之后再回过头来复习)："></a>一些 Builder 优点的深入探讨(目前还没有看明白，等看到后面之后再回过头来复习)：</h3><p>设置了参数的 builder 生成了一个很好的抽象工厂。客户端可以将这样一个 builder 传给方法，使该方法能够为客户端创建一个或者多个对象。要使用这种方法，需要有个类型来表示 builder。这里使用的是 泛型，只需要一个泛型，就能满足所有的builder，无论它们在构建哪种类型的对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A builder for objects of type T</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Builder</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">builder</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>带有 Builder 实例的方法通常利用有限制的 <strong>通配符类型</strong> 来约束构建器的参数类型。例如，下面就是构建器每个节点的方法，它利用一个客户端提供的 Builder 实例来构建树:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Tree <span class="title">buildTree</span><span class="params">(Builder&lt;? extends Node&gt; nodeBuilder)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>&lt;? extends Node&gt;</code> 就是上述的 <strong>通配符类型</strong>，这里表示只能是继承自 Node 类的类型才能作为 Builder 的类型。</p>
+<h3 id="Builder-模式的缺点"><a href="#Builder-模式的缺点" class="headerlink" title="Builder 模式的缺点"></a>Builder 模式的缺点</h3><p>Builder 模式当然也是存在不足之处。为了创建对象，我们必须先创建它的构建器。虽然创建构建器的开销在实践中可能没有那么明显，但是在某些十分注重性能的情况下，这部分开销可能就没有办法被忽略了。</p>
+<p>此外，Builder 模式还比 重叠构建器模式 更加冗长，因此它只有在很多参数的时候才会使用。一般在 4+ 个参数时候会选择使用构建器的形式。并且还要记住，将来你有很大的可能会扩充参数的个数，如果一开始选择的是 构造器 或者是 静态工厂方法，得到类需要增加参数的时候才添加构建器，这个改动就会很蛋疼了，你需要将之前所有创建该类实例的地方全部修改，我的妈，太可怕了，几乎是不可能的，所以<strong>在前期是否该选择使用构建器需要仔细斟酌！</strong></p>
+<h3 id="举栗目前正在使用栗子"><a href="#举栗目前正在使用栗子" class="headerlink" title="举栗目前正在使用栗子"></a>举栗目前正在使用栗子</h3><p>最近刚看了点 Mybatis 的东西，正好看到人家也使用了 Builder 模式来构建实例，想着记录分析一波。</p>
+<p>首先基础的 Mybatis 知识我就不多 BB 了，我才不会告诉你我也不知道呢</p>
+<p>直接来看一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String resource = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);</span><br><span class="line">SqlSession session = sqlSessionFactory.openSession();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	News news = session.selectOne(<span class="string">"NewsMapper.selectNews"</span>, <span class="number">2</span>);</span><br><span class="line">	<span class="keyword">if</span> (news != <span class="keyword">null</span>) &#123;</span><br><span class="line">		System.out.println(news.getTitle());</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	session.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码是一个官方的入门栗子，我们打个断点来看看人家是怎么使用的 Builder 模式：</p>
+<p>主要看看这段代码：</p>
+<p><strong>SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);</strong></p>
+<p>一个很熟悉的东西出现了，<code>XXXBuilder</code>，ok，跟进去看看是怎么玩的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlSessionFactoryBuilder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> build(inputStream, <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, String environment)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> build(inputStream, environment, <span class="keyword">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, Properties properties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> build(inputStream, <span class="keyword">null</span>, properties);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(InputStream inputStream, String environment, Properties properties)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      XMLConfigBuilder parser = <span class="keyword">new</span> XMLConfigBuilder(inputStream, environment, properties);</span><br><span class="line">      <span class="keyword">return</span> build(parser.parse());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> ExceptionFactory.wrapException(<span class="string">"Error building SqlSession."</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      ErrorContext.instance().reset();</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        inputStream.close();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="comment">// Intentionally ignore. Prefer previous error.</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(Configuration config)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DefaultSqlSessionFactory(config);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看看 DefaultSqlSessionFactory 类的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultSqlSessionFactory</span> <span class="keyword">implements</span> <span class="title">SqlSessionFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Configuration configuration;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">DefaultSqlSessionFactory</span><span class="params">(Configuration configuration)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.configuration = configuration;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> SqlSession <span class="title">openSession</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> openSessionFromDataSource(configuration.getDefaultExecutorType(), <span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的我只截取了部分的代码，可以发现人家是把 Builder 单独的提出来的，并没有做成一个内部的静态类，并且 <code>build()</code> 方法也并不是传入的 Builder 对象本身，并且也没有赋值的操作。</p>
+<p>但是可以发现，它重载了多次 <code>build()</code> 方法，但是执行到最后都会调用:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">build</span><span class="params">(Configuration config)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> DefaultSqlSessionFactory(config);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过这个 <code>build()</code> 方法传入参数 <code>Configuration config</code> 完成 <strong>SqlSessionFactory</strong> 的创建。</p>
+<p>同时在 <strong>DefaultSqlSessionFactory</strong> 类中，也只有传入 <code>Configuration configuration</code> 参数的构造方法，对比一下，是不是和我们上面举的 Builder 栗子很相似，对吧。</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>最近学会一个单词叫做 <code>All In</code>，其最常见的意思源自于扑克牌游戏，英文释义为:</p>
+<blockquote>
+<p>staking all of one’s chips.</p>
+</blockquote>
+<p>表示游戏玩家（player）押上全部筹码。</p>
+<p><img src="https://i.loli.net/2019/03/04/5c7cd6b7db541.jpg" alt=""></p>
+<p>我想我也该如此，”困兽犹斗” 般的内心，也是时候 “孤注一掷” 了。</p>
+<p><code>It&#39;s time to going all-in.</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/Effective-Java/" rel="tag"># Effective Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/26/FareWell Snow/" rel="next" title="Farewell Snow">
+                <i class="fa fa-chevron-left"></i> Farewell Snow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/06/最简单的梯子搭建/" rel="prev" title="从零开始的科学上网">
+                从零开始的科学上网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何实例化大量参数的类"><span class="nav-number">2.</span> <span class="nav-text">如何实例化大量参数的类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用-重叠构造器-来创建此类"><span class="nav-number">2.1.</span> <span class="nav-text">1. 使用 重叠构造器 来创建此类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-使用-JavaBean-模式"><span class="nav-number">2.2.</span> <span class="nav-text">2. 使用 JavaBean 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaBeans-模式的缺点"><span class="nav-number">2.2.1.</span> <span class="nav-text">JavaBeans 模式的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Builder-模式"><span class="nav-number">2.3.</span> <span class="nav-text">使用 Builder 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#约束性检查"><span class="nav-number">2.3.1.</span> <span class="nav-text">约束性检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些-Builder-优点的深入探讨-目前还没有看明白，等看到后面之后再回过头来复习-："><span class="nav-number">2.3.2.</span> <span class="nav-text">一些 Builder 优点的深入探讨(目前还没有看明白，等看到后面之后再回过头来复习)：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Builder-模式的缺点"><span class="nav-number">2.3.3.</span> <span class="nav-text">Builder 模式的缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举栗目前正在使用栗子"><span class="nav-number">2.3.4.</span> <span class="nav-text">举栗目前正在使用栗子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">3.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>

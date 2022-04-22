@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="/css/fancybox.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Sigmar One:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+
+
+  
+
+<link href="/css/share.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.0.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=0.0.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=0.0.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=0.0.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,后端,十万个为什么,">
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/csshake.css">
+<link rel="stylesheet" type="text/css" href="/css/animated.css">
+<link rel="stylesheet" type="text/css" href="/css/APlayer.min.css">
+
+
+
+
+<meta name="description" content="前言ok，第二期如期而至。">
+<meta name="keywords" content="Java,后端,十万个为什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 姿势解锁 —— 十万个为什么第二期">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/Java姿势解锁 —— 十万个为什么第二期/index.html">
+<meta property="og:site_name" content="陷陣之誌，有死無生">
+<meta property="og:description" content="前言ok，第二期如期而至。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-bg.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-1.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-2.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-3.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-4.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-5.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-6.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-7.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-8.png">
+<meta property="og:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-9.png">
+<meta property="og:updated_time" content="2019-07-26T04:03:56.693Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 姿势解锁 —— 十万个为什么第二期">
+<meta name="twitter:description" content="前言ok，第二期如期而至。">
+<meta name="twitter:image" content="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-bg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '0.0.4',
+    sidebar: {"position":"right","display":"always","offset":52,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    since: '5/25/2018 08:30:00',
+    onlineAPI: '',
+    site: {
+      title: '陷陣之誌，有死無生',
+      subtitle: '',
+      author: 'Lanc4r'
+    },
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    leancloud: {
+      enable: false,
+      appID: '',
+      appKey: ''
+    },
+    favicon: {
+      visibilitychange: true,
+      narmal: '/images/favicon.ico',
+      hidden: '/images/failure.ico',
+      show_text: '(/≧▽≦/)咦！又好了！',
+      hide_text: '(●—●)喔哟，崩溃啦！'
+    }
+  };
+</script>
+
+
+
+  
+    <script type="text/javascript" src="/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="/js/APlayer.min.js"></script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/26/Java姿势解锁 —— 十万个为什么第二期/">
+
+
+
+
+
+  <title>Java 姿势解锁 —— 十万个为什么第二期 | 陷陣之誌，有死無生</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48084758-7', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default" class="theme-darling">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-location-arrow"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友链">
+          <a href="/friends/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mars"></i> <br>
+            
+            友链
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-paw"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-听歌">
+          <a href="/music/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-music"></i> <br>
+            
+            听歌
+          </a>
+        </li>
+      
+
+      
+      <li class="menu-item search">
+          <form class="local-search-form">
+            <input name="keyword" type="text" class="local-search-input" id="local-search-input" placeholder="站内搜索">
+            <button type="submit" class="local-search-submit"><i class="fa fa-search"></i></button>
+          </form>
+          <div id="local-search-result" class="local-search-result-cls"></div>
+      </li>
+    </ul>
+  
+
+  
+</nav>
+
+<div class="site-brand-wrapper" style="background-image: url('https://view.moezx.cc/images/2019/07/13/lanc4r-newlifebg.png')">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <div class="brand">
+        <span class="logo-line-before"><i></i></span>
+        <div class="site-title">
+          <div id="animate" class="animate">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+          <div id="guide" class="guide">
+            <span>陷</span><span>陣</span><span>之</span><span>誌</span><span>，</span><span>有</span><span>死</span><span>無</span><span>生</span>
+          </div>
+        </div>
+        <span class="logo-line-after"><i></i></span>
+      </div>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+<div class="site-master" itemprop="author" itemscope="" itemtype="http://schema.org/Person" style="display: block;">
+    <img id="avatar-img" class="site-master-avatar" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg2.jpg" alt="Lanc4r">
+    <h2 class="site-master-description shake" itemprop="description">
+        <span style="color:#00a7e0">Write</span> <span style="color:#00a7e0">the</span> <span style="color:#000">Code,</span> <span style="color:#000">Change</span> <span style="color:#ff3f1a">the</span> <span style="color:#ff3f1a">World.</span>
+    </h2>
+</div>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-date">
+			<div class="post-month">07月</div>
+			<div class="post-day">26</div>
+	</div>
+  
+  <div class="post-badge">
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+          <span itemprop="name">流下了没有技术的泪水</span>
+        </a>
+      </span>
+    
+      <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+        <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+          <span itemprop="name">Java姿势解锁</span>
+        </a>
+      </span>
+    
+  </div>
+  
+
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/Java姿势解锁 —— 十万个为什么第二期/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lanc4r">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/DIYgod.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陷陣之誌，有死無生">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 姿势解锁 —— 十万个为什么第二期</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time" style="color: #00a7e0;">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-26T13:00:00+08:00">
+                2019-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">•</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">流下了没有技术的泪水</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/流下了没有技术的泪水/Java姿势解锁/" itemprop="url" rel="index">
+                    <span itemprop="name" style="color: #ff3f1a;">Java姿势解锁</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-bg.png" alt=""></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ok，第二期如期而至。</p>
+<a id="more"></a>
+<h1 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h1><p>这一期我们解决如下几个问题：</p>
+<ol>
+<li><strong>Eclipse</strong> 部署 <strong>JavaWeb</strong> 项目的几个细节问题。</li>
+<li><strong>Eclipse</strong> 下的几个目录的理解：<code>/WEB-INF</code>、<code>/target</code>、<code>/META-INF</code>、<code>/Server</code></li>
+</ol>
+<h1 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h1><h2 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h2><p><strong>Eclipse</strong> 部署 <strong>JavaWeb</strong> 项目的几个细节问题。</p>
+<p>首先 <strong>Eclipse</strong> 如何联合 <strong>Tomcat</strong> 部署 <strong>JavaWeb</strong> 项目我就不多说了，我们主要来看看主要的几步操作做了一些什么事情。</p>
+<ul>
+<li>创建 <strong>Tomcat</strong> 服务器的时候那些配置项代表什么？</li>
+<li>项目发布到 <strong>Tomcat</strong> 是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。</li>
+<li><strong>JavaWeb</strong> 使用第三方 <strong>Jar</strong> 的问题。</li>
+</ul>
+<h3 id="创建-Tomcat-服务器的时候那些配置项代表什么？"><a href="#创建-Tomcat-服务器的时候那些配置项代表什么？" class="headerlink" title="创建 Tomcat 服务器的时候那些配置项代表什么？"></a>创建 Tomcat 服务器的时候那些配置项代表什么？</h3><p>首先我们先来看看 <strong>Tomcat</strong> 配置表，我大概列了一下常用的东西，有些点放到后面再聊吧。</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-1.png" alt=""></p>
+<p>呀，发现 <strong>Server Options</strong> 忘说了，这里应该对应着 <strong>Tomcat</strong> 的配置文件的一些配置项，后面找个时间学习 Tomcat 后再说吧….</p>
+<p>然后关于主机名就是表示 你可以通过 <code>http://主机名:端口号</code> 这样的方式来访问你的项目。配置文件路径其实就是对应当前 <strong>Tomcat</strong> 服务器配置文件的路径，注意是当前的 <strong>Tomcat</strong> 服务器，你可以创建多个服务器，这样就会有多个配置文件，也就有多个路径啦。后面说 <code>/Server</code> 目录的时候就能看到。</p>
+<h3 id="项目发布到-Tomcat-是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。"><a href="#项目发布到-Tomcat-是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。" class="headerlink" title="项目发布到 Tomcat 是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。"></a>项目发布到 Tomcat 是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。</h3><p>要说这个就得看看 <strong>Server Location</strong> 这一块啦，当我们新建一个 <strong>Tomcat</strong> 服务器后，如果选择 <strong>Eclipse</strong> 默认的发布路径，这时候 <strong>Eclipse</strong> 就会在 规定的路径下 <code>.metadata/.plugins/org.eclipse.wst.server.core/</code> 新建一个目录作为新的 <strong>Tomcat</strong> 容器发布路径。</p>
+<p>上面我们创建了一个叫做 <strong>Tomcat-BiuBiuBiu</strong> 的服务器，下面来看看他对应的 <strong>tmp3</strong> 下有什么东西吧。</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-2.png" alt=""></p>
+<p>emmmmmm，什么都没有，下面我们启动一下这个服务器试试(注意只是启动了服务器，还没有发布项目过去)。先看一下启动输出的日志。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">信息: CATALINA_BASE:         /Users/lanc4r/javaWorkspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp3</span><br><span class="line">信息: Command line argument: -Dcatalina.base=/Users/lanc4r/javaWorkspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp3</span><br><span class="line">七月 24, 2019 1:29:19 下午 org.apache.catalina.startup.VersionLoggerListener log</span><br><span class="line">信息: Command line argument: -Dcatalina.home=/Users/lanc4r/Home/program/about java/apache-tomcat-8.5.38</span><br><span class="line">七月 24, 2019 1:29:19 下午 org.apache.catalina.startup.VersionLoggerListener log</span><br><span class="line">信息: Command line argument: -Dwtp.deploy=/Users/lanc4r/javaWorkspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp3/wtpwebapps</span><br><span class="line">七月 24, 2019 1:29:19 下午 org.apache.catalina.startup.VersionLoggerListener log</span><br></pre></td></tr></table></figure>
+<p>这几个目录是不是很熟悉，对就是我们之前设置的 <strong>Tomcat-BiuBiuBiu</strong> 发布目录的地址啦，这时候我们再看看这个目录中的内容</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-3.png" alt=""></p>
+<p>哟西，这时候有文件就过来啦，他其实和我们 <strong>Tomcat</strong> 的目录很像的</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-4.png" alt=""></p>
+<p>这里顺带说一下下面这一条输出信息，和 <strong>Tomcat</strong> 配置文件的对应关系</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">信息: CATALINA_BASE:         /Users/lanc4r/javaWorkspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp3</span><br></pre></td></tr></table></figure>
+<p>首先是 <strong>context.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">  Licensed to the Apache Software Foundation (ASF) under one or more</span></span><br><span class="line"><span class="comment">  contributor license agreements.  See the NOTICE file distributed with</span></span><br><span class="line"><span class="comment">  this work for additional information regarding copyright ownership.</span></span><br><span class="line"><span class="comment">  The ASF licenses this file to You under the Apache License, Version 2.0</span></span><br><span class="line"><span class="comment">  (the "License"); you may not use this file except in compliance with</span></span><br><span class="line"><span class="comment">  the License.  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">      http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  Unless required by applicable law or agreed to in writing, software</span></span><br><span class="line"><span class="comment">  distributed under the License is distributed on an "AS IS" BASIS,</span></span><br><span class="line"><span class="comment">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="comment">  See the License for the specific language governing permissions and</span></span><br><span class="line"><span class="comment">  limitations under the License.</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- The contents of this file will be loaded for each web application --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Context</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Default set of monitored resources. If one of these changes, the    --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- web application will be reloaded.                                   --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 这里这个 $&#123;catalina.base&#125; 就是之前设置的地址啦 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>$&#123;catalina.base&#125;/conf/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Uncomment this to disable session persistence across Tomcat restarts --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    &lt;Manager pathname="" /&gt;</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Context</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>还有一个日志文件 <strong>loggin.property</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line"># contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line"># this work for additional information regarding copyright ownership.</span><br><span class="line"># The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line"># (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line"># the License.  You may obtain a copy of the License at</span><br><span class="line">#</span><br><span class="line">#     http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line">#</span><br><span class="line"># Unless required by applicable law or agreed to in writing, software</span><br><span class="line"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"># See the License for the specific language governing permissions and</span><br><span class="line"># limitations under the License.</span><br><span class="line"></span><br><span class="line">handlers = 1catalina.org.apache.juli.AsyncFileHandler, 2localhost.org.apache.juli.AsyncFileHandler, 3manager.org.apache.juli.AsyncFileHandler, 4host-manager.org.apache.juli.AsyncFileHandler, java.util.logging.ConsoleHandler</span><br><span class="line"></span><br><span class="line">.handlers = 1catalina.org.apache.juli.AsyncFileHandler, java.util.logging.ConsoleHandler</span><br><span class="line"></span><br><span class="line">############################################################</span><br><span class="line"># Handler specific properties.</span><br><span class="line"># Describes specific configuration info for Handlers.</span><br><span class="line">############################################################</span><br><span class="line"></span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.level = FINE</span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.directory = $&#123;catalina.base&#125;/logs</span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.prefix = catalina.</span><br><span class="line">1catalina.org.apache.juli.AsyncFileHandler.encoding = UTF-8</span><br><span class="line"></span><br><span class="line">2localhost.org.apache.juli.AsyncFileHandler.level = FINE</span><br><span class="line">2localhost.org.apache.juli.AsyncFileHandler.directory = $&#123;catalina.base&#125;/logs</span><br><span class="line">2localhost.org.apache.juli.AsyncFileHandler.prefix = localhost.</span><br><span class="line">2localhost.org.apache.juli.AsyncFileHandler.encoding = UTF-8</span><br><span class="line"></span><br><span class="line">3manager.org.apache.juli.AsyncFileHandler.level = FINE</span><br><span class="line">3manager.org.apache.juli.AsyncFileHandler.directory = $&#123;catalina.base&#125;/logs</span><br><span class="line">3manager.org.apache.juli.AsyncFileHandler.prefix = manager.</span><br><span class="line">3manager.org.apache.juli.AsyncFileHandler.encoding = UTF-8</span><br><span class="line"></span><br><span class="line">4host-manager.org.apache.juli.AsyncFileHandler.level = FINE</span><br><span class="line">4host-manager.org.apache.juli.AsyncFileHandler.directory = $&#123;catalina.base&#125;/logs</span><br><span class="line">4host-manager.org.apache.juli.AsyncFileHandler.prefix = host-manager.</span><br><span class="line">4host-manager.org.apache.juli.AsyncFileHandler.encoding = UTF-8</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>${catalina.base}</code> 变量其实就是我们之前创建 <strong>Tomcat</strong> 的发布路径啦。</p>
+<h4 id="小疑问"><a href="#小疑问" class="headerlink" title="小疑问"></a>小疑问</h4><p>这看起来像是把 <strong>Tomcat</strong> 目录下的部分数据拷贝过去了，但是真实的操作是不是就是如此呢，这里我也不清楚，所以算是记录下的一个疑问点吧。</p>
+<h4 id="下面我们发布一个-Web项目到新的Tomcat-容器试试"><a href="#下面我们发布一个-Web项目到新的Tomcat-容器试试" class="headerlink" title="下面我们发布一个 Web项目到新的Tomcat 容器试试"></a>下面我们发布一个 Web项目到新的Tomcat 容器试试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  tmp3 ls wtpwebapps</span><br><span class="line">ROOT</span><br><span class="line">➜  tmp3 ls wtpwebapps</span><br><span class="line">ROOT   shutup</span><br></pre></td></tr></table></figure>
+<p>当我们发布一个项目的时候，就会在 <strong>wtpwebapps</strong> 项目下添加一个对应项目的文件夹（shutup），里面主要含有这几个目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">└─WEB-INF/</span><br><span class="line">    └─classes/  //存储源码编译后的 class 文件，包会转换成相应的路径，注意这里文件是动态的，简单说就是每一次发布都会更新其中内容，这也能理解嘛，毕竟我们刷新时候再运行就会走我们新修改的逻辑了。</span><br><span class="line">    └─lib/      //存储导入的第三方 Jar 包，比如 Maven 项目，就会把 pom 文件中需要导入的 jar 包放入其中，这样项目运行的时候如果需要相应的库文件就会到这里寻找。等会配合一个问题来说说这个运行时候寻找的 类的问题</span><br><span class="line">    └─web.xml   //用户自定义的 web.xml 文件</span><br><span class="line">└─META-INF</span><br><span class="line">    └─maven/    //如果是maven 项目，这里还会多一个 maven 目录，里面保存着 项目的 pom 文件以及 pom 的配置文件</span><br><span class="line">    └─MANIFEST.MF</span><br><span class="line"></span><br><span class="line">其余的其实都是自定义的数据文件啦，比如定义存储 JSP 文件的目录、或是存储 CSS、JS 文件的目录，或是一些配置文件等等，</span><br></pre></td></tr></table></figure>
+<p>截了两张图看看对应的关系吧</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-5.png" alt=""></p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-6.png" alt=""></p>
+<p>关于 <code>MANIFEST.MF</code> 文件，我也不知道是干啥的，先看看里面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  META-INF cat MANIFEST.MF</span><br><span class="line">Manifest-Version: 1.0</span><br><span class="line">Built-By: lanc4r</span><br><span class="line">Build-Jdk: 1.8.0_111</span><br><span class="line">Created-By: Maven Integration for Eclipse</span><br></pre></td></tr></table></figure>
+<p>emmmmmmmm，看完后更不知道是做什么的了，只知道由 <strong>Eclipse</strong> 中集成的 <strong>Maven</strong> 创建，貌似跟打 <strong>jar</strong> 包相关，懒得看了，有兴趣的可以参考一下这篇文章 <a href="https://blog.csdn.net/ye1992/article/details/11766377" target="_blank" rel="noopener">META-INF文件夹中的MANIFEST.MF 有什么作用？</a>，ok，就酱紫。</p>
+<h3 id="JavaWeb-使用第三方-Jar-的问题。"><a href="#JavaWeb-使用第三方-Jar-的问题。" class="headerlink" title="JavaWeb 使用第三方 Jar 的问题。"></a>JavaWeb 使用第三方 Jar 的问题。</h3><p>这个是我自己亲自体验到的问题，想着这里记录一下，在普通项目我们导入 Jar包会将其加入到当前项目的 <strong>ClassPath</strong> 中，但是 <strong>JavaWeb</strong> 项目呢？也是添加 <strong>ClassPath</strong> 吗？</p>
+<p>之前我找了一下网上的答案，貌似并没有提 <strong>ClassPath</strong> 这个概念，而是提出了一种曲线救国的方式，将第三方 <strong>Jar</strong> 包添加到 <strong>Tomcat</strong> 的 <strong>lib</strong> 目录下，这样也行是没问题的，因为 <strong>lib</strong> 文件内的 <strong>jar</strong> 包肯定是在 <strong>Tomcat</strong> 自己的类加载路径下的嘛。</p>
+<p>但是这样有一个问题，就是<strong>所有的项目默认其实都能够访问 所增加的 jar 包了</strong>，虽然类是动态加载，不会主动的加载 <strong>jar</strong> 包，但是总感觉不是最完美的方式。就好比普通的 <strong>java</strong> 项目在导入第三方 <strong>jar</strong> 包的时候，也没见往 <strong>java</strong> 的内置包路径中添加啊。</p>
+<p>所以我找了一下针对于当前 <strong>Tomcat</strong> 容器的 <strong>ClassPath</strong>，应该也存在着这样一个类加载的路径，在这里设置好你需要 <strong>Jar</strong> 的时候，这样你在发布的时候 <strong>Tomcat</strong> 就知道去哪找你引用的第三方 <strong>jar</strong> 包了。当然这只是让你能够在本地运行，如果你放到其他地方运行，应该跟 <strong>Tomcat</strong> 的设置有关，挖个坑吧，后面有时间了解一下 <strong>Tomcat</strong>。</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-7.png" alt=""></p>
+<h2 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h2><p><code>/WEB-INF</code>、<code>/target</code>、<code>/META-INF</code>、<code>/Server</code> 这几个目录到底是干啥的。</p>
+<p>首先 <code>/WEB-INF</code> 和 <code>/META-INF</code> 这两个目录我们在上面已经说过啦，这里就聊聊 <code>/target</code> 和 <code>/Server</code> 目录啦。</p>
+<h3 id="target"><a href="#target" class="headerlink" title="/target"></a>/target</h3><p><code>/target</code> 目录其作用就是存放编译后的 <strong>class</strong> 文件啦，具体我就不截图啦，大家可以自己试试。现在最重要的是为什么会放到这里呢？</p>
+<p>首先 <strong>class</strong> 文件是通过 <strong>javac</strong> 命令生成的，<strong>javac</strong> 可以选择带上输出路径的参数，如果不加这个参数会默认输出到源文件目录，如果带上就会指定到指定目录。所以现在为什么 <strong>class</strong> 会出现在 <code>/target</code> 目录下我们就知道了，一定是有一个地方指定了输出路径，现有又有另一个问题，在哪个地址指定的呢？</p>
+<p>我们先说说一个图形化的地方，其实就是放到 <strong>BuildPath</strong> 的 <strong>Source</strong> 标签中啦：</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-8.png" alt=""></p>
+<p>当然这些显式内容都存在一个配置文件，这个输出目录其实就是对应项目的 `.classpath 文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">➜  WebSocketTest cat .classpath</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">classpath</span>&gt;</span></span><br><span class="line">    // 这里这个 output 也就是设置的输出目录啦</span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"src"</span> <span class="attr">output</span>=<span class="string">"target/classes"</span> <span class="attr">path</span>=<span class="string">"src/main/java"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"optional"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"maven.pomderived"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">classpathentry</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">excluding</span>=<span class="string">"**"</span> <span class="attr">kind</span>=<span class="string">"src"</span> <span class="attr">output</span>=<span class="string">"target/classes"</span> <span class="attr">path</span>=<span class="string">"src/main/resources"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"maven.pomderived"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">classpathentry</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"src"</span> <span class="attr">output</span>=<span class="string">"target/test-classes"</span> <span class="attr">path</span>=<span class="string">"src/test/java"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"optional"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"maven.pomderived"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">classpathentry</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"con"</span> <span class="attr">path</span>=<span class="string">"org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"maven.pomderived"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">classpathentry</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"con"</span> <span class="attr">path</span>=<span class="string">"org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">attributes</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"maven.pomderived"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">attribute</span> <span class="attr">name</span>=<span class="string">"org.eclipse.jst.component.dependency"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/lib"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">attributes</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">classpathentry</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"con"</span> <span class="attr">path</span>=<span class="string">"org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"con"</span> <span class="attr">path</span>=<span class="string">"org.eclipse.jdt.USER_LIBRARY/Lanc4rLibrary"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">classpathentry</span> <span class="attr">kind</span>=<span class="string">"output"</span> <span class="attr">path</span>=<span class="string">"target/classes"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">classpath</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>同理你会发现好多项目会把编译后的文件放到 <code>/build</code> 目录中，同样的道理咯。</p>
+<h3 id="Server"><a href="#Server" class="headerlink" title="/Server"></a>/Server</h3><p>这个目录其实打开后你就发现是什么了，就是你创建的服务器集合，其中含有几个目录就表示你创建了几个服务器，其中放了一些对应当前服务器的配置文件，就像下面这个样子，其中其实大部分是将 <strong>Tomcat</strong> 的主配置文件复制了一份存储进来，其中具体是干什么的等到后面有时间了解一下 <strong>Tomcat</strong> 后再说吧。</p>
+<p><img src="https://view.moezx.cc/images/2019/07/26/lanc4r-somanywhy2-9.png" alt=""></p>
+<p>再回到上面看看第一张 <strong>Tomcat</strong> 配置信息图，其中设置的路径就存在于此啦。</p>
+<p>当然这不是关键，我想说的是之前在工作中想找项目对应的数据库连接信息，当时浩哥给我说了两种方法，第一种是找 <strong>resource</strong> 目录下查看资源信息，因为你跑单元测试的时候需要数据库的连接信息，所以这一点可以说是首选。<br>还有一种就是查询 <strong>Servers</strong> 目录下的配置文件，这样就可以查到…….，我现在发现我好像已经忘了具体怎么操作的了，啊啊啊啊啊啊，好烦好烦，这里先这样记着吧，等到后面后时间再聊聊。</p>
+<h1 id="随笔"><a href="#随笔" class="headerlink" title="随笔"></a>随笔</h1><p>到这边第二周了，发现这边并没有想象中那么轻松啊，理想中是能够偷发育的，现在看来没什么机会啊，也许这就是生活应该有的样子吧，fine，我也不想去思考当初没有选择回家闭关是不是正确的了，这让我想到之前看到的一句话，好像是出自《杀鹌鹑的少女》里的(没有看过，最近就定这本和之前赞哥推荐的吧)。</p>
+<blockquote>
+<p>当你老了，回顾一生，就会发觉：什么时候出国读书、什么时候决定做第一份职业、何时选定了对象而恋爱、什么时候结婚，其实都是命运的巨变。只是当时站在三岔路口，眼见风云千樯，你作出抉择的那一日，在日记上，相当的沉闷和平凡，当时还以为是生命中普通的一天。</p>
+</blockquote>
+<p>这一定是自己的转折点，从最开始我就有这样的感觉，不过，fine，现在已经做出了选择，当下就以最好的状态去面对吧，做好自己的事情，以后的事情交给以后的自己去思考吧。</p>
+<p>这一周由于各种各样的事情一直都没睡好，这周末一定要把欠的睡眠补回来，=_=</p>
+<p>另外下周决定开始带便当了，只做一些简单的东西，吃了两周外卖，耗蓝决定要自己做了(认真脸)。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/十万个为什么/" rel="tag"># 十万个为什么</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/21/协议姿势解锁 —— WebSocket 长连接实战篇/" rel="next" title="协议姿势解锁 —— WebSocket长连接实战篇">
+                <i class="fa fa-chevron-left"></i> 协议姿势解锁 —— WebSocket长连接实战篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/08/Java姿势解锁 —— 多线程第一期/" rel="prev" title="Java 姿势解锁 —— 多线程第一期">
+                Java 姿势解锁 —— 多线程第一期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNjkxNy8xMzQ1Mw=="></div>
+    </div>
+
+  
+
+
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element shake-hard" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://view.moezx.cc/images/2019/05/01/lanc4rbg1.jpg" alt="Lanc4r">
+            
+              <p class="site-author-name" itemprop="name"><span style="opacity:.2;">咸鱼</span>Lanc4r</p>
+              <p class="site-description motion-element" itemprop="description">你看见我的甜甜圈了么？</p>
+          </div>
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="GitHub" data-balloon="GitHub" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/lanc4r" target="_blank" title="微博" data-balloon="微博" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="/images/qq-g.jpg" target="_blank" title="QQ" data-balloon="QQ" data-balloon-pos="up">
+                    
+                      <i class="fa fa-fw fa-qq"></i></a>
+                </span>
+              
+            
+          </div>
+
+          
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-name" style="color: #00a7e0" ;="">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name" style="color: #ff3f1a;">分类</span>
+                </a>
+              </div>
+            
+            
+
+          </nav>
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发现问题"><span class="nav-number">2.</span> <span class="nav-text">发现问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决问题"><span class="nav-number">3.</span> <span class="nav-text">解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一"><span class="nav-number">3.1.</span> <span class="nav-text">问题一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-Tomcat-服务器的时候那些配置项代表什么？"><span class="nav-number">3.1.1.</span> <span class="nav-text">创建 Tomcat 服务器的时候那些配置项代表什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目发布到-Tomcat-是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。"><span class="nav-number">3.1.2.</span> <span class="nav-text">项目发布到 Tomcat 是什么情况，数据都存到了什么地方，配置文件存到了那些地方等等。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小疑问"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">小疑问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下面我们发布一个-Web项目到新的Tomcat-容器试试"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">下面我们发布一个 Web项目到新的Tomcat 容器试试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaWeb-使用第三方-Jar-的问题。"><span class="nav-number">3.1.3.</span> <span class="nav-text">JavaWeb 使用第三方 Jar 的问题。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二"><span class="nav-number">3.2.</span> <span class="nav-text">问题二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#target"><span class="nav-number">3.2.1.</span> <span class="nav-text">/target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-number">3.2.2.</span> <span class="nav-text">/Server</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随笔"><span class="nav-number">4.</span> <span class="nav-text">随笔</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <div id="aplayer" class="aplayer" data-id="2228455822" data-server="netease" data-type="playlist" data-mode="random"></div>
+
+    <footer id="footer" class="footer">
+      <div class="footer-image"></div>
+      <div class="footer-inner">
+        <p>博客已萌萌哒运行<span id="since"></span><span class="my-face">(●'◡'●)ﾉ♥</span></p>
+<p></p>
+
+<p>© <span itemprop="copyrightYear">2020</span> 陷陣之誌，有死無生.
+    Powered By <a href="https://hexo.io/" target="_blank" class="external" rel="nofollow">Hexo</a>.
+    Theme By <a href="https://github.com/DIYgod/hexo-theme-sagiri" target="_blank" class="external" rel="nofollow">Sagiri</a>.
+    Made with ♥ by <a href="https://github.com/lanc4r" target="_blank"><span class="author" itemprop="copyrightHolder">Lanc4r</span></a>. 
+</p>
+<p><span id="busuanzi_container_site_pv">(/ω＼*)……… (/ω•＼*) 目前共有 <span id="busuanzi_value_site_uv"></span> 位来访者 ♥ 共计浏览次数 <span id="busuanzi_value_site_pv"></span> 次 (/▽＼)</span></p>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+
+    <canvas id="evanyou"></canvas>
+    <canvas id="live2d" width="150" height="400" class="live2d"></canvas>
+
+    
+
+  </div>
+
+  <script type="text/javascript" src="/js/sagiri.min.js?v=0.0.4"></script>
+
+  
+
+
+
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+
+  <!-- 头像的 animated 效果 -->
+  <script type="text/javascript" src="/js/animated.js"></script>
+
+  <!-- 站内搜索 search 文件，以及搜索按钮初始化代码 -->
+  <script type="text/javascript" src="/js/search.js"></script>
+  <script type="text/javascript" id="local.search.active">
+    window.onload = function (){
+      var inputArea       = document.querySelector("#local-search-input");
+      inputArea.onclick   = function(){ getSearchFile(); this.onclick = null }
+      inputArea.onkeydown = function(){ if(event.keyCode == 13) return false }
+    }
+  </script>
+
+  <!-- aplayer 播放器 -->
+  <script type="text/javascript" src="/js/Meting.min.js"></script>
+
+  <!-- 点击变为少女祈祷中 -->
+  <script type="text/javascript">
+    $(document).ready(function (){
+       $(".post-title-link").click(function (){
+           $(this).text("少女祈祷中……");
+       });
+    });
+  </script>
+
+  <!-- 不蒜子 计数器 -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- 输入框输入内容 屏幕抖动效果 
+  <script type="text/javascript" src="/js/activate-power-mode.js"></script>
+  <script type="text/javascript">
+    // 由于 livere 不是访问页面时候就加载，所以需要写一个监听函数，判断当其DOM结构发生变化时再进行设置
+    //$("#comments").bind('DOMNodeInserted', function (e){
+    POWERMODE.colorful = 'true';    // make power mode colorful
+    POWERMODE.shake = 'false';       // turn off shake
+    // TODO 这里根据具体情况修改
+    document.body.addEventListener('input', POWERMODE);
+    //});
+  </script>-->
+
+</body>
+</html>
