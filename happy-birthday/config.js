@@ -1,65 +1,58 @@
-// 霸都丶傲天 2019年10月10日 https://github.com/AJLoveChina/birthday
 var config = {
-    // 句子的长度可以任意， 你可以写十句话， 二十句话都可以
-    // 每句话尽量不要超过15个字,不然展示效果可能不太好
     texts: [
-        "送给我",      //这里,每句话结尾的最后一个逗号必须是英文的哦!! 很重要哦!!
-        "心爱的姑娘",  // 同上...
-        "今天是你的生日",
-        "这是我们在一起的",
-        "第三个生日！",
-        "这两年来，我见过你",
-        "奇怪的样子",
-        "可爱的样子",
-        "生气的样子",
-        "都是我喜欢的样子",
-        "对了，礼物收全了吗？",
-        "今年要吃好好的",
-        "喂饱饱的",
-        "然后才有力气干活",
-        "和想我！",
-        "生日快乐~~",
+        "这算是第一个生日礼物吧",
+        "之前忘记过你的生日(>_<)",
+        "不过这次记住了，嗯",
+        "你说过嘛",
+        "咱们不能太腻歪了",
+        "其实我嘴笨也说不出来腻歪的话啦",
+        "对于你的感受",
+        "多少还是会有一点点感同身受的",
+        "毕竟小时候的自己遇到过这个情况",
+        "那就少说两句",
+        "我很信任你，莫名且坚定的信任",
+        "总之不用怀疑我的想法",
+        "(不开心的时候我会直接说出来的)",
+        "你的生日到了",
+        "该祝福些什么呢",
+        "之前貌似常说【祝你暴富】、【祝你变得更强】",
+        "这次就【祝你快乐】(>▽<)",
+        "当然不仅仅是【生日快乐】",
+        "wish you happy every day~",
     ],
-    /**
-     * imgs 可以不填, 但是如果要填写的话必须遵循下面的格式
-     * "对应上面的文字, 要完全一样" : "图片地址, 可以把图片放在imgs文件夹中"
-     * 例如
-     * "心爱的小可爱": "./imgs/xiaokeai.jpg"
-     *
-     * 如果不要图片的话, 直接在每行开头写两个斜杠注释即可, 例如下面的 "今天是你的生日" 的图片就不会展示了:)
-     * Tip: 图片最好用正方形or接近正方形, 看起来效果更好
-     */
     imgs: {
-        "送给我": "./imgs/songxinxin.jpeg",
-        "心爱的姑娘": "./imgs/nothing.jpg",
-        //"今天是你的生日": "./imgs/shengri.jpeg",
-        "这是我们在一起的": "./imgs/zaiyiqi.png",
-        "第三个生日！": "./imgs/nothing.jpg",
-        "这两年来，我见过你": "./imgs/yangzi.jpeg",
-        "奇怪的样子": "./imgs/nothing.jpg",
-        "可爱的样子": "./imgs/nothing.jpg",
-        "生气的样子": "./imgs/nothing.jpg",
-        "都是我喜欢的样子": "./imgs/nothing.jpg",
-        "对了，礼物收全了吗？": "./imgs/chuo.gif",
-        "今年要吃好好的": "./imgs/chihaodian.jpeg",
-        "喂饱饱的": "./imgs/weibao.jpeg",
-        "然后才有力气干活": "./imgs/nothing.jpg",
-        "和想我！": "./imgs/nothing.jpg",
-        "生日快乐~~": "./imgs/nothing.jpg"
-    },
+        //"这算是第一个生日礼物吧": "./imgs/songxinxin.jpeg",
+        //"之前忘记过你的生日(>_<)": "./imgs/nothing.jpg",
+        //"不过这次记住了，嗯": "./imgs/shengri.jpeg",
+        //"你说过嘛": "./imgs/zaiyiqi.png",
+        //"咱们不能太腻歪了": "./imgs/nothing.jpg",
+        //"其实我嘴笨也说不出来腻歪的话啦": "./imgs/yangzi.jpeg",
+        //"对于你的感受": "./imgs/nothing.jpg",
+        //"多少还是会有一点点感同身受的": "./imgs/nothing.jpg",
+        //"毕竟小时候的自己遇到过这个情况": "./imgs/nothing.jpg",
+        //"那就少说两句": "./imgs/nothing.jpg",
+        //"我很信任你，莫名且坚定的信任": "./imgs/nothing.jpg",
+        //"总之不用怀疑我的想法": "./imgs/chuo.gif",
+        //"(不开心的时候我会直接说出来的)": "./imgs/chihaodian.jpeg",
+        //"你的生日到了": "./imgs/weibao.jpeg",
+        //"该祝福些什么呢": "./imgs/nothing.jpg",
+        //"之前貌似常说【祝你暴富】、【祝你变得更强】": "./imgs/nothing.jpg",
+        //"这次就【祝你快乐】(>▽<)": "./imgs/nothing.jpg"
+        //"当然不仅仅是【生日快乐】": "./imgs/nothing.jpg"
+        "wish you happy every day~": "./imgs/1.jpg"
+    },	
     
-    // 按钮文字描述, 以下是默认的按钮文字，英文的，您可以改成你喜欢的文字
     desc: {
         turn_on: "Hello呀，今天是你的生日哦",
-        play: "先上音乐嘻嘻",
-        bannar_coming: "抱歉这次没有太多时间去准备",
+        play: "希望是自己动手的礼物啦",
+        bannar_coming: "不过抱歉这次没有太多时间去准备",
         balloons_flying: "时间真的是让人猝不及防的东西呢",
-        cake_fadein: "这次的蛋糕是线上的啦",
+        cake_fadein: "所以这次的蛋糕是线上的哦",
         light_candle: "当然也会有蜡烛的",
         wish_message: "生日快乐～",
-        story: "A MESSAGE FOR YOU"
+        story: "还有一些碎碎念想要告诉你"
     },
 
     // 结束语
-    loveText: '爱你的X先生~'
+    loveText: '我是耗蓝'
 };
