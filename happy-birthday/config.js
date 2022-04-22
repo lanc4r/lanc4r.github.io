@@ -50,9 +50,9 @@ var config = {
         cake_fadein: "所以这次的蛋糕是线上的哦",
         light_candle: "当然也会有蜡烛的",
         wish_message: "生日快乐～",
-        story: "还有一些碎碎念想要告诉你"
+        story: "许个愿吧(●’◡’●)"
     },
 
     // 结束语
-    loveText: '是耗蓝哦'
+    loveText: '这里是喜欢你的耗蓝'
 };
