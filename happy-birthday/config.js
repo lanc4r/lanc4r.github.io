@@ -39,7 +39,7 @@ var config = {
         //"之前貌似常说【祝你暴富】、【祝你变得更强】": "./imgs/nothing.jpg",
         //"这次就【祝你快乐】(>▽<)": "./imgs/nothing.jpg"
         //"当然不仅仅是【生日快乐】": "./imgs/nothing.jpg"
-        "wish you happy every day~": "./imgs/1.jpg"
+        "wish you happy every day~": "./imgs/1.jpeg"
     },	
     
     desc: {
@@ -54,5 +54,5 @@ var config = {
     },
 
     // 结束语
-    loveText: '我是耗蓝'
+    loveText: '是耗蓝哦'
 };
