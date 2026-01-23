@@ -5,10 +5,10 @@
     { "msgs": ["【任务日志已更新】"], "msgInputSpeed": 120 },
     { "msgs": ["✅ 第一章：聆听吟游诗人演奏（已完成）"], "msgInputSpeed": 120 },
     { "msgs": ["⏳ 第二章：开启吟游诗人的信件（进行中）"], "msgInputSpeed": 120 },
-    { "msgs": ["——————————————————"], "msgInputSpeed": 120 },
+    { "msgs": ["——————分割线——————"], "msgInputSpeed": 120 },
     { "msgs": ["勇敢的冒险者"], "msgInputSpeed": 120 },
-    { "msgs": ["信件里封存着吟游诗人的呢喃"], "msgInputSpeed": 120 },
-    { "msgs": ["那些话不适合被风吹散"], "msgInputSpeed": 120 },
+    { "msgs": ["信件里藏有吟游诗人的呢喃"], "msgInputSpeed": 120 },
+    { "msgs": ["当信纸展开时，那些低语便会轻轻醒来"], "msgInputSpeed": 120 },
     {
         "msgs": ["<letter src='options/demo/letters/test.json'/>"],
         "triggerNextAction": { "type": "componentClose" }
@@ -17,7 +17,7 @@
     { "msgs": ["✅ 第一章：聆听吟游诗人演奏（已完成）"], "msgInputSpeed": 120 },
     { "msgs": ["✅ 第二章：开启吟游诗人的信件（已完成）"], "msgInputSpeed": 120 },
     { "msgs": ["⏳ 最终章：做出抉择（进行中）"], "msgInputSpeed": 120 },
-    { "msgs": ["——————————————————"], "msgInputSpeed": 120 },
+    { "msgs": ["——————分割线——————"], "msgInputSpeed": 120 },
     { "msgs": ["勇敢的冒险者"], "msgInputSpeed": 120 },
     { "msgs": ["现在，故事走到了分岔路口"], "msgInputSpeed": 120 },
     { "msgs": ["两条路都铺满鲜花"], "msgInputSpeed": 120 },
@@ -133,7 +133,7 @@
         "msgInputSpeed": 120
     },
     {
-        "msgs": ["——————————————————"],
+        "msgs": ["——————分割线——————"],
         "msgInputSpeed": 120
     },
     {
