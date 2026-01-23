@@ -29,8 +29,8 @@
         "triggerNextAction": {
             "type": "userInput",
             "options": {
-                "resolveKeyTexts": [" 愿意"," 愿意 ","愿意 ", "愿意", "好", "同意", "可以", "没问题", "嗯", "愿意的", "我愿意", "好的", "1", "嗯嗯", "ok", "OK", "yes", "YES", "我可以", "我同意", "愿意啦", "当然", "愿意啊", "当然愿意", "yes, i do", "yes, I DO", "妥", "可", "妥~"],
-                "rejectKeyTexts": [],
+                "resolveKeyTexts": ["愿意", "可以"],
+                "rejectKeyTexts": ["不"],
                 "rejectHitTexts": [
                     "获得成就：【星光聆听者】，感谢您为旋律画上完美的休止符！",
                     "获得纪念品：【封存的旋律水晶】",
